@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+#parse("inc_head.vm")
+  </head>
+
+  <body>
+#parse("inc_navigation.vm")
+
+<!-- CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <h2>$bean.pageTitle</h2>
+          <hr />
+        </div>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <h4>Abenteuer</h4>
+            <ul class="nav nav-list">
+#foreach($a in $bean.abenteuers)
+              <li><a href="$resolver.resolveUrlFor($a)">$a.title</a></li>
+#end
+            </ul>
+        </div>
+        <div class="span2">
+          <h4>Helden</h4>
+            <ul class="nav nav-list">
+#foreach($h in $bean.helden)
+              <li><a href="$resolver.resolveUrlFor($h)">$h.name</a></li>
+#end
+            </ul>
+        </div>
+        <div class="span2">
+          <h4>Meisterpersonen</h4>
+            <ul class="nav nav-list">
+#foreach($n in $bean.nscs)
+              <li><a href="$resolver.resolveUrlFor($n)">$n.name</a></li>
+#end
+            </ul>
+        </div>
+        <div class="span2">
+          <h4>Kreaturen</h4>
+            <ul class="nav nav-list">
+#foreach($k in $bean.kreaturen)
+              <li><a href="$resolver.resolveUrlFor($k)">$k.name</a></li>
+#end
+            </ul>
+        </div>
+        <div class="span2">
+          <h4>Schaupl&auml;tze</h4>
+            <ul class="nav nav-list">
+#foreach($o in $bean.orte)
+              <li><a href="$resolver.resolveUrlFor($o)">$o.name</a></li>
+#end
+            </ul>
+        </div>
+      </div>
+
+      <hr />
+
+#parse("inc_footer.vm")
+    </div> <!-- /container -->
+    
+#parse("inc_js.vm")
+  </body>
+</html>

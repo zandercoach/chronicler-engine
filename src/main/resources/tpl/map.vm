@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+#parse("inc_head.vm")
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="../js/projection.js"></script>
+    <script src="../js/maplabel.js"></script>
+    <script>
+      var avMapTypeOptions = {
+        getTileUrl: function(coord, zoom) {
+          var normalized = getNormalizedCoord(coord, zoom);
+          if (!normalized) {
+            return null;
+          }
+          var bound = Math.pow(2, zoom);
+          return '../av_tiles/' + zoom + '/' + normalized.x + '/' + (bound - normalized.y -1) + '.png';
+        },
+        tileSize: new google.maps.Size(TILE_SIZE, TILE_SIZE),
+        maxZoom: 6,
+        minZoom: 2,
+        radius: 1,
+        name: 'Aventurien'
+      };
+
+      var avMapType = new google.maps.ImageMapType(avMapTypeOptions);
+
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(0, 0),
+          zoom: 2,
+          streetViewControl: false,
+          mapTypeControlOptions: {
+            mapTypeIds: ['av']
+          }
+        };
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        map.mapTypes.set('av', avMapType);
+        map.setMapTypeId('av');
+        
+        var routeCoordinates;
+
+#foreach($abenteuer in $bean.abenteuers)
+        routeCoordinates = [
+
+  #foreach($wegpunkt in $abenteuer.wegpunkte)
+          getLatLng($wegpunkt.x, $wegpunkt.y), // $wegpunkt.ort.name
+  #end
+        ];
+        new google.maps.Polyline({map: map, path: routeCoordinates, strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2});
+
+  #foreach($ereignis in $abenteuer.ereignisse)
+    #if($ereignis.ort)
+        new MapLabel({text: '$ereignis.ort.name', position: getLatLng($ereignis.ort.x, $ereignis.ort.y), map: map, fontSize: 12});
+    #end
+  #end
+#end
+      }
+    </script>
+  </head>
+
+  <body onload="initialize()">
+#parse("inc_navigation.vm")
+
+<!-- CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <h2>$bean.pageTitle</h2>
+          <hr />
+        </div>
+      </div>
+      <div id="map_canvas" style="width: 100%; height: 1200px; background-color: #11aed9;"></div>
+
+#parse("inc_footer.vm")
+    </div> <!-- /container -->
+    
+#parse("inc_js.vm")
+  </body>
+</html>

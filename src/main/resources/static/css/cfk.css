@@ -1,0 +1,45 @@
+.cfk-unit {
+  padding: 30px;
+  margin-bottom: 30px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  color: inherit;
+  background-color: #eeeeee;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+.cfk-unit h1 {
+  margin-bottom: 0;
+  font-size: 48px;
+  line-height: 1;
+  color: inherit;
+  letter-spacing: -1px;
+}
+.cfk-unit li {
+  line-height: 30px;
+}
+
+a, a:hover {
+  color: #9c1818;
+}
+
+a.thumbnail:hover {
+  border-top-color: #9c1818;
+  border-right-color: #9c1818;
+  border-bottom-color: #9c1818;
+  border-left-color: #9c1818;
+	
+}
+a.cfk-wiki-aventurica-link {
+  background-color: transparent;
+  background-image: url("../img/wiki-aventurica-logo.png");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: left center;
+  background-clip: border-box;
+  background-origin: padding-box;
+  background-size: auto auto;
+  padding-left: 20px;
+}

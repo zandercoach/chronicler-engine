@@ -1,0 +1,31 @@
+          <div class="well sidebar-nav">
+            <a href="$resolver.resolveUrlFor($bean.abenteuer)" class="thumbnail">
+              <img src="$resolver.resolveImageUrlFor($bean.abenteuer)" alt="$bean.abenteuer.title" />
+            </a>
+            <ul class="nav nav-list">
+#if($bean.abenteuer.orte)
+              <li class="nav-header">Orte</li>
+#foreach($o in $bean.abenteuer.orte)
+              <li><a href="$resolver.resolveUrlFor($o)">$o.name</a></li>
+#end
+#end
+#if($bean.abenteuer.nscs)
+              <li class="nav-header">Meisterpersonen</li>
+#foreach($n in $bean.abenteuer.nscs)
+              <li><a href="$resolver.resolveUrlFor($n)">$n.name</a></li>
+#end
+#end
+#if($bean.abenteuer.kreaturen)
+              <li class="nav-header">Kreaturen</li>
+#foreach($k in $bean.abenteuer.kreaturen)
+              <li><a href="$resolver.resolveUrlFor($k)">$k.name</a></li>
+#end
+#end
+#if($bean.abenteuer.helden)
+              <li class="nav-header">Helden</li>
+#foreach($h in $bean.abenteuer.helden)
+              <li><a href="$resolver.resolveUrlFor($h)">$h.name</a></li>
+#end
+#end
+            </ul>
+          </div><!--/.well -->

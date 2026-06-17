@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+#parse("inc_head.vm")
+  </head>
+
+  <body>
+#parse("inc_navigation.vm")
+
+<!-- CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="span9">
+          <h2>$bean.abenteuer.title</h2>
+#if($bean.abenteuer.wikiPage && !$resolver.resolveWikiUrlFor($bean.abenteuer.wikiPage).isEmpty())
+          (siehe auch <a href="$resolver.resolveWikiUrlFor($bean.abenteuer.wikiPage)" target="wiki-aventurica" class="cfk-wiki-aventurica-link">Wiki Aventurica</a>)
+#end
+          <hr />
+          <h4>Kurzbeschreibung</h4>
+          $bean.abenteuer.description
+          <hr />
+          <h4>Ereignisse</h4>
+#foreach($ereignis in $bean.abenteuer.ereignisse)
+#if($ereignis.ort)
+          <h5>$ereignis.date - $ereignis.ort.name - $ereignis.title</h5>
+#else
+          <h5>$ereignis.date - $ereignis.title</h5>
+#end
+          $ereignis.description
+#end
+#parse("inc_abe_${bean.abenteuer.class.simpleName}.vm")
+        </div>
+        <div class="span3">
+#parse("inc_abe_references.vm")
+        </div>
+      </div>
+
+      <hr />
+
+#parse("inc_footer.vm")
+    </div> <!-- /container -->
+    
+#parse("inc_js.vm")
+  </body>
+</html>

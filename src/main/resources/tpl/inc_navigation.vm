@@ -1,0 +1,37 @@
+    <!-- NAVIGATION -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="$resolver.resolveUrlFor('home')">Die Chroniken des fliegenden Kessels</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="$resolver.resolveUrlFor('home')">Startseite</a></li>
+              <li><a href="$resolver.resolveUrlFor('chronicles')">Chronik</a></li>
+              <li><a href="$resolver.resolveUrlFor('idx')">Index</a></li>
+              <li><a href="$resolver.resolveUrlFor('map')">Karte</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Abenteuer <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+#foreach($a in $navigation.abenteuers)
+                  <li><a href="$resolver.resolveUrlFor($a)">$a.title</a></li>
+#end
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Helden <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+#foreach($h in $navigation.helden)
+                  <li><a href="$resolver.resolveUrlFor($h)">$h.name</a></li>
+#end
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>

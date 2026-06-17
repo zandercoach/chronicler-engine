@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+#parse("inc_head.vm")
+  </head>
+
+  <body>
+#parse("inc_navigation.vm")
+
+<!-- CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <h2>$bean.pageTitle</h2>
+#foreach($abenteuer in $bean.abenteuers)
+          <hr />
+#parse("inc_abe_teaser.vm")
+#end
+        </div>
+      </div>
+
+      <hr>
+
+#parse("inc_footer.vm")
+    </div> <!-- /container -->
+    
+#parse("inc_js.vm")
+  </body>
+</html>
