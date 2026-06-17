@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!DOCTYPE doc [
+<!ENTITY abenteuerXml SYSTEM "abenteuer.xml">
+<!ENTITY heldenXml SYSTEM "helden.xml">
+<!ENTITY kreaturenXml SYSTEM "kreaturen.xml">
+<!ENTITY nscsXml SYSTEM "nscs.xml">
+<!ENTITY orteXml SYSTEM "orte.xml">
+<!ENTITY sessionsXml SYSTEM "sessions.xml">
+]>
+
+<cfkData>
+
+    &abenteuerXml;
+
+    &heldenXml;
+    &kreaturenXml;
+    &nscsXml;
+    &orteXml;
+    &sessionsXml;
+
+</cfkData>

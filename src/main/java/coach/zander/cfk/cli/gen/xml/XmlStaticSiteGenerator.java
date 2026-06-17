@@ -270,9 +270,10 @@ public class XmlStaticSiteGenerator {
     VelocityContext ctx = new VelocityContext(baseCtx);
     ctx.put("bean", bean);
     Template tpl = Velocity.getTemplate(templateBaseName + ".vm");
-    FileWriter fw = new FileWriter(new File(destination + htmlPath + "/" + destinationFileName));
-    tpl.merge(ctx, fw);
-    fw.flush();
+    try (FileWriter fw = new FileWriter(new File(destination + htmlPath + "/" + destinationFileName))) {
+      tpl.merge(ctx, fw);
+      fw.flush();
+    }
   }
 
   private void prepareDestination(boolean copyImages) throws IOException {
