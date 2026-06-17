@@ -10,7 +10,7 @@ public class XmlStaticSiteGeneratorApp {
   public static void main(String[] args) throws IOException, JAXBException {
     String source = "src/main/resources/static";
     String destination = "target/cfk";
-    String dataDir = "../cfk-data";
+    String dataDir = "../coach.zander.cfk.data";
     String xml = dataDir + "/data/data.xml";
     String map = dataDir + "/data/map.jpg";
     String imgSource = dataDir + "/img";

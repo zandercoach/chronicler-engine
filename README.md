@@ -25,7 +25,7 @@ mvn org.codehaus.mojo:exec-maven-plugin:3.1.0:java \
   -Dexec.mainClass=coach.zander.cfk.cli.gen.xml.XmlStaticSiteGeneratorApp
 ```
 
-This expects a sibling directory `../cfk-data` containing the content data
+This expects a sibling directory `../coach.zander.cfk.data` containing the content data
 (see `XmlStaticSiteGeneratorApp` for the exact expected layout: `data/`,
 `img/`). Output is written to `target/cfk`.
 
