@@ -26,7 +26,7 @@ public class Wegpunkt {
   @ManyToOne
   @JoinColumn(name = "abe_id", nullable = false)
   @XmlTransient
-  private Abenteuer abenteuer;
+  private Adventure adventure;
   @ManyToOne
   @JoinColumn(name = "ort")
   @XmlIDREF
@@ -37,8 +37,8 @@ public class Wegpunkt {
   @XmlAttribute
   private Integer y;
 
-  public Abenteuer getAbenteuer() {
-    return abenteuer;
+  public Adventure getAdventure() {
+    return adventure;
   }
 
   public Integer getId() {
@@ -57,8 +57,8 @@ public class Wegpunkt {
     return y != null ? y : ort.getY();
   }
 
-  public void setAbenteuer(Abenteuer abenteuer) {
-    this.abenteuer = abenteuer;
+  public void setAdventure(Adventure adventure) {
+    this.adventure = adventure;
   }
 
   public void setId(Integer id) {
@@ -80,7 +80,7 @@ public class Wegpunkt {
   @Override
   public String toString() {
     ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    builder.append("abenteuer", abenteuer == null ? "<null>" : abenteuer.getTitle());
+    builder.append("adventure", adventure == null ? "<null>" : adventure.getTitle());
     builder.append("ort", ort == null ? "<null>" : ort.getName());
     builder.append("x", getX());
     builder.append("y", getY());

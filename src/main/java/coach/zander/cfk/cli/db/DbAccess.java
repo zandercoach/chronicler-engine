@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import coach.zander.cfk.cli.util.HibernateUtil;
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.Held;
 import coach.zander.cfk.model.Kreatur;
 import coach.zander.cfk.model.Nsc;
@@ -31,13 +31,13 @@ public class DbAccess {
     }
   }
 
-  public List<Abenteuer> getAbenteuerAll() {
-    return getNamedQueryList("Abenteuer.all");
+  public List<Adventure> getAdventureAll() {
+    return getNamedQueryList("Adventure.all");
   }
 
-  public Abenteuer getAbenteuerLatest() {
-    List<Abenteuer> abenteuers = getAbenteuerAll();
-    return abenteuers.get(0);
+  public Adventure getAdventureLatest() {
+    List<Adventure> adventures = getAdventureAll();
+    return adventures.get(0);
   }
 
   public List<Held> getHeldAll() {

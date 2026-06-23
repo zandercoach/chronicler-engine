@@ -24,7 +24,7 @@ import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
-import coach.zander.cfk.beans.AbenteuerBean;
+import coach.zander.cfk.beans.AdventureBean;
 import coach.zander.cfk.beans.CfkPageBean;
 import coach.zander.cfk.beans.ChroniclesBean;
 import coach.zander.cfk.beans.HeldBean;
@@ -37,7 +37,7 @@ import coach.zander.cfk.beans.NscBean;
 import coach.zander.cfk.beans.OrtBean;
 import coach.zander.cfk.cli.gen.StaticUrlResolver;
 import coach.zander.cfk.links.CfkReferenceInsertionEventHandler;
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.CFKData;
 import coach.zander.cfk.model.Ereignis;
 import coach.zander.cfk.model.Held;
@@ -66,10 +66,10 @@ public class XmlStaticSiteGenerator {
   private void createPageChronicles(CFKData data) throws IOException {
 
     ChroniclesBean bean = new ChroniclesBean();
-    List<Abenteuer> abenteuers = data.getAbenteuers();
-    // IMPL: Order Abenteuers by Date!
+    List<Adventure> adventures = data.getAdventures();
+    // IMPL: Order Adventures by Date!
     bean.setPageTitle("Die Chroniken");
-    bean.setAbenteuers(abenteuers);
+    bean.setAdventures(adventures);
     mergeTemplateWithBeanDataToFile("chronicles", bean);
 
     System.out.println("--> Page 'chronicles' created!");
@@ -79,11 +79,11 @@ public class XmlStaticSiteGenerator {
       IOException {
 
     HomeBean bean = new HomeBean();
-    List<Abenteuer> abenteuers = data.getAbenteuers();
-    
-    // Latest Abenteuer for index.html
-    Abenteuer abenteuer = abenteuers.get(0);
-    bean.setAbenteuer(abenteuer);
+    List<Adventure> adventures = data.getAdventures();
+
+    // Latest Adventure for index.html
+    Adventure adventure = adventures.get(0);
+    bean.setAdventure(adventure);
     bean.setPageTitle("Startseite");
     mergeTemplateWithBeanDataToFile("home", bean);
     
@@ -94,7 +94,7 @@ public class XmlStaticSiteGenerator {
 
     IdxBean bean = new IdxBean();
     bean.setPageTitle("Index");
-    bean.setAbenteuers(data.getAbenteuers());
+    bean.setAdventures(data.getAdventures());
     bean.setHelden(data.getHelden());
     bean.setOrte(data.getOrte());
     bean.setNscs(data.getNscs());
@@ -109,27 +109,27 @@ public class XmlStaticSiteGenerator {
     bean.setPageTitle("Karte");
     bean.setMap("map");
 
-    List<Abenteuer> abenteuers = data.getAbenteuers();
-    
-    // IMPL: order abenteuers by date!
-    bean.setAbenteuers(abenteuers);
+    List<Adventure> adventures = data.getAdventures();
+
+    // IMPL: order adventures by date!
+    bean.setAdventures(adventures);
 
     mergeTemplateWithBeanDataToFile("map", bean);
 
     System.out.println("--> Page 'map' created!");
   }
 
-  private void createPagesAbenteuer(CFKData data) throws IOException {
-    List<Abenteuer> abenteuers = data.getAbenteuers();
-    for (Abenteuer abenteuer : abenteuers) {
-      AbenteuerBean bean = new AbenteuerBean();
-      bean.setAbenteuer(abenteuer);
-      mergeTemplateWithBeanDataToFile("abenteuer", bean, resolver.resolveUrlFor(abenteuer));
+  private void createPagesAdventure(CFKData data) throws IOException {
+    List<Adventure> adventures = data.getAdventures();
+    for (Adventure adventure : adventures) {
+      AdventureBean bean = new AdventureBean();
+      bean.setAdventure(adventure);
+      mergeTemplateWithBeanDataToFile("adventure", bean, resolver.resolveUrlFor(adventure));
 
-      System.out.println("----> Abenteuer " + abenteuer.getTitle());
+      System.out.println("----> Adventure " + adventure.getTitle());
     }
 
-    System.out.println("--> Abenteuers created!");
+    System.out.println("--> Adventures created!");
   }
 
   private void createPagesHelden(CFKData data) throws IOException {
@@ -180,14 +180,14 @@ public class XmlStaticSiteGenerator {
     System.out.println("--> Orte created!");
   }
 
-  private void generateMap(List<Abenteuer> abenteuers, String map) throws IOException {
-    Collections.reverse(abenteuers);
+  private void generateMap(List<Adventure> adventures, String map) throws IOException {
+    Collections.reverse(adventures);
     BufferedImage img = ImageIO.read(new File(map));
     Graphics2D graphics = img.createGraphics();
     graphics.setStroke(new BasicStroke(50.0f));
     Wegpunkt previous = null;
-    for (Abenteuer abenteuer : abenteuers) {
-      for (Wegpunkt current : abenteuer.getWegpunkte()) {
+    for (Adventure adventure : adventures) {
+      for (Wegpunkt current : adventure.getWegpunkte()) {
         if (previous != null) {
           graphics.drawLine(previous.getX(), previous.getY(), current.getX(), current.getY());
         }
@@ -208,11 +208,11 @@ public class XmlStaticSiteGenerator {
 	    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 	    CFKData data = (CFKData) jaxbUnmarshaller.unmarshal(new StreamSource(file));
 	    
-	    List<Abenteuer> abenteuers = data.getAbenteuers();
-	    for (Abenteuer abenteuer : abenteuers) {
-		    List<Ereignis> ereignisse = abenteuer.getEreignisse();
+	    List<Adventure> adventures = data.getAdventures();
+	    for (Adventure adventure : adventures) {
+		    List<Ereignis> ereignisse = adventure.getEreignisse();
 	    	for (Ereignis ereignis : ereignisse) {
-	    		ereignis.setAbenteuer(abenteuer);
+	    		ereignis.setAdventure(adventure);
 		    	List<Held> helden = ereignis.getHelden();
 		    	for (Held held : helden) {
 		    		held.add(ereignis);
@@ -251,9 +251,9 @@ public class XmlStaticSiteGenerator {
     baseCtx.put("resolver", resolver);
     baseCtx.put("formatter", new DateFormatter());
     
-    List<Abenteuer> navAbenteuers = data.getAbenteuers();
+    List<Adventure> navAdventures = data.getAdventures();
     List<Held> navHelden = data.getHelden();
-    baseCtx.put("navigation", new NavigationBean(navAbenteuers, navHelden));
+    baseCtx.put("navigation", new NavigationBean(navAdventures, navHelden));
 
     EventCartridge ec = new EventCartridge();
     ec.addEventHandler(new CfkReferenceInsertionEventHandler(new XmlInternalLinksProvider(data), resolver));
@@ -303,14 +303,14 @@ public void run(String source, String imgSource, String destination, String xml,
     initialize(source, imgSource, destination, data, copyImages);
 
     if (generateMap) {
-      generateMap(data.getAbenteuers(), map);
+      generateMap(data.getAdventures(), map);
     }
     
     createPageMap(data);
     createPageHome(data);
     createPageChronicles(data);
     createPageIdx(data);
-    createPagesAbenteuer(data);
+    createPagesAdventure(data);
     createPagesOrte(data);
     createPagesHelden(data);
     createPagesNscs(data);

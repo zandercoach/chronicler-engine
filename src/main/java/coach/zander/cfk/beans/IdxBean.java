@@ -2,21 +2,21 @@ package coach.zander.cfk.beans;
 
 import java.util.List;
 
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.Held;
 import coach.zander.cfk.model.Kreatur;
 import coach.zander.cfk.model.Nsc;
 import coach.zander.cfk.model.Ort;
 
 public class IdxBean extends CfkPageBean {
-  private List<Abenteuer> abenteuers;
+  private List<Adventure> adventures;
   private List<Held> helden;
   private List<Ort> orte;
   private List<Nsc> nscs;
   private List<Kreatur> kreaturen;
 
-  public List<Abenteuer> getAbenteuers() {
-    return abenteuers;
+  public List<Adventure> getAdventures() {
+    return adventures;
   }
 
   public List<Held> getHelden() {
@@ -35,8 +35,8 @@ public class IdxBean extends CfkPageBean {
     return orte;
   }
 
-  public void setAbenteuers(List<Abenteuer> abenteuers) {
-    this.abenteuers = abenteuers;
+  public void setAdventures(List<Adventure> adventures) {
+    this.adventures = adventures;
   }
 
   public void setHelden(List<Held> helden) {

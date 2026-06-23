@@ -3,9 +3,9 @@
               <img src="$resolver.resolveImageUrlFor($bean.object)" alt="$bean.object.name" />
             </a>
             <ul class="nav nav-list">
-#if($bean.object.abenteuers)
+#if($bean.object.adventures)
               <li class="nav-header">Abenteuer</li>
-#foreach($a in $bean.object.abenteuers)
+#foreach($a in $bean.object.adventures)
               <li><a href="$resolver.resolveUrlFor($a)">$a.title</a></li>
 #end
 #end

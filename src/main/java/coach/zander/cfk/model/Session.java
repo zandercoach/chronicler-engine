@@ -37,10 +37,10 @@ public class Session implements Comparable<Session> {
   private String location;
   @ManyToMany(mappedBy = "sessions")
   @OrderBy("id")
-  private final List<Abenteuer> abenteuers = new ArrayList<Abenteuer>();
+  private final List<Adventure> adventures = new ArrayList<Adventure>();
 
-  public void addAbenteuer(Abenteuer abenteuer) {
-    abenteuers.add(abenteuer);
+  public void addAdventure(Adventure adventure) {
+    adventures.add(adventure);
   }
 
   public int compareTo(Session o) {
@@ -69,8 +69,8 @@ public class Session implements Comparable<Session> {
     return true;
   }
 
-  public List<Abenteuer> getAbenteuers() {
-    return abenteuers;
+  public List<Adventure> getAdventures() {
+    return adventures;
   }
 
   public Date getDate() {

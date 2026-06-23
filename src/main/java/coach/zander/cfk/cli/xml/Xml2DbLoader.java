@@ -8,7 +8,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import coach.zander.cfk.cli.db.DbAccess;
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.CFKData;
 import coach.zander.cfk.model.Held;
 import coach.zander.cfk.model.Kreatur;
@@ -83,7 +83,7 @@ public class Xml2DbLoader {
     for (Kreatur k : data.getKreaturen()) {
       db.save(k);
     }
-    for (Abenteuer a : data.getAbenteuers()) {
+    for (Adventure a : data.getAdventures()) {
       db.save(a);
     }
   }

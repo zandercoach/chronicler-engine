@@ -2,23 +2,23 @@ package coach.zander.cfk.beans;
 
 import java.util.List;
 
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 
 public class MapBean extends CfkPageBean {
   private String map;
 
-  private List<Abenteuer> abenteuers;
+  private List<Adventure> adventures;
 
-  public List<Abenteuer> getAbenteuers() {
-    return abenteuers;
+  public List<Adventure> getAdventures() {
+    return adventures;
   }
 
   public String getMap() {
     return map;
   }
 
-  public void setAbenteuers(List<Abenteuer> abenteuers) {
-    this.abenteuers = abenteuers;
+  public void setAdventures(List<Adventure> adventures) {
+    this.adventures = adventures;
   }
 
   public void setMap(String map) {

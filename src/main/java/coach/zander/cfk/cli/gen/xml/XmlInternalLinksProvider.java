@@ -5,7 +5,7 @@ import java.util.List;
 
 import coach.zander.cfk.links.InternalLink;
 import coach.zander.cfk.links.InternalLinksProvider;
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.CFKData;
 import coach.zander.cfk.model.Held;
 import coach.zander.cfk.model.Kreatur;
@@ -16,8 +16,8 @@ public class XmlInternalLinksProvider implements InternalLinksProvider {
 	private List<InternalLink> internalLinks = new ArrayList<InternalLink>();
 
 	public XmlInternalLinksProvider(CFKData data) {
-		for (Abenteuer abenteuer : data.getAbenteuers()) {
-			internalLinks.add(new InternalLink(abenteuer));
+		for (Adventure adventure : data.getAdventures()) {
+			internalLinks.add(new InternalLink(adventure));
 		}
 		for (Held held : data.getHelden()) {
 			internalLinks.add(new InternalLink(held));

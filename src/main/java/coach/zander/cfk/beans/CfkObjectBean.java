@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.CFKObject;
 import coach.zander.cfk.model.Ereignis;
 import coach.zander.cfk.model.Held;
@@ -14,12 +14,12 @@ import coach.zander.cfk.model.Nsc;
 import coach.zander.cfk.model.Ort;
 
 public abstract class CfkObjectBean extends CfkPageBean {
-  public List<Abenteuer> getAbenteuers() {
-    SortedSet<Abenteuer> abenteuers = new TreeSet<Abenteuer>();
+  public List<Adventure> getAdventures() {
+    SortedSet<Adventure> adventures = new TreeSet<Adventure>();
     for (Ereignis e : getObject().getEreignisse()) {
-      abenteuers.add(e.getAbenteuer());
+      adventures.add(e.getAdventure());
     }
-    return new ArrayList<Abenteuer>(abenteuers);
+    return new ArrayList<Adventure>(adventures);
   }
 
   public List<Held> getHelden() {

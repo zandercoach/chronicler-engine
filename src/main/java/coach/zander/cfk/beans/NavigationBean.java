@@ -5,36 +5,36 @@ import java.util.List;
 
 import org.springframework.util.Assert;
 
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.Held;
 
 public class NavigationBean {
   private List<Held> helden;
-  private List<Abenteuer> abenteuers;
+  private List<Adventure> adventures;
 
   public NavigationBean() {
-    setAbenteuers(abenteuers = new ArrayList<Abenteuer>());
+    setAdventures(adventures = new ArrayList<Adventure>());
     setHelden(new ArrayList<Held>());
   }
 
-  public NavigationBean(List<Abenteuer> abenteuers, List<Held> helden) {
-    Assert.notNull(abenteuers);
+  public NavigationBean(List<Adventure> adventures, List<Held> helden) {
+    Assert.notNull(adventures);
     Assert.notNull(helden);
-    this.abenteuers = abenteuers;
+    this.adventures = adventures;
     this.helden = helden;
   }
 
-  public List<Abenteuer> getAbenteuers() {
-    return abenteuers;
+  public List<Adventure> getAdventures() {
+    return adventures;
   }
 
   public List<Held> getHelden() {
     return helden;
   }
 
-  public void setAbenteuers(List<Abenteuer> abenteuers) {
-    Assert.notNull(abenteuers);
-    this.abenteuers = abenteuers;
+  public void setAdventures(List<Adventure> adventures) {
+    Assert.notNull(adventures);
+    this.adventures = adventures;
   }
 
   public void setHelden(List<Held> helden) {

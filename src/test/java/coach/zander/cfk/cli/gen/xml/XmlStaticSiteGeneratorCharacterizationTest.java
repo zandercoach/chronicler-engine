@@ -78,7 +78,7 @@ class XmlStaticSiteGeneratorCharacterizationTest {
     assertTrue(new File(destination, "html/idx.html").isFile());
     assertTrue(new File(destination, "html/chronicles.html").isFile());
     assertTrue(new File(destination, "html/map.html").isFile());
-    assertTrue(new File(destination, "html/abenteuer_Das_Testabenteuer.html").isFile());
+    assertTrue(new File(destination, "html/adventure_Das_Testabenteuer.html").isFile());
     assertTrue(new File(destination, "html/held_Testheld.html").isFile());
     assertTrue(new File(destination, "html/nsc_Test-NSC.html").isFile());
     assertTrue(new File(destination, "html/kreatur_Testkreatur.html").isFile());

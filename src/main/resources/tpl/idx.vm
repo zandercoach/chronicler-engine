@@ -19,7 +19,7 @@
         <div class="span4">
           <h4>Abenteuer</h4>
             <ul class="nav nav-list">
-#foreach($a in $bean.abenteuers)
+#foreach($a in $bean.adventures)
               <li><a href="$resolver.resolveUrlFor($a)">$a.title</a></li>
 #end
             </ul>

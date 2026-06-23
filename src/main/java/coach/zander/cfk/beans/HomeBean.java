@@ -1,16 +1,16 @@
 package coach.zander.cfk.beans;
 
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 
 public class HomeBean extends CfkPageBean {
-  private Abenteuer abenteuer;
+  private Adventure adventure;
 
-  public Abenteuer getAbenteuer() {
-    return abenteuer;
+  public Adventure getAdventure() {
+    return adventure;
   }
 
-  public void setAbenteuer(Abenteuer abenteuer) {
-    this.abenteuer = abenteuer;
+  public void setAdventure(Adventure adventure) {
+    this.adventure = adventure;
     this.setPageTitle("Startseite");
   }
 }

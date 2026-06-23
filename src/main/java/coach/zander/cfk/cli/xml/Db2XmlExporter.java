@@ -11,7 +11,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import coach.zander.cfk.cli.db.DbAccess;
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.CFKData;
 
 public class Db2XmlExporter {
@@ -46,9 +46,9 @@ public class Db2XmlExporter {
     data.setHelden(db.getHeldAll());
     data.setNscs(db.getNscAll());
     data.setKreaturen(db.getKreaturAll());
-    List<Abenteuer> abenteuers = db.getAbenteuerAll();
-    Collections.sort(abenteuers);
-    data.setAbenteuers(abenteuers);
+    List<Adventure> adventures = db.getAdventureAll();
+    Collections.sort(adventures);
+    data.setAdventures(adventures);
     data.setSessions(db.getSessionAll());
     JAXBContext context = JAXBContext.newInstance(CFKData.class);
     Marshaller m = context.createMarshaller();

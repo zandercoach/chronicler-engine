@@ -25,7 +25,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import coach.zander.cfk.beans.AbenteuerBean;
+import coach.zander.cfk.beans.AdventureBean;
 import coach.zander.cfk.beans.CfkPageBean;
 import coach.zander.cfk.beans.ChroniclesBean;
 import coach.zander.cfk.beans.HeldBean;
@@ -37,7 +37,7 @@ import coach.zander.cfk.beans.NavigationBean;
 import coach.zander.cfk.beans.NscBean;
 import coach.zander.cfk.beans.OrtBean;
 import coach.zander.cfk.cli.gen.StaticUrlResolver;
-import coach.zander.cfk.dao.AbenteuerDao;
+import coach.zander.cfk.dao.AdventureDao;
 import coach.zander.cfk.dao.HeldDao;
 import coach.zander.cfk.dao.KreaturDao;
 import coach.zander.cfk.dao.NscDao;
@@ -45,7 +45,7 @@ import coach.zander.cfk.dao.OrtDao;
 import coach.zander.cfk.links.CfkReferenceInsertionEventHandler;
 import coach.zander.cfk.links.InternalLink;
 import coach.zander.cfk.links.InternalLinksProvider;
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.Held;
 import coach.zander.cfk.model.Kreatur;
 import coach.zander.cfk.model.Nsc;
@@ -64,7 +64,7 @@ public class DbStaticSiteGenerator {
   private VelocityContext baseCtx;
 
   @Autowired
-  private AbenteuerDao abenteuerDao;
+  private AdventureDao adventureDao;
 
   @Autowired
   private HeldDao heldDao;
@@ -85,9 +85,9 @@ public class DbStaticSiteGenerator {
   private void createPageChronicles() throws IOException {
 
     ChroniclesBean bean = new ChroniclesBean();
-    List<Abenteuer> abenteuers = abenteuerDao.readAllOrderedByDate();
+    List<Adventure> adventures = adventureDao.readAllOrderedByDate();
     bean.setPageTitle("Die Chroniken");
-    bean.setAbenteuers(abenteuers);
+    bean.setAdventures(adventures);
     mergeTemplateWithBeanDataToFile("chronicles", bean);
   }
 
@@ -95,8 +95,8 @@ public class DbStaticSiteGenerator {
       IOException {
 
     HomeBean bean = new HomeBean();
-    Abenteuer abenteuer = abenteuerDao.findLatest();
-    bean.setAbenteuer(abenteuer);
+    Adventure adventure = adventureDao.findLatest();
+    bean.setAdventure(adventure);
     bean.setPageTitle("Startseite");
 
     mergeTemplateWithBeanDataToFile("home", bean);
@@ -106,7 +106,7 @@ public class DbStaticSiteGenerator {
 
     IdxBean bean = new IdxBean();
     bean.setPageTitle("Index");
-    bean.setAbenteuers(abenteuerDao.readAll());
+    bean.setAdventures(adventureDao.readAll());
     bean.setHelden(heldDao.readAll());
     bean.setOrte(ortDao.readAll());
     bean.setNscs(nscDao.readAll());
@@ -120,19 +120,19 @@ public class DbStaticSiteGenerator {
     bean.setPageTitle("Karte");
     bean.setMap("map");
 
-    List<Abenteuer> abenteuers = abenteuerDao.readAllOrderedByDate();
-    bean.setAbenteuers(abenteuers);
-    // generateMap(abenteuers);
+    List<Adventure> adventures = adventureDao.readAllOrderedByDate();
+    bean.setAdventures(adventures);
+    // generateMap(adventures);
 
     mergeTemplateWithBeanDataToFile("map", bean);
   }
 
-  private void createPagesAbenteuer() throws IOException {
-    List<Abenteuer> abenteuers = abenteuerDao.readAll();
-    for (Abenteuer abenteuer : abenteuers) {
-      AbenteuerBean bean = new AbenteuerBean();
-      bean.setAbenteuer(abenteuer);
-      mergeTemplateWithBeanDataToFile("abenteuer", bean, resolver.resolveUrlFor(abenteuer));
+  private void createPagesAdventure() throws IOException {
+    List<Adventure> adventures = adventureDao.readAll();
+    for (Adventure adventure : adventures) {
+      AdventureBean bean = new AdventureBean();
+      bean.setAdventure(adventure);
+      mergeTemplateWithBeanDataToFile("adventure", bean, resolver.resolveUrlFor(adventure));
     }
   }
 
@@ -172,14 +172,14 @@ public class DbStaticSiteGenerator {
     }
   }
 
-  private void generateMap(List<Abenteuer> abenteuers) throws IOException {
-    Collections.reverse(abenteuers);
+  private void generateMap(List<Adventure> adventures) throws IOException {
+    Collections.reverse(adventures);
     BufferedImage img = ImageIO.read(new File(source + "/map.jpg"));
     Graphics2D graphics = img.createGraphics();
     graphics.setStroke(new BasicStroke(50.0f));
     Wegpunkt previous = null;
-    for (Abenteuer abenteuer : abenteuers) {
-      for (Wegpunkt current : abenteuer.getWegpunkte()) {
+    for (Adventure adventure : adventures) {
+      for (Wegpunkt current : adventure.getWegpunkte()) {
         if (previous != null) {
           graphics.drawLine(previous.getX(), previous.getY(), current.getX(), current.getY());
         }
@@ -201,8 +201,8 @@ public class DbStaticSiteGenerator {
 
   public List<InternalLink> getInternalLinks() {
     List<InternalLink> internalLinks = new ArrayList<InternalLink>();
-    for (Abenteuer abenteuer : abenteuerDao.readAll()) {
-      internalLinks.add(new InternalLink(abenteuer));
+    for (Adventure adventure : adventureDao.readAll()) {
+      internalLinks.add(new InternalLink(adventure));
     }
     for (Held held : heldDao.readAll()) {
       internalLinks.add(new InternalLink(held));
@@ -234,9 +234,9 @@ public class DbStaticSiteGenerator {
     baseCtx.put("resolver", resolver);
     baseCtx.put("formatter", new DateFormatter());
 
-    List<Abenteuer> navAbenteuers = abenteuerDao.readAll();
+    List<Adventure> navAdventures = adventureDao.readAll();
     List<Held> navHelden = heldDao.readAll();
-    baseCtx.put("navigation", new NavigationBean(navAbenteuers, navHelden));
+    baseCtx.put("navigation", new NavigationBean(navAdventures, navHelden));
 
     EventCartridge ec = new EventCartridge();
     ec.addEventHandler(new CfkReferenceInsertionEventHandler(getInernalLinksProvider(), resolver));
@@ -280,7 +280,7 @@ public class DbStaticSiteGenerator {
     createPageHome();
     createPageChronicles();
     createPageIdx();
-    createPagesAbenteuer();
+    createPagesAdventure();
     createPagesOrte();
     createPagesHelden();
     createPagesNscs();

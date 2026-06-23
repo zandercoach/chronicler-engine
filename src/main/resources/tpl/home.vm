@@ -78,8 +78,8 @@
         <div class="span12" id="teaser:abenteuer">
           <h2>Letztes Abenteuer</h2>
           <hr />
-#set( $abenteuer = $bean.abenteuer )
-#parse("inc_abe_teaser.vm")
+#set( $adventure = $bean.adventure )
+#parse("inc_adv_teaser.vm")
         </div>
       </div>
 

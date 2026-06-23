@@ -3,7 +3,7 @@ package coach.zander.cfk.cli.db;
 import java.io.IOException;
 import java.util.List;
 
-import coach.zander.cfk.model.Abenteuer;
+import coach.zander.cfk.model.Adventure;
 import coach.zander.cfk.model.Held;
 import coach.zander.cfk.model.Nsc;
 import coach.zander.cfk.model.Ort;
@@ -32,9 +32,9 @@ public class DbLoader {
 
   private void run() {
     System.out.println("********** DbLoader - Run! **********");
-    List<Abenteuer> abenteuers = db.getAbenteuerAll();
-    for (Abenteuer abenteuer : abenteuers) {
-      System.out.println(abenteuer);
+    List<Adventure> adventures = db.getAdventureAll();
+    for (Adventure adventure : adventures) {
+      System.out.println(adventure);
     }
     List<Ort> orte = db.getOrtAll();
     for (Ort ort : orte) {

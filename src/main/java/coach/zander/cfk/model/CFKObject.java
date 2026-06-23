@@ -57,14 +57,14 @@ public abstract class CFKObject implements Comparable<CFKObject> {
 		return true;
 	}
 
-	public List<Abenteuer> getAbenteuers() {
-		SortedSet<Abenteuer> abenteuers = new TreeSet<Abenteuer>();
+	public List<Adventure> getAdventures() {
+		SortedSet<Adventure> adventures = new TreeSet<Adventure>();
 		for (Ereignis e : getEreignisse()) {
-			if (e.getAbenteuer() != null) {
-				abenteuers.add(e.getAbenteuer());
+			if (e.getAdventure() != null) {
+				adventures.add(e.getAdventure());
 			}
 		}
-		return new ArrayList<Abenteuer>(abenteuers);
+		return new ArrayList<Adventure>(adventures);
 	}
 
 	public String getDescription() {

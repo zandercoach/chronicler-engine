@@ -13,12 +13,12 @@ public class CFKData {
   private List<Held> helden;
   private List<Nsc> nscs;
   private List<Kreatur> kreaturen;
-  private List<Abenteuer> abenteuers;
+  private List<Adventure> adventures;
   private List<Session> sessions;
 
   @XmlElement(name = "abenteuer")
-  public List<Abenteuer> getAbenteuers() {
-    return abenteuers;
+  public List<Adventure> getAdventures() {
+    return adventures;
   }
 
   @XmlElementWrapper(name = "helden")
@@ -51,17 +51,17 @@ public class CFKData {
     return sessions;
   }
 
-  public void setAbenteuers(List<Abenteuer> abenteuers) {
-    this.abenteuers = abenteuers;
-    for (Abenteuer a : abenteuers) {
+  public void setAdventures(List<Adventure> adventures) {
+    this.adventures = adventures;
+    for (Adventure a : adventures) {
       for (Ereignis e : a.getEreignisse()) {
-        e.setAbenteuer(a);
+        e.setAdventure(a);
       }
       for (Wegpunkt w : a.getWegpunkte()) {
-        w.setAbenteuer(a);
+        w.setAdventure(a);
       }
       for (Session s : a.getSessions()) {
-        s.addAbenteuer(a);
+        s.addAdventure(a);
       }
     }
   }
@@ -89,7 +89,7 @@ public class CFKData {
   @Override
   public String toString() {
     return "CFKData [orte=" + orte + ", helden=" + helden + ", nscs=" + nscs + ", kreaturen=" + kreaturen
-        + ", abenteuers=" + abenteuers + ", sessions=" + sessions + "]";
+        + ", adventures=" + adventures + ", sessions=" + sessions + "]";
   }
 
 }

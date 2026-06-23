@@ -18,15 +18,15 @@ import javax.persistence.OrderBy;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 
-@NamedQueries({ @NamedQuery(name = "Abenteuer.all", query = "SELECT a FROM Abenteuer a ORDER BY a.title"),
-    @NamedQuery(name = "Abenteuer.byTitle", query = "SELECT a FROM Abenteuer a WHERE a.title = ?") })
+@NamedQueries({ @NamedQuery(name = "Adventure.all", query = "SELECT a FROM Adventure a ORDER BY a.title"),
+    @NamedQuery(name = "Adventure.byTitle", query = "SELECT a FROM Adventure a WHERE a.title = ?") })
 @Entity
-public class Abenteuer extends CFKActivity {
-  @OneToMany(mappedBy = "abenteuer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+public class Adventure extends CFKActivity {
+  @OneToMany(mappedBy = "adventure", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @XmlElement(name = "ereignis")
   private List<Ereignis> ereignisse = new ArrayList<Ereignis>();
 
-  @OneToMany(mappedBy = "abenteuer", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "adventure", cascade = CascadeType.ALL)
   @XmlElement(name = "wegpunkt")
   private final List<Wegpunkt> wegpunkte = new ArrayList<Wegpunkt>();
 
@@ -40,7 +40,7 @@ public class Abenteuer extends CFKActivity {
   public void add(Ereignis ereignis) {
     if (ereignis != null) {
       ereignisse.add(ereignis);
-      ereignis.setAbenteuer(this);
+      ereignis.setAdventure(this);
     }
   }
 

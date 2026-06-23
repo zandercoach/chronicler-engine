@@ -24,7 +24,7 @@ public class Ereignis extends CFKActivity {
   @ManyToOne
   @JoinColumn(name = "abe_id", nullable = false)
   @XmlTransient
-  private Abenteuer abenteuer;
+  private Adventure adventure;
   @ManyToOne
   @JoinColumn(name = "ort")
   @XmlIDREF
@@ -67,8 +67,8 @@ public class Ereignis extends CFKActivity {
     }
   }
 
-  public Abenteuer getAbenteuer() {
-    return abenteuer;
+  public Adventure getAdventure() {
+    return adventure;
   }
 
   public List<Held> getHelden() {
@@ -87,8 +87,8 @@ public class Ereignis extends CFKActivity {
     return ort;
   }
 
-  public void setAbenteuer(Abenteuer abenteuer) {
-    this.abenteuer = abenteuer;
+  public void setAdventure(Adventure adventure) {
+    this.adventure = adventure;
   }
 
   public void setHelden(List<Held> helden) {
@@ -110,7 +110,7 @@ public class Ereignis extends CFKActivity {
   @Override
   public String toString() {
     ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    builder.append("abenteuer", abenteuer == null ? "<null>" : abenteuer.getTitle());
+    builder.append("adventure", adventure == null ? "<null>" : adventure.getTitle());
     builder.append("title", getTitle());
     return builder.toString();
   }
