@@ -21,7 +21,6 @@ public class StaticUrlResolver extends UrlResolver {
     String resource = imagePath + "/" + (type == null ? "" : type.toLowerCase() + "/") + basename;
     for (String extension : getImageExtensions()) {
       String filename = resource + extension;
-
       if (new File(filename).exists()) {
         return "../img/" + (type == null ? "" : type.toLowerCase() + "/") + basename + extension;
       }
