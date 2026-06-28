@@ -1,43 +1,43 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Kreatur;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
+import coach.zander.chronicler.model.Creature;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Stakeholder;
 
 @Component
-public class AdventureBean extends CfkPageBean {
-  private Adventure adventure;
+public class EndeavorBean extends ChroniclerPageBean {
+  private Endeavor endeavor;
 
-  public Adventure getAdventure() {
-    return adventure;
+  public Endeavor getEndeavor() {
+    return endeavor;
   }
 
-  public List<Held> getHelden() {
-    return adventure.getHelden();
+  public List<Member> getMembers() {
+    return endeavor.getMembers();
   }
 
-  public List<Kreatur> getKreaturen() {
-    return adventure.getKreaturen();
+  public List<Creature> getCreatures() {
+    return endeavor.getCreatures();
   }
 
-  public List<Nsc> getNscs() {
-    return adventure.getNscs();
+  public List<Stakeholder> getStakeholders() {
+    return endeavor.getStakeholders();
   }
 
-  public List<Ort> getOrte() {
-    return adventure.getOrte();
+  public List<Location> getLocations() {
+    return endeavor.getLocations();
   }
 
-  public void setAdventure(Adventure adventure) {
-    Assert.notNull(adventure);
-    this.adventure = adventure;
-    this.setPageTitle(adventure.getClass().getSimpleName() + " - " + adventure.getTitle());
+  public void setEndeavor(Endeavor endeavor) {
+    Assert.notNull(endeavor);
+    this.endeavor = endeavor;
+    this.setPageTitle(endeavor.getClass().getSimpleName() + " - " + endeavor.getTitle());
   }
 }

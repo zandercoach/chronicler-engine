@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @MappedSuperclass
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class CFKObject implements Comparable<CFKObject> {
+public abstract class ChroniclerObject implements Comparable<ChroniclerObject> {
 	@Id
 	@XmlAttribute
 	@XmlID
@@ -31,7 +31,7 @@ public abstract class CFKObject implements Comparable<CFKObject> {
 	@XmlAttribute
 	private String wikiPage;
 
-	public int compareTo(CFKObject o) {
+	public int compareTo(ChroniclerObject o) {
 		return name.compareTo(o.name);
 	}
 
@@ -46,7 +46,7 @@ public abstract class CFKObject implements Comparable<CFKObject> {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		CFKObject other = (CFKObject) obj;
+		ChroniclerObject other = (ChroniclerObject) obj;
 		if (name == null) {
 			if (other.name != null) {
 				return false;
@@ -57,14 +57,14 @@ public abstract class CFKObject implements Comparable<CFKObject> {
 		return true;
 	}
 
-	public List<Adventure> getAdventures() {
-		SortedSet<Adventure> adventures = new TreeSet<Adventure>();
-		for (Ereignis e : getEreignisse()) {
-			if (e.getAdventure() != null) {
-				adventures.add(e.getAdventure());
+	public List<Endeavor> getEndeavors() {
+		SortedSet<Endeavor> endeavors = new TreeSet<Endeavor>();
+		for (Event event : getEvents()) {
+			if (event.getEndeavor() != null) {
+				endeavors.add(event.getEndeavor());
 			}
 		}
-		return new ArrayList<Adventure>(adventures);
+		return new ArrayList<Endeavor>(endeavors);
 	}
 
 	public String getDescription() {
@@ -75,47 +75,47 @@ public abstract class CFKObject implements Comparable<CFKObject> {
 		return wikiPage;
 	}
 
-	public abstract List<Ereignis> getEreignisse();
+	public abstract List<Event> getEvents();
 
-	public List<Held> getHelden() {
-		SortedSet<Held> helden = new TreeSet<Held>();
-		for (Ereignis e : getEreignisse()) {
-			helden.addAll(e.getHelden());
+	public List<Member> getMembers() {
+		SortedSet<Member> members = new TreeSet<Member>();
+		for (Event e : getEvents()) {
+			members.addAll(e.getMembers());
 		}
-		return new ArrayList<Held>(helden);
+		return new ArrayList<Member>(members);
 	}
 
-	public List<Kreatur> getKreaturen() {
-		SortedSet<Kreatur> kreaturen = new TreeSet<Kreatur>();
-		for (Ereignis e : getEreignisse()) {
-			kreaturen.addAll(e.getKreaturen());
+	public List<Creature> getCreatures() {
+		SortedSet<Creature> creatures = new TreeSet<Creature>();
+		for (Event e : getEvents()) {
+			creatures.addAll(e.getCreatures());
 		}
-		return new ArrayList<Kreatur>(kreaturen);
+		return new ArrayList<Creature>(creatures);
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public List<Nsc> getNscs() {
-		SortedSet<Nsc> nscs = new TreeSet<Nsc>();
-		for (Ereignis e : getEreignisse()) {
-			nscs.addAll(e.getNscs());
+	public List<Stakeholder> getStakeholders() {
+		SortedSet<Stakeholder> stakeholders = new TreeSet<Stakeholder>();
+		for (Event eereignis : getEvents()) {
+			stakeholders.addAll(eereignis.getStakeholders());
 		}
-		return new ArrayList<Nsc>(nscs);
+		return new ArrayList<Stakeholder>(stakeholders);
 	}
 
-	public List<Ort> getOrte() {
-		SortedSet<Ort> orte = new TreeSet<Ort>();
-		Ort last = null;
-		for (Ereignis e : getEreignisse()) {
-			Ort o = e.getOrt();
-			if (o != null && !o.equals(last)) {
-				orte.add(o);
-				last = o;
+	public List<Location> getLocations() {
+		SortedSet<Location> locations = new TreeSet<Location>();
+		Location last = null;
+		for (Event event : getEvents()) {
+			Location location = event.getLocation();
+			if (location != null && !location.equals(last)) {
+				locations.add(location);
+				last = location;
 			}
 		}
-		return new ArrayList<Ort>(orte);
+		return new ArrayList<Location>(locations);
 	}
 
 	@Override

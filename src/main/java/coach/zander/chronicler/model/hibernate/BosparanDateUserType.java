@@ -1,4 +1,4 @@
-package coach.zander.cfk.model.hibernate;
+package coach.zander.chronicler.model.hibernate;
 
 import java.io.Serializable;
 import java.sql.PreparedStatement;
@@ -10,9 +10,9 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.StringType;
 import org.hibernate.usertype.UserType;
 
-import coach.zander.cfk.exception.IllegalBosparanDateException;
-import coach.zander.cfk.model.BosparanDate;
-import coach.zander.cfk.util.SimpleBosparanDateFormat;
+import coach.zander.chronicler.exception.IllegalBosparanDateException;
+import coach.zander.chronicler.model.BosparanDate;
+import coach.zander.chronicler.util.SimpleBosparanDateFormat;
 
 public class BosparanDateUserType implements UserType {
 

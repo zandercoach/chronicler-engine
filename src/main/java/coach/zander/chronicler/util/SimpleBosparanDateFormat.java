@@ -1,7 +1,7 @@
-package coach.zander.cfk.util;
+package coach.zander.chronicler.util;
 
-import coach.zander.cfk.exception.IllegalBosparanDateException;
-import coach.zander.cfk.model.BosparanDate;
+import coach.zander.chronicler.exception.IllegalBosparanDateException;
+import coach.zander.chronicler.model.BosparanDate;
 
 public final class SimpleBosparanDateFormat {
 

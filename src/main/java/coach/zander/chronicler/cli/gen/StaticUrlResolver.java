@@ -1,8 +1,8 @@
-package coach.zander.cfk.cli.gen;
+package coach.zander.chronicler.cli.gen;
 
 import java.io.File;
 
-import coach.zander.cfk.util.UrlResolver;
+import coach.zander.chronicler.util.UrlResolver;
 
 public class StaticUrlResolver extends UrlResolver {
   private final String imagePath;

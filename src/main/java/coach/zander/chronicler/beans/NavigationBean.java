@@ -1,44 +1,44 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.util.Assert;
 
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.Held;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Member;
 
 public class NavigationBean {
-  private List<Held> helden;
-  private List<Adventure> adventures;
+  private List<Member> members;
+  private List<Endeavor> endeavors;
 
   public NavigationBean() {
-    setAdventures(adventures = new ArrayList<Adventure>());
-    setHelden(new ArrayList<Held>());
+    setEndeavors(endeavors = new ArrayList<Endeavor>());
+    setMembers(new ArrayList<Member>());
   }
 
-  public NavigationBean(List<Adventure> adventures, List<Held> helden) {
-    Assert.notNull(adventures);
-    Assert.notNull(helden);
-    this.adventures = adventures;
-    this.helden = helden;
+  public NavigationBean(List<Endeavor> endeavors, List<Member> members) {
+    Assert.notNull(endeavors);
+    Assert.notNull(members);
+    this.endeavors = endeavors;
+    this.members = members;
   }
 
-  public List<Adventure> getAdventures() {
-    return adventures;
+  public List<Endeavor> getEndeavors() {
+    return endeavors;
   }
 
-  public List<Held> getHelden() {
-    return helden;
+  public List<Member> getMembers() {
+    return members;
   }
 
-  public void setAdventures(List<Adventure> adventures) {
-    Assert.notNull(adventures);
-    this.adventures = adventures;
+  public void setEndeavors(List<Endeavor> endeavors) {
+    Assert.notNull(endeavors);
+    this.endeavors = endeavors;
   }
 
-  public void setHelden(List<Held> helden) {
-    Assert.notNull(helden);
-    this.helden = helden;
+  public void setMembers(List<Member> members) {
+    Assert.notNull(members);
+    this.members = members;
   }
 }

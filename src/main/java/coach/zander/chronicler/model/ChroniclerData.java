@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.util.List;
 
@@ -8,41 +8,41 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement
-public class CFKData {
-  private List<Ort> orte;
-  private List<Held> helden;
-  private List<Nsc> nscs;
-  private List<Kreatur> kreaturen;
-  private List<Adventure> adventures;
+public class ChroniclerData {
+  private List<Location> locations;
+  private List<Member> members;
+  private List<Stakeholder> stakeholders;
+  private List<Creature> creatures;
+  private List<Endeavor> endeavors;
   private List<Session> sessions;
 
-  @XmlElement(name = "abenteuer")
-  public List<Adventure> getAdventures() {
-    return adventures;
+  @XmlElement(name = "endeavor")
+  public List<Endeavor> getEndeavors() {
+    return endeavors;
   }
 
-  @XmlElementWrapper(name = "helden")
-  @XmlElement(name = "held")
-  public List<Held> getHelden() {
-    return helden;
+  @XmlElementWrapper(name = "members")
+  @XmlElement(name = "member")
+  public List<Member> getMembers() {
+    return members;
   }
 
-  @XmlElementWrapper(name="kreaturen")
-  @XmlElement(name = "kreatur")
-  public List<Kreatur> getKreaturen() {
-    return kreaturen;
+  @XmlElementWrapper(name="creatures")
+  @XmlElement(name = "creature")
+  public List<Creature> getCreatures() {
+    return creatures;
   }
 
-  @XmlElementWrapper(name="nscs")
-  @XmlElement(name = "nsc")
-  public List<Nsc> getNscs() {
-    return nscs;
+  @XmlElementWrapper(name="stakeholders")
+  @XmlElement(name = "stakeholder")
+  public List<Stakeholder> getStakeholders() {
+    return stakeholders;
   }
 
-  @XmlElementWrapper(name="orte")
-  @XmlElement(name = "ort")
-  public List<Ort> getOrte() {
-    return orte;
+  @XmlElementWrapper(name="locations")
+  @XmlElement(name = "location")
+  public List<Location> getLocations() {
+    return locations;
   }
 
   @XmlElementWrapper(name="sessions")
@@ -51,35 +51,35 @@ public class CFKData {
     return sessions;
   }
 
-  public void setAdventures(List<Adventure> adventures) {
-    this.adventures = adventures;
-    for (Adventure a : adventures) {
-      for (Ereignis e : a.getEreignisse()) {
-        e.setAdventure(a);
+  public void setEndeavors(List<Endeavor> endeavors) {
+    this.endeavors = endeavors;
+    for (Endeavor endeavor : endeavors) {
+      for (Event event : endeavor.getEvents()) {
+        event.setEndeavor(endeavor);
       }
-      for (Wegpunkt w : a.getWegpunkte()) {
-        w.setAdventure(a);
+      for (Waypoint waypoint : endeavor.getWaypoints()) {
+        waypoint.setEndeavor(endeavor);
       }
-      for (Session s : a.getSessions()) {
-        s.addAdventure(a);
+      for (Session session : endeavor.getSessions()) {
+        session.addEndeavor(endeavor);
       }
     }
   }
 
-  public void setHelden(List<Held> helden) {
-    this.helden = helden;
+  public void setMembers(List<Member> members) {
+    this.members = members;
   }
 
-  public void setKreaturen(List<Kreatur> kreaturen) {
-    this.kreaturen = kreaturen;
+  public void setCreatures(List<Creature> creatures) {
+    this.creatures = creatures;
   }
 
-  public void setNscs(List<Nsc> nscs) {
-    this.nscs = nscs;
+  public void setStakeholders(List<Stakeholder> stakeholders) {
+    this.stakeholders = stakeholders;
   }
 
-  public void setOrte(List<Ort> orte) {
-    this.orte = orte;
+  public void setLocations(List<Location> locations) {
+    this.locations = locations;
   }
 
   public void setSessions(List<Session> sessions) {
@@ -88,8 +88,8 @@ public class CFKData {
 
   @Override
   public String toString() {
-    return "CFKData [orte=" + orte + ", helden=" + helden + ", nscs=" + nscs + ", kreaturen=" + kreaturen
-        + ", adventures=" + adventures + ", sessions=" + sessions + "]";
+    return "ChroniclerData [locations=" + locations + ", members=" + members + ", stakeholders=" + stakeholders + ", creatures=" + creatures
+        + ", endeavors=" + endeavors + ", sessions=" + sessions + "]";
   }
 
 }

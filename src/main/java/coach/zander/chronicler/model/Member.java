@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,35 +12,35 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
-@NamedQueries({ @NamedQuery(name = "Held.all", query = "SELECT h FROM Held h ORDER BY h.name"),
-    @NamedQuery(name = "Held.byName", query = "SELECT h FROM Held h WHERE h.name = ?") })
-@Entity(name = "Held")
+@NamedQueries({ @NamedQuery(name = "Member.all", query = "SELECT m FROM Member m ORDER BY m.name"),
+    @NamedQuery(name = "Member.byName", query = "SELECT m FROM Member m WHERE m.name = ?") })
+@Entity(name = "Member")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Held extends Charakter {
-  @ManyToMany(mappedBy = "helden")
+public class Member extends Person {
+  @ManyToMany(mappedBy = "members")
   @XmlTransient
-  private List<Ereignis> ereignisse = new ArrayList<Ereignis>();
+  private List<Event> events = new ArrayList<Event>();
 
-  public void add(Ereignis ereignis) {
-    if (ereignis != null) {
-      ereignisse.add(ereignis);
+  public void add(Event event) {
+    if (event != null) {
+      events.add(event);
     }
   }
 
   @Override
-  public List<Ereignis> getEreignisse() {
-    Collections.sort(ereignisse);
-    return ereignisse;
+  public List<Event> getEvents() {
+    Collections.sort(events);
+    return events;
   }
 
   @Override
-  public List<Held> getHelden() {
-    List<Held> helden = super.getHelden();
-    helden.remove(this);
-    return helden;
+  public List<Member> getMembers() {
+    List<Member> members = super.getMembers();
+    members.remove(this);
+    return members;
   }
 
-  public void setEreignisse(List<Ereignis> ereignisse) {
-    this.ereignisse = ereignisse;
+  public void setEvents(List<Event> events) {
+    this.events = events;
   }
 }

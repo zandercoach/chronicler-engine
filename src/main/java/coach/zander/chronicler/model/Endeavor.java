@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,82 +18,82 @@ import javax.persistence.OrderBy;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 
-@NamedQueries({ @NamedQuery(name = "Adventure.all", query = "SELECT a FROM Adventure a ORDER BY a.title"),
-    @NamedQuery(name = "Adventure.byTitle", query = "SELECT a FROM Adventure a WHERE a.title = ?") })
+@NamedQueries({ @NamedQuery(name = "Endeavor.all", query = "SELECT e FROM Endeavor e ORDER BY e.title"),
+    @NamedQuery(name = "Endeavor.byTitle", query = "SELECT e FROM Endeavor e WHERE e.title = ?") })
 @Entity
-public class Adventure extends CFKActivity {
-  @OneToMany(mappedBy = "adventure", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @XmlElement(name = "ereignis")
-  private List<Ereignis> ereignisse = new ArrayList<Ereignis>();
+public class Endeavor extends ChroniclerActivity {
+  @OneToMany(mappedBy = "endeavor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @XmlElement(name = "event")
+  private List<Event> events = new ArrayList<Event>();
 
-  @OneToMany(mappedBy = "adventure", cascade = CascadeType.ALL)
-  @XmlElement(name = "wegpunkt")
-  private final List<Wegpunkt> wegpunkte = new ArrayList<Wegpunkt>();
+  @OneToMany(mappedBy = "endeavor", cascade = CascadeType.ALL)
+  @XmlElement(name = "waypoint")
+  private final List<Waypoint> waypoints = new ArrayList<Waypoint>();
 
   @ManyToMany(cascade = CascadeType.ALL)
   @OrderBy("id DESC")
-  @JoinTable(joinColumns = @JoinColumn(name = "abe_id"), inverseJoinColumns = @JoinColumn(name = "ses_id"))
+  @JoinTable(joinColumns = @JoinColumn(name = "end_id"), inverseJoinColumns = @JoinColumn(name = "ses_id"))
   @XmlIDREF
   @XmlElement(name = "session")
   private final List<Session> sessions = new ArrayList<Session>();
 
-  public void add(Ereignis ereignis) {
-    if (ereignis != null) {
-      ereignisse.add(ereignis);
-      ereignis.setAdventure(this);
+  public void add(Event event) {
+    if (event != null) {
+      events.add(event);
+      event.setEndeavor(this);
     }
   }
 
-  public List<Ereignis> getEreignisse() {
-    return ereignisse;
+  public List<Event> getEvents() {
+    return events;
   }
 
-  public List<Held> getHelden() {
-    SortedSet<Held> helden = new TreeSet<Held>();
-    for (Ereignis e : ereignisse) {
-      helden.addAll(e.getHelden());
+  public List<Member> getMembers() {
+    SortedSet<Member> members = new TreeSet<Member>();
+    for (Event eevent : events) {
+      members.addAll(eevent.getMembers());
     }
-    return new ArrayList<Held>(helden);
+    return new ArrayList<Member>(members);
   }
 
-  public List<Kreatur> getKreaturen() {
-    SortedSet<Kreatur> kreaturen = new TreeSet<Kreatur>();
-    for (Ereignis e : ereignisse) {
-      kreaturen.addAll(e.getKreaturen());
+  public List<Creature> getCreatures() {
+    SortedSet<Creature> creatures = new TreeSet<Creature>();
+    for (Event e : events) {
+      creatures.addAll(e.getCreatures());
     }
-    return new ArrayList<Kreatur>(kreaturen);
+    return new ArrayList<Creature>(creatures);
   }
 
-  public List<Nsc> getNscs() {
-    SortedSet<Nsc> nscs = new TreeSet<Nsc>();
-    for (Ereignis e : ereignisse) {
-      nscs.addAll(e.getNscs());
+  public List<Stakeholder> getStakeholders() {
+    SortedSet<Stakeholder> stakeholders = new TreeSet<Stakeholder>();
+    for (Event e : events) {
+      stakeholders.addAll(e.getStakeholders());
     }
-    return new ArrayList<Nsc>(nscs);
+    return new ArrayList<Stakeholder>(stakeholders);
   }
 
-  public List<Ort> getOrte() {
-    SortedSet<Ort> orte = new TreeSet<Ort>();
-    Ort last = null;
-    for (Ereignis e : getEreignisse()) {
-      Ort o = e.getOrt();
-      if (o != null && !o.equals(last)) {
-        orte.add(o);
-        last = o;
+  public List<Location> getLocations() {
+    SortedSet<Location> locations = new TreeSet<Location>();
+    Location last = null;
+    for (Event e : getEvents()) {
+      Location location = e.getLocation();
+      if (location != null && !location.equals(last)) {
+        locations.add(location);
+        last = location;
       }
     }
-    return new ArrayList<Ort>(orte);
+    return new ArrayList<Location>(locations);
   }
 
   public List<Session> getSessions() {
     return sessions;
   }
 
-  public List<Wegpunkt> getWegpunkte() {
-    return wegpunkte;
+  public List<Waypoint> getWaypoints() {
+    return waypoints;
   }
 
-  public void setEreignisse(List<Ereignis> ereignisse) {
-    this.ereignisse = ereignisse;
+  public void setEvents(List<Event> events) {
+    this.events = events;
   }
 }

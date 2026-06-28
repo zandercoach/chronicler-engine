@@ -1,17 +1,17 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
 import java.util.List;
 
-import coach.zander.cfk.model.Adventure;
+import coach.zander.chronicler.model.Endeavor;
 
-public class ChroniclesBean extends CfkPageBean {
-  private List<Adventure> adventures;
+public class ChroniclesBean extends ChroniclerPageBean {
+  private List<Endeavor> endeavors;
 
-  public List<Adventure> getAdventures() {
-    return adventures;
+  public List<Endeavor> getEndeavors() {
+    return endeavors;
   }
 
-  public void setAdventures(List<Adventure> adventures) {
-    this.adventures = adventures;
+  public void setEndeavors(List<Endeavor> endeavors) {
+    this.endeavors = endeavors;
   }
 }

@@ -1,13 +1,13 @@
-package coach.zander.cfk.dao;
+package coach.zander.chronicler.dao;
 
 import org.springframework.stereotype.Component;
 
-import coach.zander.cfk.model.Kreatur;
+import coach.zander.chronicler.model.Creature;
 
 @Component
-public class KreaturDao extends GenericDao<Kreatur, String> {
+public class CreatureDao extends GenericDao<Creature, String> {
 
-  public Kreatur findByName(String name) {
-    return (Kreatur) getQuery("byName").setParameter(1, name).getSingleResult();
+  public Creature findByName(String name) {
+    return (Creature) getQuery("byName").setParameter(1, name).getSingleResult();
   }
 }

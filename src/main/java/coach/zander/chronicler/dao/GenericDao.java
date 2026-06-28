@@ -1,4 +1,4 @@
-package coach.zander.cfk.dao;
+package coach.zander.chronicler.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;

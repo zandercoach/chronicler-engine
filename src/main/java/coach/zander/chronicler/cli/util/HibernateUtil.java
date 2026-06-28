@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.util;
+package coach.zander.chronicler.cli.util;
 
 import java.io.IOException;
 import java.io.InputStream;

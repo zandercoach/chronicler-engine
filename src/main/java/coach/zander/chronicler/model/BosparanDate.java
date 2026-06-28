@@ -1,9 +1,9 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.io.Serializable;
 
-import coach.zander.cfk.exception.IllegalBosparanDateException;
-import coach.zander.cfk.util.SimpleBosparanDateFormat;
+import coach.zander.chronicler.exception.IllegalBosparanDateException;
+import coach.zander.chronicler.util.SimpleBosparanDateFormat;
 
 public class BosparanDate implements Comparable<BosparanDate>, Serializable {
   public enum Month {

@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.gen.db;
+package coach.zander.chronicler.cli.gen.db;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
@@ -25,36 +25,36 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import coach.zander.cfk.beans.AdventureBean;
-import coach.zander.cfk.beans.CfkPageBean;
-import coach.zander.cfk.beans.ChroniclesBean;
-import coach.zander.cfk.beans.HeldBean;
-import coach.zander.cfk.beans.HomeBean;
-import coach.zander.cfk.beans.IdxBean;
-import coach.zander.cfk.beans.KreaturBean;
-import coach.zander.cfk.beans.MapBean;
-import coach.zander.cfk.beans.NavigationBean;
-import coach.zander.cfk.beans.NscBean;
-import coach.zander.cfk.beans.OrtBean;
-import coach.zander.cfk.cli.gen.StaticUrlResolver;
-import coach.zander.cfk.dao.AdventureDao;
-import coach.zander.cfk.dao.HeldDao;
-import coach.zander.cfk.dao.KreaturDao;
-import coach.zander.cfk.dao.NscDao;
-import coach.zander.cfk.dao.OrtDao;
-import coach.zander.cfk.links.CfkReferenceInsertionEventHandler;
-import coach.zander.cfk.links.InternalLink;
-import coach.zander.cfk.links.InternalLinksProvider;
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Kreatur;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
-import coach.zander.cfk.model.Wegpunkt;
-import coach.zander.cfk.util.DateFormatter;
-import coach.zander.cfk.util.UrlResolver;
+import coach.zander.chronicler.beans.ChroniclerPageBean;
+import coach.zander.chronicler.beans.ChroniclesBean;
+import coach.zander.chronicler.beans.CreatureBean;
+import coach.zander.chronicler.beans.EndeavorBean;
+import coach.zander.chronicler.beans.HomeBean;
+import coach.zander.chronicler.beans.IdxBean;
+import coach.zander.chronicler.beans.LocationBean;
+import coach.zander.chronicler.beans.MapBean;
+import coach.zander.chronicler.beans.MemberBean;
+import coach.zander.chronicler.beans.NavigationBean;
+import coach.zander.chronicler.beans.StakeholderBean;
+import coach.zander.chronicler.cli.gen.StaticUrlResolver;
+import coach.zander.chronicler.dao.CreatureDao;
+import coach.zander.chronicler.dao.EndeavorDao;
+import coach.zander.chronicler.dao.LocationDao;
+import coach.zander.chronicler.dao.MemberDao;
+import coach.zander.chronicler.dao.StakeholderDao;
+import coach.zander.chronicler.links.ChroniclerReferenceInsertionEventHandler;
+import coach.zander.chronicler.links.InternalLink;
+import coach.zander.chronicler.links.InternalLinksProvider;
+import coach.zander.chronicler.model.Creature;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Stakeholder;
+import coach.zander.chronicler.model.Waypoint;
+import coach.zander.chronicler.util.DateFormatter;
+import coach.zander.chronicler.util.UrlResolver;
 
-@ComponentScan("coach.zander.cfk.dao")
+@ComponentScan("coach.zander.chronicler.dao")
 @Service
 public class DbStaticSiteGenerator {
 
@@ -64,30 +64,30 @@ public class DbStaticSiteGenerator {
   private VelocityContext baseCtx;
 
   @Autowired
-  private AdventureDao adventureDao;
+  private EndeavorDao endeavorDao;
 
   @Autowired
-  private HeldDao heldDao;
+  private MemberDao memberDao;
 
   @Autowired
-  private KreaturDao kreaturDao;
+  private CreatureDao creatureDao;
 
   @Autowired
-  private NscDao nscDao;
+  private StakeholderDao stakeholderDao;
 
   @Autowired
-  private OrtDao ortDao;
+  private LocationDao locationDao;
 
   public void close() {
-    System.out.println("********** CFKGenerator - Close! **********");
+    System.out.println("********** ChroniclerGenerator - Close! **********");
   }
 
   private void createPageChronicles() throws IOException {
 
     ChroniclesBean bean = new ChroniclesBean();
-    List<Adventure> adventures = adventureDao.readAllOrderedByDate();
+    List<Endeavor> endeavor = endeavorDao.readAllOrderedByDate();
     bean.setPageTitle("Die Chroniken");
-    bean.setAdventures(adventures);
+    bean.setEndeavors(endeavor);
     mergeTemplateWithBeanDataToFile("chronicles", bean);
   }
 
@@ -95,8 +95,8 @@ public class DbStaticSiteGenerator {
       IOException {
 
     HomeBean bean = new HomeBean();
-    Adventure adventure = adventureDao.findLatest();
-    bean.setAdventure(adventure);
+    Endeavor endeavor = endeavorDao.findLatest();
+    bean.setEndeavor(endeavor);
     bean.setPageTitle("Startseite");
 
     mergeTemplateWithBeanDataToFile("home", bean);
@@ -106,11 +106,11 @@ public class DbStaticSiteGenerator {
 
     IdxBean bean = new IdxBean();
     bean.setPageTitle("Index");
-    bean.setAdventures(adventureDao.readAll());
-    bean.setHelden(heldDao.readAll());
-    bean.setOrte(ortDao.readAll());
-    bean.setNscs(nscDao.readAll());
-    bean.setKreaturen(kreaturDao.readAll());
+    bean.setEndeavors(endeavorDao.readAll());
+    bean.setMembers(memberDao.readAll());
+    bean.setLocations(locationDao.readAll());
+    bean.setStakeholders(stakeholderDao.readAll());
+    bean.setCreatures(creatureDao.readAll());
 
     mergeTemplateWithBeanDataToFile("idx", bean);
   }
@@ -120,66 +120,66 @@ public class DbStaticSiteGenerator {
     bean.setPageTitle("Karte");
     bean.setMap("map");
 
-    List<Adventure> adventures = adventureDao.readAllOrderedByDate();
-    bean.setAdventures(adventures);
-    // generateMap(adventures);
+    List<Endeavor> endeavors = endeavorDao.readAllOrderedByDate();
+    bean.setEndeavors(endeavors);
+    // generateMap(endeavors);
 
     mergeTemplateWithBeanDataToFile("map", bean);
   }
 
   private void createPagesAdventure() throws IOException {
-    List<Adventure> adventures = adventureDao.readAll();
-    for (Adventure adventure : adventures) {
-      AdventureBean bean = new AdventureBean();
-      bean.setAdventure(adventure);
-      mergeTemplateWithBeanDataToFile("adventure", bean, resolver.resolveUrlFor(adventure));
+    List<Endeavor> endeavors = endeavorDao.readAll();
+    for (Endeavor endeavor : endeavors) {
+      EndeavorBean bean = new EndeavorBean();
+      bean.setEndeavor(endeavor);
+      mergeTemplateWithBeanDataToFile("endeavor", bean, resolver.resolveUrlFor(endeavor));
     }
   }
 
-  private void createPagesHelden() throws IOException {
-    List<Held> helden = heldDao.readAll();
-    for (Held held : helden) {
-      HeldBean bean = new HeldBean();
-      bean.setHeld(held);
-      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(held));
+  private void createPagesMembers() throws IOException {
+    List<Member> members = memberDao.readAll();
+    for (Member member : members) {
+      MemberBean bean = new MemberBean();
+      bean.setMember(member);
+      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(member));
     }
   }
 
-  private void createPagesKreaturen() throws IOException {
-    List<Kreatur> kreaturen = kreaturDao.readAll();
-    for (Kreatur kreatur : kreaturen) {
-      KreaturBean bean = new KreaturBean();
-      bean.setKreatur(kreatur);
-      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(kreatur));
+  private void createPagesCreatures() throws IOException {
+    List<Creature> creatures = creatureDao.readAll();
+    for (Creature creature : creatures) {
+      CreatureBean bean = new CreatureBean();
+      bean.setCreature(creature);
+      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(creature));
     }
   }
 
   private void createPagesNscs() throws IOException {
-    List<Nsc> nscs = nscDao.readAll();
-    for (Nsc nsc : nscs) {
-      NscBean bean = new NscBean();
-      bean.setNsc(nsc);
-      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(nsc));
+    List<Stakeholder> stakeholders = stakeholderDao.readAll();
+    for (Stakeholder stakeholder : stakeholders) {
+      StakeholderBean bean = new StakeholderBean();
+      bean.setStakeholder(stakeholder);
+      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(stakeholder));
     }
   }
 
   private void createPagesOrte() throws IOException {
-    List<Ort> orte = ortDao.readAll();
-    for (Ort ort : orte) {
-      OrtBean bean = new OrtBean();
-      bean.setOrt(ort);
-      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(ort));
+    List<Location> locations = locationDao.readAll();
+    for (Location location : locations) {
+      LocationBean bean = new LocationBean();
+      bean.setLocation(location);
+      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(location));
     }
   }
 
-  private void generateMap(List<Adventure> adventures) throws IOException {
-    Collections.reverse(adventures);
+  private void generateMap(List<Endeavor> endeavors) throws IOException {
+    Collections.reverse(endeavors);
     BufferedImage img = ImageIO.read(new File(source + "/map.jpg"));
     Graphics2D graphics = img.createGraphics();
     graphics.setStroke(new BasicStroke(50.0f));
-    Wegpunkt previous = null;
-    for (Adventure adventure : adventures) {
-      for (Wegpunkt current : adventure.getWegpunkte()) {
+    Waypoint previous = null;
+    for (Endeavor endeavor : endeavors) {
+      for (Waypoint current : endeavor.getWaypoints()) {
         if (previous != null) {
           graphics.drawLine(previous.getX(), previous.getY(), current.getX(), current.getY());
         }
@@ -201,26 +201,26 @@ public class DbStaticSiteGenerator {
 
   public List<InternalLink> getInternalLinks() {
     List<InternalLink> internalLinks = new ArrayList<InternalLink>();
-    for (Adventure adventure : adventureDao.readAll()) {
-      internalLinks.add(new InternalLink(adventure));
+    for (Endeavor endeavor : endeavorDao.readAll()) {
+      internalLinks.add(new InternalLink(endeavor));
     }
-    for (Held held : heldDao.readAll()) {
-      internalLinks.add(new InternalLink(held));
+    for (Member member : memberDao.readAll()) {
+      internalLinks.add(new InternalLink(member));
     }
-    for (Nsc nsc : nscDao.readAll()) {
-      internalLinks.add(new InternalLink(nsc));
+    for (Stakeholder stakeholder : stakeholderDao.readAll()) {
+      internalLinks.add(new InternalLink(stakeholder));
     }
-    for (Ort ort : ortDao.readAll()) {
-      internalLinks.add(new InternalLink(ort));
+    for (Location location : locationDao.readAll()) {
+      internalLinks.add(new InternalLink(location));
     }
-    for (Kreatur kreatur : kreaturDao.readAll()) {
-      internalLinks.add(new InternalLink(kreatur));
+    for (Creature creature : creatureDao.readAll()) {
+      internalLinks.add(new InternalLink(creature));
     }
     return internalLinks;
   }
 
   public void initialize(String source, String destination) throws IOException {
-    System.out.println("********** CFKGenerator - Initialize! **********");
+    System.out.println("********** ChroniclerGenerator - Initialize! **********");
     this.source = source;
     this.destination = destination;
 
@@ -234,21 +234,21 @@ public class DbStaticSiteGenerator {
     baseCtx.put("resolver", resolver);
     baseCtx.put("formatter", new DateFormatter());
 
-    List<Adventure> navAdventures = adventureDao.readAll();
-    List<Held> navHelden = heldDao.readAll();
+    List<Endeavor> navAdventures = endeavorDao.readAll();
+    List<Member> navHelden = memberDao.readAll();
     baseCtx.put("navigation", new NavigationBean(navAdventures, navHelden));
 
     EventCartridge ec = new EventCartridge();
-    ec.addEventHandler(new CfkReferenceInsertionEventHandler(getInernalLinksProvider(), resolver));
+    ec.addEventHandler(new ChroniclerReferenceInsertionEventHandler(getInernalLinksProvider(), resolver));
 
     ec.attachToContext(baseCtx);
   }
 
-  private void mergeTemplateWithBeanDataToFile(String templateBaseName, CfkPageBean bean) throws IOException {
+  private void mergeTemplateWithBeanDataToFile(String templateBaseName, ChroniclerPageBean bean) throws IOException {
     mergeTemplateWithBeanDataToFile(templateBaseName, bean, templateBaseName + ".html");
   }
 
-  private void mergeTemplateWithBeanDataToFile(String templateBaseName, CfkPageBean bean, String destinationFileName)
+  private void mergeTemplateWithBeanDataToFile(String templateBaseName, ChroniclerPageBean bean, String destinationFileName)
       throws IOException {
     VelocityContext ctx = new VelocityContext(baseCtx);
     ctx.put("bean", bean);
@@ -273,18 +273,18 @@ public class DbStaticSiteGenerator {
   public void run(String source, String destination) throws IOException {
     initialize(source, destination);
 
-    System.out.println("********** CFKGenerator - Run! **********");
+    System.out.println("********** ChroniclerGenerator - Run! **********");
 
-    // generateMap(db.getAbenteuerAll());
+    // generateMap(db.getEndeavorAll());
     createPageMap();
     createPageHome();
     createPageChronicles();
     createPageIdx();
     createPagesAdventure();
     createPagesOrte();
-    createPagesHelden();
+    createPagesMembers();
     createPagesNscs();
-    createPagesKreaturen();
+    createPagesCreatures();
 
     close();
   }

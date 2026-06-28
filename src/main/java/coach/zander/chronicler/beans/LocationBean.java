@@ -1,21 +1,21 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
-import coach.zander.cfk.model.CFKObject;
-import coach.zander.cfk.model.Ort;
+import coach.zander.chronicler.model.ChroniclerObject;
+import coach.zander.chronicler.model.Location;
 
-public class OrtBean extends CfkObjectBean {
-  private Ort ort;
+public class LocationBean extends ChroniclerObjectBean {
+  private Location location;
 
   @Override
-  public CFKObject getObject() {
-    return getOrt();
+  public ChroniclerObject getObject() {
+    return getLocation();
   }
 
-  public Ort getOrt() {
-    return ort;
+  public Location getLocation() {
+    return location;
   }
 
-  public void setOrt(Ort ort) {
-    this.ort = ort;
+  public void setLocation(Location location) {
+    this.location = location;
   }
 }

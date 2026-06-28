@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,99 +18,99 @@ import javax.xml.bind.annotation.XmlType;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-@Entity(name = "Ereignis")
-@XmlType(propOrder = { "title", "description", "nscs", "helden", "kreaturen" })
-public class Ereignis extends CFKActivity {
+@Entity(name = "Event")
+@XmlType(propOrder = { "title", "description", "stakeholders", "members", "creatures" })
+public class Event extends ChroniclerActivity {
   @ManyToOne
-  @JoinColumn(name = "abe_id", nullable = false)
+  @JoinColumn(name = "end_id", nullable = false)
   @XmlTransient
-  private Adventure adventure;
+  private Endeavor endeavor;
   @ManyToOne
-  @JoinColumn(name = "ort")
+  @JoinColumn(name = "location")
   @XmlIDREF
   @XmlAttribute
-  private Ort ort;
+  private Location location;
   @ManyToMany
   @OrderBy("name")
-  @JoinTable(joinColumns = @JoinColumn(name = "ere_id"), inverseJoinColumns = @JoinColumn(name = "nsc"))
-  @XmlElement(name = "nsc")
+  @JoinTable(joinColumns = @JoinColumn(name = "eve_id"), inverseJoinColumns = @JoinColumn(name = "stakeholder"))
+  @XmlElement(name = "stakeholder")
   @XmlIDREF
-  private List<Nsc> nscs = new ArrayList<Nsc>();
+  private List<Stakeholder> stakeholders = new ArrayList<Stakeholder>();
   @ManyToMany
   @OrderBy("name")
-  @JoinTable(joinColumns = @JoinColumn(name = "ere_id"), inverseJoinColumns = @JoinColumn(name = "held"))
-  @XmlElement(name = "held")
+  @JoinTable(joinColumns = @JoinColumn(name = "eve_id"), inverseJoinColumns = @JoinColumn(name = "member"))
+  @XmlElement(name = "member")
   @XmlIDREF
-  private List<Held> helden = new ArrayList<Held>();
+  private List<Member> members = new ArrayList<Member>();
   @ManyToMany
   @OrderBy("name")
-  @JoinTable(joinColumns = @JoinColumn(name = "ere_id"), inverseJoinColumns = @JoinColumn(name = "kreatur"))
-  @XmlElement(name = "kreatur")
+  @JoinTable(joinColumns = @JoinColumn(name = "eve_id"), inverseJoinColumns = @JoinColumn(name = "creature"))
+  @XmlElement(name = "creature")
   @XmlIDREF
-  private List<Kreatur> kreaturen = new ArrayList<Kreatur>();
+  private List<Creature> creatures = new ArrayList<Creature>();
 
-  public void add(Held held) {
-    if (held != null) {
-      helden.add(held);
+  public void add(Member member) {
+    if (member != null) {
+      members.add(member);
     }
   }
 
-  public void add(Kreatur kreatur) {
-    if (kreatur != null) {
-      kreaturen.add(kreatur);
+  public void add(Creature creature) {
+    if (creature != null) {
+      creatures.add(creature);
     }
   }
 
-  public void add(Nsc nsc) {
-    if (nsc != null) {
-      nscs.add(nsc);
+  public void add(Stakeholder stakeholder) {
+    if (stakeholder != null) {
+      stakeholders.add(stakeholder);
     }
   }
 
-  public Adventure getAdventure() {
-    return adventure;
+  public Endeavor getEndeavor() {
+    return endeavor;
   }
 
-  public List<Held> getHelden() {
-    return helden;
+  public List<Member> getMembers() {
+    return members;
   }
 
-  public List<Kreatur> getKreaturen() {
-    return kreaturen;
+  public List<Creature> getCreatures() {
+    return creatures;
   }
 
-  public List<Nsc> getNscs() {
-    return nscs;
+  public List<Stakeholder> getStakeholders() {
+    return stakeholders;
   }
 
-  public Ort getOrt() {
-    return ort;
+  public Location getLocation() {
+    return location;
   }
 
-  public void setAdventure(Adventure adventure) {
-    this.adventure = adventure;
+  public void setEndeavor(Endeavor endeavor) {
+    this.endeavor = endeavor;
   }
 
-  public void setHelden(List<Held> helden) {
-    this.helden = helden;
+  public void setMembers(List<Member> members) {
+    this.members = members;
   }
 
-  public void setKreaturen(List<Kreatur> kreaturen) {
-    this.kreaturen = kreaturen;
+  public void setCreatures(List<Creature> creatures) {
+    this.creatures = creatures;
   }
 
-  public void setNscs(List<Nsc> nscs) {
-    this.nscs = nscs;
+  public void setStakeholders(List<Stakeholder> stakeholders) {
+    this.stakeholders = stakeholders;
   }
 
-  public void setOrt(Ort ort) {
-    this.ort = ort;
+  public void setLocation(Location location) {
+    this.location = location;
   }
 
   @Override
   public String toString() {
     ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    builder.append("adventure", adventure == null ? "<null>" : adventure.getTitle());
+    builder.append("endeavor", endeavor == null ? "<null>" : endeavor.getTitle());
     builder.append("title", getTitle());
     return builder.toString();
   }

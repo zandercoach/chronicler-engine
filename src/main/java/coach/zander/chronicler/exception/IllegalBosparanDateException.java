@@ -1,4 +1,4 @@
-package coach.zander.cfk.exception;
+package coach.zander.chronicler.exception;
 
 public class IllegalBosparanDateException extends Exception {
   public IllegalBosparanDateException(String message) {

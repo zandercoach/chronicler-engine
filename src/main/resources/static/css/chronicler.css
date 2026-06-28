@@ -1,4 +1,4 @@
-.cfk-unit {
+.chronicler-unit {
   padding: 30px;
   margin-bottom: 30px;
   font-size: 18px;
@@ -10,14 +10,14 @@
   -moz-border-radius: 6px;
   border-radius: 6px;
 }
-.cfk-unit h1 {
+.chronicler-unit h1 {
   margin-bottom: 0;
   font-size: 48px;
   line-height: 1;
   color: inherit;
   letter-spacing: -1px;
 }
-.cfk-unit li {
+.chronicler-unit li {
   line-height: 30px;
 }
 
@@ -32,7 +32,7 @@ a.thumbnail:hover {
   border-left-color: #9c1818;
 	
 }
-a.cfk-wiki-aventurica-link {
+a.chronicler-wiki-aventurica-link {
   background-color: transparent;
   background-image: url("../img/wiki-aventurica-logo.png");
   background-repeat: no-repeat;

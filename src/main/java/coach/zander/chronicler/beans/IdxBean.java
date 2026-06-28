@@ -1,57 +1,57 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
 import java.util.List;
 
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Kreatur;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
+import coach.zander.chronicler.model.Creature;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Stakeholder;
 
-public class IdxBean extends CfkPageBean {
-  private List<Adventure> adventures;
-  private List<Held> helden;
-  private List<Ort> orte;
-  private List<Nsc> nscs;
-  private List<Kreatur> kreaturen;
+public class IdxBean extends ChroniclerPageBean {
+  private List<Endeavor> endeavors;
+  private List<Member> members;
+  private List<Location> locations;
+  private List<Stakeholder> stakeholders;
+  private List<Creature> creatures;
 
-  public List<Adventure> getAdventures() {
-    return adventures;
+  public List<Endeavor> getEndeavors() {
+    return endeavors;
   }
 
-  public List<Held> getHelden() {
-    return helden;
+  public List<Member> getMembers() {
+    return members;
   }
 
-  public List<Kreatur> getKreaturen() {
-    return kreaturen;
+  public List<Creature> getCreatures() {
+    return creatures;
   }
 
-  public List<Nsc> getNscs() {
-    return nscs;
+  public List<Stakeholder> getStakeholders() {
+    return stakeholders;
   }
 
-  public List<Ort> getOrte() {
-    return orte;
+  public List<Location> getLocations() {
+    return locations;
   }
 
-  public void setAdventures(List<Adventure> adventures) {
-    this.adventures = adventures;
+  public void setEndeavors(List<Endeavor> endeavors) {
+    this.endeavors = endeavors;
   }
 
-  public void setHelden(List<Held> helden) {
-    this.helden = helden;
+  public void setMembers(List<Member> members) {
+    this.members = members;
   }
 
-  public void setKreaturen(List<Kreatur> kreaturen) {
-    this.kreaturen = kreaturen;
+  public void setCreatures(List<Creature> creatures) {
+    this.creatures = creatures;
   }
 
-  public void setNscs(List<Nsc> nscs) {
-    this.nscs = nscs;
+  public void setStakeholders(List<Stakeholder> stakeholders) {
+    this.stakeholders = stakeholders;
   }
 
-  public void setOrte(List<Ort> orte) {
-    this.orte = orte;
+  public void setLocations(List<Location> locations) {
+    this.locations = locations;
   }
 }

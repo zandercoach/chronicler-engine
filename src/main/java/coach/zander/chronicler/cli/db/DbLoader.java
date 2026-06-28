@@ -1,12 +1,12 @@
-package coach.zander.cfk.cli.db;
+package coach.zander.chronicler.cli.db;
 
 import java.io.IOException;
 import java.util.List;
 
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Stakeholder;
 
 public class DbLoader {
   public static void main(String[] args) throws IOException {
@@ -32,21 +32,21 @@ public class DbLoader {
 
   private void run() {
     System.out.println("********** DbLoader - Run! **********");
-    List<Adventure> adventures = db.getAdventureAll();
-    for (Adventure adventure : adventures) {
-      System.out.println(adventure);
+    List<Endeavor> endeavors = db.getEndeavorAll();
+    for (Endeavor endeavor : endeavors) {
+      System.out.println(endeavor);
     }
-    List<Ort> orte = db.getOrtAll();
-    for (Ort ort : orte) {
-      System.out.println(ort);
+    List<Location> locations = db.getLocationAll();
+    for (Location location : locations) {
+      System.out.println(location);
     }
-    List<Held> helden = db.getHeldAll();
-    for (Held held : helden) {
-      System.out.println(held);
+    List<Member> members = db.getMemberAll();
+    for (Member member : members) {
+      System.out.println(member);
     }
-    List<Nsc> mps = db.getNscAll();
-    for (Nsc mp : mps) {
-      System.out.println(mp);
+    List<Stakeholder> stakeholders = db.getStakeholderAll();
+    for (Stakeholder stakeholder : stakeholders) {
+      System.out.println(stakeholder);
     }
   }
 }

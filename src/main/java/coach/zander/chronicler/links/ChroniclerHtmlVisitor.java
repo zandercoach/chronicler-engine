@@ -1,13 +1,13 @@
-package coach.zander.cfk.links;
+package coach.zander.chronicler.links;
 
 import java.io.Writer;
 
 import be.devijver.wikipedia.SmartLinkResolver;
 import be.devijver.wikipedia.html.HtmlVisitor;
 
-public class CfkHtmlVisitor extends HtmlVisitor {
+public class ChroniclerHtmlVisitor extends HtmlVisitor {
 
-  public CfkHtmlVisitor(Writer writer, SmartLinkResolver smartLinkResolver) {
+  public ChroniclerHtmlVisitor(Writer writer, SmartLinkResolver smartLinkResolver) {
     super(writer, smartLinkResolver);
   }
 
@@ -36,7 +36,7 @@ public class CfkHtmlVisitor extends HtmlVisitor {
     append("\"");
     if (resolvedLink.startsWith("http")) {
       append(" target=\"wiki-aventurica\"");
-      append(" class=\"cfk-wiki-aventurica-link\"");
+      append(" class=\"chronicler-wiki-aventurica-link\"");
     }
     append(">");
   }

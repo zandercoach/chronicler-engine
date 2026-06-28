@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.db;
+package coach.zander.chronicler.cli.db;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,12 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import coach.zander.cfk.cli.util.HibernateUtil;
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Kreatur;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
+import coach.zander.chronicler.cli.util.HibernateUtil;
+import coach.zander.chronicler.model.Creature;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Stakeholder;
 
 public class DbAccess {
   private SessionFactory sessionFactory;
@@ -31,21 +31,21 @@ public class DbAccess {
     }
   }
 
-  public List<Adventure> getAdventureAll() {
-    return getNamedQueryList("Adventure.all");
+  public List<Endeavor> getEndeavorAll() {
+    return getNamedQueryList("Endeavor.all");
   }
 
-  public Adventure getAdventureLatest() {
-    List<Adventure> adventures = getAdventureAll();
-    return adventures.get(0);
+  public Endeavor getEndeavorLatest() {
+    List<Endeavor> endeavors = getEndeavorAll();
+    return endeavors.get(0);
   }
 
-  public List<Held> getHeldAll() {
-    return getNamedQueryList("Held.all");
+  public List<Member> getMemberAll() {
+    return getNamedQueryList("Member.all");
   }
 
-  public List<Kreatur> getKreaturAll() {
-    return getNamedQueryList("Kreatur.all");
+  public List<Creature> getCreatureAll() {
+    return getNamedQueryList("Creature.all");
   }
 
   private List getNamedQueryList(String namedQuery) {
@@ -56,19 +56,19 @@ public class DbAccess {
     return getSession().getNamedQuery(namedQuery).uniqueResult();
   }
 
-  public List<Nsc> getNscAll() {
-    return getNamedQueryList("Nsc.all");
+  public List<Stakeholder> getStakeholderAll() {
+    return getNamedQueryList("Stakeholder.all");
   }
 
-  public List<Ort> getOrtAll() {
-    return getNamedQueryList("Ort.all");
+  public List<Location> getLocationAll() {
+    return getNamedQueryList("Location.all");
   }
 
   public Session getSession() {
     return sessionFactory.getCurrentSession();
   }
 
-  public List<coach.zander.cfk.model.Session> getSessionAll() {
+  public List<coach.zander.chronicler.model.Session> getSessionAll() {
     return getNamedQueryList("Session.all");
   }
 

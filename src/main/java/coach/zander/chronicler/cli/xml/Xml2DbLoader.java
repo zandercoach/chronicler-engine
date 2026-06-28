@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.xml;
+package coach.zander.chronicler.cli.xml;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,14 +7,14 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import coach.zander.cfk.cli.db.DbAccess;
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.CFKData;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Kreatur;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
-import coach.zander.cfk.model.Session;
+import coach.zander.chronicler.cli.db.DbAccess;
+import coach.zander.chronicler.model.ChroniclerData;
+import coach.zander.chronicler.model.Creature;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Session;
+import coach.zander.chronicler.model.Stakeholder;
 
 public class Xml2DbLoader {
   private static final String DATA_XML = "data.xml";
@@ -49,41 +49,41 @@ public class Xml2DbLoader {
     db.open("xml_dbloader.properties");
   }
 
-  private CFKData loadDataFromXml() throws JAXBException, IOException {
+  private ChroniclerData loadDataFromXml() throws JAXBException, IOException {
     File file = new File(source + "/" + DATA_XML);
-    JAXBContext jaxbContext = JAXBContext.newInstance(CFKData.class);
+    JAXBContext jaxbContext = JAXBContext.newInstance(ChroniclerData.class);
     System.out.println("JAXB Context: " + jaxbContext.getClass());
 
     Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-    CFKData data = (CFKData) jaxbUnmarshaller.unmarshal(file);
+    ChroniclerData data = (ChroniclerData) jaxbUnmarshaller.unmarshal(file);
 
     return data;
   }
 
   private void run() throws JAXBException, IOException {
     System.out.println("********** XmlDbLoader - Run! **********");
-    CFKData data = loadDataFromXml();
+    ChroniclerData data = loadDataFromXml();
     storeDataInDB(data);
     System.out.println(data);
   }
 
-  private void storeDataInDB(CFKData data) {
+  private void storeDataInDB(ChroniclerData data) {
     for (Session s : data.getSessions()) {
       db.save(s);
     }
-    for (Ort o : data.getOrte()) {
+    for (Location o : data.getLocations()) {
       db.save(o);
     }
-    for (Held h : data.getHelden()) {
+    for (Member h : data.getMembers()) {
       db.save(h);
     }
-    for (Nsc n : data.getNscs()) {
+    for (Stakeholder n : data.getStakeholders()) {
       db.save(n);
     }
-    for (Kreatur k : data.getKreaturen()) {
+    for (Creature k : data.getCreatures()) {
       db.save(k);
     }
-    for (Adventure a : data.getAdventures()) {
+    for (Endeavor a : data.getEndeavors()) {
       db.save(a);
     }
   }

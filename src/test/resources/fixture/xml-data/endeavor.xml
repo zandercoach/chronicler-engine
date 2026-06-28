@@ -1,12 +1,12 @@
-    <abenteuer date="1.PER 1001 BF" wikiPage="Test Abenteuer">
-        <title>Das Testabenteuer</title>
-        <description>Eine Testbeschreibung ohne besondere Verweise.</description>
+    <endeavor date="1.PER 1001 BF" wikiPage="Test-Endeavor">
+        <title>Test-Endeavor</title>
+        <description>A test endeavor description without links.</description>
         <ereignis date="1.PER 1001 BF" ort="Testort">
-            <title>Das Testereignis</title>
-            <description>Eine Ereignisbeschreibung zu Testzwecken.</description>
-            <held>Testheld</held>
-            <nsc>Test-NSC</nsc>
-            <kreatur>Testkreatur</kreatur>
+            <title>Test-Event</title>
+            <description>A test event description.</description>
+            <held>Test-Member</held>
+            <stakeholder>Test-Stakeholder</stakeholder>
+            <kreatur>Test-Creature</kreatur>
         </ereignis>
-        <wegpunkt x="100" y="100"/>
-    </abenteuer>
+        <waypoint x="100" y="100"/>
+    </endeavor>

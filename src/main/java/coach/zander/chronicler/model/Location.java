@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,36 +13,36 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-@NamedQueries({ @NamedQuery(name = "Ort.all", query = "SELECT o FROM Ort o ORDER BY o.name"),
-    @NamedQuery(name = "Ort.byName", query = "SELECT o FROM Ort o WHERE o.name = ?") })
+@NamedQueries({ @NamedQuery(name = "Location.all", query = "SELECT location FROM Location location ORDER BY location.name"),
+    @NamedQuery(name = "Location.byName", query = "SELECT location FROM Location location WHERE location.name = ?") })
 @Entity
 @XmlType(propOrder = { "name", "region", "x", "y", "description" })
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Ort extends CFKObject {
+public class Location extends ChroniclerObject {
   @XmlAttribute
   private String region;
   @XmlAttribute
   private Integer x;
   @XmlAttribute
   private Integer y;
-  @OneToMany(mappedBy = "ort")
+  @OneToMany(mappedBy = "location")
   // @OrderBy("id")
   @XmlTransient
-  private List<Ereignis> ereignisse = new ArrayList<Ereignis>();
+  private List<Event> events = new ArrayList<Event>();
 
-  public void add(Ereignis ereignis) {
-    if (ereignis != null) {
-      ereignisse.add(ereignis);
+  public void add(Event event) {
+    if (event != null) {
+      events.add(event);
     }
   }
 
   @Override
-  public List<Ereignis> getEreignisse() {
-    return ereignisse;
+  public List<Event> getEvents() {
+    return events;
   }
 
   @Override
-  public List<Ort> getOrte() {
+  public List<Location> getLocations() {
     return null;
   }
 
@@ -58,8 +58,8 @@ public class Ort extends CFKObject {
     return y;
   }
 
-  public void setEreignisse(List<Ereignis> ereignisse) {
-    this.ereignisse = ereignisse;
+  public void setEvents(List<Event> events) {
+    this.events = events;
   }
 
   public void setRegion(String region) {

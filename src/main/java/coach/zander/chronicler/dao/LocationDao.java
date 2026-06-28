@@ -1,13 +1,13 @@
-package coach.zander.cfk.dao;
+package coach.zander.chronicler.dao;
 
 import org.springframework.stereotype.Component;
 
-import coach.zander.cfk.model.Ort;
+import coach.zander.chronicler.model.Location;
 
 @Component
-public class OrtDao extends GenericDao<Ort, String> {
+public class LocationDao extends GenericDao<Location, String> {
 
-  public Ort findByName(String name) {
-    return (Ort) getQuery("byName").setParameter(1, name).getSingleResult();
+  public Location findByName(String name) {
+    return (Location) getQuery("byName").setParameter(1, name).getSingleResult();
   }
 }

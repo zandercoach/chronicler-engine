@@ -1,14 +1,14 @@
-package coach.zander.cfk.util;
+package coach.zander.chronicler.util;
 
-import coach.zander.cfk.model.CFKActivity;
-import coach.zander.cfk.model.CFKObject;
+import coach.zander.chronicler.model.ChroniclerActivity;
+import coach.zander.chronicler.model.ChroniclerObject;
 
 public class WikiLinkBuilder {
-  public String buildFreeLinkFor(CFKActivity activity) {
+  public String buildFreeLinkFor(ChroniclerActivity activity) {
     return buildFreeLinkFor(activity == null ? null : activity.getTitle());
   }
 
-  public String buildFreeLinkFor(CFKObject object) {
+  public String buildFreeLinkFor(ChroniclerObject object) {
     return buildFreeLinkFor(object == null ? null : object.getName());
   }
 

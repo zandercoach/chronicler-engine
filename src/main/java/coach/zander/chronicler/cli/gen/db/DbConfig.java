@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.gen.db;
+package coach.zander.chronicler.cli.gen.db;
 
 import java.util.Properties;
 
@@ -29,9 +29,9 @@ public class DbConfig {
   private DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-    dataSource.setUrl("jdbc:mysql://127.0.0.1/cfk");
-    dataSource.setUsername("cfk");
-    dataSource.setPassword("cfk");
+    dataSource.setUrl("jdbc:mysql://127.0.0.1/chronicler");
+    dataSource.setUsername("chronicler");
+    dataSource.setPassword("chronicler");
     return dataSource;
   }
 
@@ -39,7 +39,7 @@ public class DbConfig {
   public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
     LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(dataSource());
-    em.setPackagesToScan(new String[] { "coach.zander.cfk.model" });
+    em.setPackagesToScan(new String[] { "coach.zander.chronicler.model" });
 
     JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
     em.setJpaVendorAdapter(vendorAdapter);

@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,33 +11,33 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
-@NamedQueries({ @NamedQuery(name = "Kreatur.all", query = "SELECT k FROM Kreatur k ORDER BY k.name"),
-    @NamedQuery(name = "Kreatur.byName", query = "SELECT k FROM Kreatur k WHERE k.name = ?") })
+@NamedQueries({ @NamedQuery(name = "Creature.all", query = "SELECT c FROM Creature c ORDER BY c.name"),
+    @NamedQuery(name = "Creature.byName", query = "SELECT c FROM Creature c WHERE c.name = ?") })
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Kreatur extends CFKObject {
-  @ManyToMany(mappedBy = "kreaturen")
+public class Creature extends ChroniclerObject {
+  @ManyToMany(mappedBy = "creatures")
   // @OrderBy("id")
   @XmlTransient
-  private List<Ereignis> ereignisse = new ArrayList<Ereignis>();
+  private List<Event> events = new ArrayList<Event>();
 
-  public void add(Ereignis ereignis) {
-    if (ereignis != null) {
-      ereignisse.add(ereignis);
+  public void add(Event event) {
+    if (event != null) {
+      events.add(event);
     }
   }
 
   @Override
-  public List<Ereignis> getEreignisse() {
-    return ereignisse;
+  public List<Event> getEvents() {
+    return events;
   }
 
   @Override
-  public List<Kreatur> getKreaturen() {
+  public List<Creature> getCreatures() {
     return null;
   }
 
-  public void setEreignisse(List<Ereignis> ereignisse) {
-    this.ereignisse = ereignisse;
+  public void setEvents(List<Event> ereignisse) {
+    this.events = ereignisse;
   }
 }

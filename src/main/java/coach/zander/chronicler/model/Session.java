@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import coach.zander.cfk.model.xml.DateAdapter;
+import coach.zander.chronicler.model.xml.DateAdapter;
 
 @NamedQueries({ @NamedQuery(name = "Session.all", query = "SELECT s FROM Session s ORDER BY s.id") })
 @Entity
@@ -37,10 +37,10 @@ public class Session implements Comparable<Session> {
   private String location;
   @ManyToMany(mappedBy = "sessions")
   @OrderBy("id")
-  private final List<Adventure> adventures = new ArrayList<Adventure>();
+  private final List<Endeavor> endeavors = new ArrayList<Endeavor>();
 
-  public void addAdventure(Adventure adventure) {
-    adventures.add(adventure);
+  public void addEndeavor(Endeavor endeavor) {
+    endeavors.add(endeavor);
   }
 
   public int compareTo(Session o) {
@@ -69,8 +69,8 @@ public class Session implements Comparable<Session> {
     return true;
   }
 
-  public List<Adventure> getAdventures() {
-    return adventures;
+  public List<Endeavor> getEndeavors() {
+    return endeavors;
   }
 
   public Date getDate() {

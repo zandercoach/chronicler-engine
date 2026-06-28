@@ -1,4 +1,4 @@
-package coach.zander.cfk.util;
+package coach.zander.chronicler.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

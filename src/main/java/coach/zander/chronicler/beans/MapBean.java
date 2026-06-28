@@ -1,24 +1,24 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
 import java.util.List;
 
-import coach.zander.cfk.model.Adventure;
+import coach.zander.chronicler.model.Endeavor;
 
-public class MapBean extends CfkPageBean {
+public class MapBean extends ChroniclerPageBean {
   private String map;
 
-  private List<Adventure> adventures;
+  private List<Endeavor> endeavors;
 
-  public List<Adventure> getAdventures() {
-    return adventures;
+  public List<Endeavor> getEndeavors() {
+    return endeavors;
   }
 
   public String getMap() {
     return map;
   }
 
-  public void setAdventures(List<Adventure> adventures) {
-    this.adventures = adventures;
+  public void setEndeavors(List<Endeavor> endeavors) {
+    this.endeavors = endeavors;
   }
 
   public void setMap(String map) {

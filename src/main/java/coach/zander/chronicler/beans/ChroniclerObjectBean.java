@@ -1,60 +1,60 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.CFKObject;
-import coach.zander.cfk.model.Ereignis;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Kreatur;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
+import coach.zander.chronicler.model.ChroniclerObject;
+import coach.zander.chronicler.model.Creature;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Event;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Stakeholder;
 
-public abstract class CfkObjectBean extends CfkPageBean {
-  public List<Adventure> getAdventures() {
-    SortedSet<Adventure> adventures = new TreeSet<Adventure>();
-    for (Ereignis e : getObject().getEreignisse()) {
-      adventures.add(e.getAdventure());
+public abstract class ChroniclerObjectBean extends ChroniclerPageBean {
+  public List<Endeavor> getAdventures() {
+    SortedSet<Endeavor> endeavors = new TreeSet<Endeavor>();
+    for (Event event : getObject().getEvents()) {
+      endeavors.add(event.getEndeavor());
     }
-    return new ArrayList<Adventure>(adventures);
+    return new ArrayList<Endeavor>(endeavors);
   }
 
-  public List<Held> getHelden() {
-    SortedSet<Held> helden = new TreeSet<Held>();
-    for (Ereignis e : getObject().getEreignisse()) {
-      helden.addAll(e.getHelden());
+  public List<Member> getMembers() {
+    SortedSet<Member> members = new TreeSet<Member>();
+    for (Event event : getObject().getEvents()) {
+      members.addAll(event.getMembers());
     }
-    return new ArrayList<Held>(helden);
+    return new ArrayList<Member>(members);
   }
 
-  public List<Kreatur> getKreaturen() {
-    SortedSet<Kreatur> kreaturen = new TreeSet<Kreatur>();
-    for (Ereignis e : getObject().getEreignisse()) {
-      kreaturen.addAll(e.getKreaturen());
+  public List<Creature> getCreatures() {
+    SortedSet<Creature> creatures = new TreeSet<Creature>();
+    for (Event event : getObject().getEvents()) {
+      creatures.addAll(event.getCreatures());
     }
-    return new ArrayList<Kreatur>(kreaturen);
+    return new ArrayList<Creature>(creatures);
   }
 
-  public List<Nsc> getNscs() {
-    SortedSet<Nsc> nscs = new TreeSet<Nsc>();
-    for (Ereignis e : getObject().getEreignisse()) {
-      nscs.addAll(e.getNscs());
+  public List<Stakeholder> getStakeholders() {
+    SortedSet<Stakeholder> stakeholders = new TreeSet<Stakeholder>();
+    for (Event event : getObject().getEvents()) {
+      stakeholders.addAll(event.getStakeholders());
     }
-    return new ArrayList<Nsc>(nscs);
+    return new ArrayList<Stakeholder>(stakeholders);
   }
 
-  public abstract CFKObject getObject();
+  public abstract ChroniclerObject getObject();
 
-  public List<Ort> getOrte() {
-    SortedSet<Ort> orte = new TreeSet<Ort>();
-    for (Ereignis e : getObject().getEreignisse()) {
-      Ort o = e.getOrt();
-      orte.add(o);
+  public List<Location> getLocations() {
+    SortedSet<Location> locations = new TreeSet<Location>();
+    for (Event event : getObject().getEvents()) {
+      Location location = event.getLocation();
+      locations.add(location);
     }
-    return new ArrayList<Ort>(orte);
+    return new ArrayList<Location>(locations);
   }
 
   @Override

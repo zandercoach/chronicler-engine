@@ -1,6 +1,6 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
-public abstract class CfkPageBean {
+public abstract class ChroniclerPageBean {
   private NavigationBean navigation;
   private String pageTitle;
 

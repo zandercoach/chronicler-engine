@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.gen.db;
+package coach.zander.chronicler.cli.gen.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,48 +6,48 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import coach.zander.cfk.dao.AdventureDao;
-import coach.zander.cfk.dao.HeldDao;
-import coach.zander.cfk.dao.KreaturDao;
-import coach.zander.cfk.dao.NscDao;
-import coach.zander.cfk.dao.OrtDao;
-import coach.zander.cfk.links.InternalLink;
-import coach.zander.cfk.links.InternalLinksProvider;
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Kreatur;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
+import coach.zander.chronicler.dao.CreatureDao;
+import coach.zander.chronicler.dao.EndeavorDao;
+import coach.zander.chronicler.dao.LocationDao;
+import coach.zander.chronicler.dao.MemberDao;
+import coach.zander.chronicler.dao.StakeholderDao;
+import coach.zander.chronicler.links.InternalLink;
+import coach.zander.chronicler.links.InternalLinksProvider;
+import coach.zander.chronicler.model.Creature;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Stakeholder;
 
 @Service
 public class DbInternalLinksProvider implements InternalLinksProvider {
   @Autowired
-  private AdventureDao adventureDao;
+  private EndeavorDao endeavorDao;
   @Autowired
-  private HeldDao heldDao;
+  private MemberDao memberDao;
   @Autowired
-  private NscDao nscDao;
+  private StakeholderDao stakeholderDao;
   @Autowired
-  private KreaturDao kreaturDao;
+  private CreatureDao creatureDao;
   @Autowired
-  private OrtDao ortDao;
+  private LocationDao locationDao;
 
   public List<InternalLink> getInternalLinks() {
     List<InternalLink> internalLinks = new ArrayList<InternalLink>();
-    for (Adventure adventure : adventureDao.readAll()) {
-      internalLinks.add(new InternalLink(adventure));
+    for (Endeavor endeavor : endeavorDao.readAll()) {
+      internalLinks.add(new InternalLink(endeavor));
     }
-    for (Held held : heldDao.readAll()) {
-      internalLinks.add(new InternalLink(held));
+    for (Member member : memberDao.readAll()) {
+      internalLinks.add(new InternalLink(member));
     }
-    for (Nsc nsc : nscDao.readAll()) {
-      internalLinks.add(new InternalLink(nsc));
+    for (Stakeholder stakeholder : stakeholderDao.readAll()) {
+      internalLinks.add(new InternalLink(stakeholder));
     }
-    for (Ort ort : ortDao.readAll()) {
-      internalLinks.add(new InternalLink(ort));
+    for (Location location : locationDao.readAll()) {
+      internalLinks.add(new InternalLink(location));
     }
-    for (Kreatur kreatur : kreaturDao.readAll()) {
-      internalLinks.add(new InternalLink(kreatur));
+    for (Creature creature : creatureDao.readAll()) {
+      internalLinks.add(new InternalLink(creature));
     }
     return internalLinks;
   }

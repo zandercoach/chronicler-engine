@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.xml;
+package coach.zander.chronicler.cli.xml;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,9 +10,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import coach.zander.cfk.cli.db.DbAccess;
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.CFKData;
+import coach.zander.chronicler.cli.db.DbAccess;
+import coach.zander.chronicler.model.ChroniclerData;
+import coach.zander.chronicler.model.Endeavor;
 
 public class Db2XmlExporter {
   private static final String DATA_XML = "data.xml";
@@ -40,17 +40,17 @@ public class Db2XmlExporter {
     System.out.println("********** XmlExporter - Close! **********");
   }
 
-  private void exportCFKData() throws JAXBException, IOException {
-    CFKData data = new CFKData();
-    data.setOrte(db.getOrtAll());
-    data.setHelden(db.getHeldAll());
-    data.setNscs(db.getNscAll());
-    data.setKreaturen(db.getKreaturAll());
-    List<Adventure> adventures = db.getAdventureAll();
-    Collections.sort(adventures);
-    data.setAdventures(adventures);
+  private void exportChroniclerData() throws JAXBException, IOException {
+    ChroniclerData data = new ChroniclerData();
+    data.setLocations(db.getLocationAll());
+    data.setMembers(db.getMemberAll());
+    data.setStakeholders(db.getStakeholderAll());
+    data.setCreatures(db.getCreatureAll());
+    List<Endeavor> endeavors = db.getEndeavorAll();
+    Collections.sort(endeavors);
+    data.setEndeavors(endeavors);
     data.setSessions(db.getSessionAll());
-    JAXBContext context = JAXBContext.newInstance(CFKData.class);
+    JAXBContext context = JAXBContext.newInstance(ChroniclerData.class);
     Marshaller m = context.createMarshaller();
     m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
     m.marshal(data, System.out);
@@ -73,6 +73,6 @@ public class Db2XmlExporter {
 
   private void run() throws JAXBException, IOException {
     System.out.println("********** XmlExporter - Run! **********");
-    exportCFKData();
+    exportChroniclerData();
   }
 }

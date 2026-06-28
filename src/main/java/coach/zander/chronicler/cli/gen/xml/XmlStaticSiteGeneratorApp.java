@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.gen.xml;
+package coach.zander.chronicler.cli.gen.xml;
 
 import java.io.IOException;
 
@@ -8,15 +8,13 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class XmlStaticSiteGeneratorApp {
   public static void main(String[] args) throws IOException, JAXBException {
-    String source = "src/main/resources/static";
-    String destination = "target/cfk";
-    String dataDir = "../chronicler-data-cfk";
-    String xml = dataDir + "/data/data.xml";
-    String map = dataDir + "/data/map.jpg";
-    String imgSource = dataDir + "/img";
+    String chroniclerSources = "src/main/resources/static";
+    String destination = "target/chronicler";
+    String projectSources = "../chronicler-data-cfk";
 
     boolean generateMap = false;
-    boolean copyImages = true;
+    boolean copyImages = false;
+    boolean copyTiles = false;
 
     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
     context.register(XmlStaticSiteGenerator.class);
@@ -24,7 +22,7 @@ public class XmlStaticSiteGeneratorApp {
 
     XmlStaticSiteGenerator generator = context.getBean(XmlStaticSiteGenerator.class);
 
-    generator.run(source, imgSource, destination, xml, map, generateMap, copyImages);
+    generator.run(chroniclerSources, projectSources, destination, generateMap, copyImages, copyTiles);
     
     context.close();
   }

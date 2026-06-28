@@ -1,4 +1,4 @@
-package coach.zander.cfk.links;
+package coach.zander.chronicler.links;
 
 import java.io.StringWriter;
 import java.util.List;
@@ -12,17 +12,17 @@ import org.springframework.util.Assert;
 import be.devijver.wikipedia.Parser;
 import be.devijver.wikipedia.SmartLinkResolver;
 import be.devijver.wikipedia.Visitor;
-import coach.zander.cfk.util.UrlResolver;
+import coach.zander.chronicler.util.UrlResolver;
 
 @Service
-public class CfkReferenceInsertionEventHandler implements ReferenceInsertionEventHandler {
+public class ChroniclerReferenceInsertionEventHandler implements ReferenceInsertionEventHandler {
   private static final String TAG_DESCRIPTION = "description";
   private String[] internalReferences = new String[0];
   private String[] internalReferenceTags = new String[0];
   private final SmartLinkResolver smartLinkResolver;
 
   @Autowired
-  public CfkReferenceInsertionEventHandler(InternalLinksProvider provider, UrlResolver resolver) {
+  public ChroniclerReferenceInsertionEventHandler(InternalLinksProvider provider, UrlResolver resolver) {
     Assert.notNull(provider);
     Assert.notNull(resolver);
     List<InternalLink> internalLinks = provider.getInternalLinks();
@@ -36,7 +36,7 @@ public class CfkReferenceInsertionEventHandler implements ReferenceInsertionEven
         i++;
       }
     }
-    this.smartLinkResolver = new CfkSmartLinkResolver(internalLinks, resolver);
+    this.smartLinkResolver = new ChroniclerSmartLinkResolver(internalLinks, resolver);
   }
 
   private String injectInternalReferenceTags(String string) {
@@ -45,7 +45,7 @@ public class CfkReferenceInsertionEventHandler implements ReferenceInsertionEven
 
   private String parse(String contentString) {
     StringWriter writer = new StringWriter();
-    Visitor visitor = new CfkHtmlVisitor(writer, smartLinkResolver);
+    Visitor visitor = new ChroniclerHtmlVisitor(writer, smartLinkResolver);
     Parser.withVisitor(contentString, visitor);
     writer.flush();
     return writer.toString();

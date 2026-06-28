@@ -1,13 +1,13 @@
-package coach.zander.cfk.dao;
+package coach.zander.chronicler.dao;
 
 import org.springframework.stereotype.Component;
 
-import coach.zander.cfk.model.Nsc;
+import coach.zander.chronicler.model.Stakeholder;
 
 @Component
-public class NscDao extends GenericDao<Nsc, String> {
+public class StakeholderDao extends GenericDao<Stakeholder, String> {
 
-  public Nsc findByName(String name) {
-    return (Nsc) getQuery("byName").setParameter(1, name).getSingleResult();
+  public Stakeholder findByName(String name) {
+    return (Stakeholder) getQuery("byName").setParameter(1, name).getSingleResult();
   }
 }

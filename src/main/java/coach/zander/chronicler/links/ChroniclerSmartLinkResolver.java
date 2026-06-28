@@ -1,4 +1,4 @@
-package coach.zander.cfk.links;
+package coach.zander.chronicler.links;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,13 +7,13 @@ import java.util.Map;
 import org.springframework.util.Assert;
 
 import be.devijver.wikipedia.SmartLinkResolver;
-import coach.zander.cfk.util.UrlResolver;
+import coach.zander.chronicler.util.UrlResolver;
 
-public class CfkSmartLinkResolver implements SmartLinkResolver {
+public class ChroniclerSmartLinkResolver implements SmartLinkResolver {
 	private final Map<String, InternalLink> internalLinks;
 	private final UrlResolver resolver;
 
-	public CfkSmartLinkResolver(List<InternalLink> internalLinks, UrlResolver resolver) {
+	public ChroniclerSmartLinkResolver(List<InternalLink> internalLinks, UrlResolver resolver) {
 		Assert.notNull(resolver);
 		this.internalLinks = new HashMap<String, InternalLink>();
 		if (internalLinks != null) {

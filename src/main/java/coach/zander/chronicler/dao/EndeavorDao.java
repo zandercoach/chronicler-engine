@@ -1,27 +1,27 @@
-package coach.zander.cfk.dao;
+package coach.zander.chronicler.dao;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import coach.zander.cfk.model.Adventure;
+import coach.zander.chronicler.model.Endeavor;
 
 @Component
-public class AdventureDao extends GenericDao<Adventure, String> {
+public class EndeavorDao extends GenericDao<Endeavor, String> {
 
-  public Adventure findByTitle(String title) {
-    return (Adventure) getQuery("byTitle").setParameter(1, title).getSingleResult();
+  public Endeavor findByTitle(String title) {
+    return (Endeavor) getQuery("byTitle").setParameter(1, title).getSingleResult();
   }
 
-  public Adventure findLatest() {
-    List<Adventure> adventures = readAllOrderedByDate();
-    return adventures.size() > 0 ? adventures.get(adventures.size() - 1) : null;
+  public Endeavor findLatest() {
+    List<Endeavor> endeavors = readAllOrderedByDate();
+    return endeavors.size() > 0 ? endeavors.get(endeavors.size() - 1) : null;
   }
 
-  public List<Adventure> readAllOrderedByDate() {
-    List<Adventure> adventures = readAll();
-    Collections.sort(adventures);
-    return adventures;
+  public List<Endeavor> readAllOrderedByDate() {
+    List<Endeavor> endeavors = readAll();
+    Collections.sort(endeavors);
+    return endeavors;
   }
 }

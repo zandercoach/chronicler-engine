@@ -1,13 +1,13 @@
-package coach.zander.cfk.dao;
+package coach.zander.chronicler.dao;
 
 import org.springframework.stereotype.Component;
 
-import coach.zander.cfk.model.Held;
+import coach.zander.chronicler.model.Member;
 
 @Component
-public class HeldDao extends GenericDao<Held, String> {
+public class MemberDao extends GenericDao<Member, String> {
 
-  public Held findByName(String name) {
-    return (Held) getQuery("byName").setParameter(1, name).getSingleResult();
+  public Member findByName(String name) {
+    return (Member) getQuery("byName").setParameter(1, name).getSingleResult();
   }
 }

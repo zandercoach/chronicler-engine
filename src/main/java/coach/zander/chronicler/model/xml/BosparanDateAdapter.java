@@ -1,9 +1,9 @@
-package coach.zander.cfk.model.xml;
+package coach.zander.chronicler.model.xml;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import coach.zander.cfk.model.BosparanDate;
-import coach.zander.cfk.util.SimpleBosparanDateFormat;
+import coach.zander.chronicler.model.BosparanDate;
+import coach.zander.chronicler.util.SimpleBosparanDateFormat;
 
 public class BosparanDateAdapter extends XmlAdapter<String, BosparanDate> {
 

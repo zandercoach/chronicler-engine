@@ -1,21 +1,21 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
-import coach.zander.cfk.model.CFKObject;
-import coach.zander.cfk.model.Nsc;
+import coach.zander.chronicler.model.ChroniclerObject;
+import coach.zander.chronicler.model.Stakeholder;
 
-public class NscBean extends CfkObjectBean {
-  private Nsc nsc;
+public class StakeholderBean extends ChroniclerObjectBean {
+  private Stakeholder stakeholder;
 
-  public Nsc getNsc() {
-    return nsc;
+  public Stakeholder getStakeholder() {
+    return stakeholder;
   }
 
   @Override
-  public CFKObject getObject() {
-    return getNsc();
+  public ChroniclerObject getObject() {
+    return getStakeholder();
   }
 
-  public void setNsc(Nsc meisterperson) {
-    this.nsc = meisterperson;
+  public void setStakeholder(Stakeholder stakeholder) {
+    this.stakeholder = stakeholder;
   }
 }

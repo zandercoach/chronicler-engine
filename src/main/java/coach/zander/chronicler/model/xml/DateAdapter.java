@@ -1,4 +1,4 @@
-package coach.zander.cfk.model.xml;
+package coach.zander.chronicler.model.xml;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

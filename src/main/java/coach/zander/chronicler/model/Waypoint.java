@@ -1,6 +1,5 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,57 +15,57 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-@Entity(name = "Wegpunkt")
+@Entity(name = "Waypoint")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Wegpunkt {
+public class Waypoint {
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)
   @XmlTransient
   private Integer id;
   @ManyToOne
-  @JoinColumn(name = "abe_id", nullable = false)
+  @JoinColumn(name = "end_id", nullable = false)
   @XmlTransient
-  private Adventure adventure;
+  private Endeavor endeavor;
   @ManyToOne
-  @JoinColumn(name = "ort")
+  @JoinColumn(name = "location")
   @XmlIDREF
   @XmlAttribute
-  private Ort ort;
+  private Location location;
   @XmlAttribute
   private Integer x;
   @XmlAttribute
   private Integer y;
 
-  public Adventure getAdventure() {
-    return adventure;
+  public Endeavor getEndeavor() {
+    return endeavor;
   }
 
   public Integer getId() {
     return id;
   }
 
-  public Ort getOrt() {
-    return ort;
+  public Location getLocation() {
+    return location;
   }
 
   public Integer getX() {
-    return x != null ? x : ort.getX();
+    return x != null ? x : location.getX();
   }
 
   public Integer getY() {
-    return y != null ? y : ort.getY();
+    return y != null ? y : location.getY();
   }
 
-  public void setAdventure(Adventure adventure) {
-    this.adventure = adventure;
+  public void setEndeavor(Endeavor endeavor) {
+    this.endeavor = endeavor;
   }
 
   public void setId(Integer id) {
     this.id = id;
   }
 
-  public void setOrt(Ort ort) {
-    this.ort = ort;
+  public void setLocation(Location location) {
+    this.location = location;
   }
 
   public void setX(Integer x) {
@@ -80,8 +79,8 @@ public class Wegpunkt {
   @Override
   public String toString() {
     ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    builder.append("adventure", adventure == null ? "<null>" : adventure.getTitle());
-    builder.append("ort", ort == null ? "<null>" : ort.getName());
+    builder.append("endeavor", endeavor == null ? "<null>" : endeavor.getTitle());
+    builder.append("location", location == null ? "<null>" : location.getName());
     builder.append("x", getX());
     builder.append("y", getY());
     return builder.toString();

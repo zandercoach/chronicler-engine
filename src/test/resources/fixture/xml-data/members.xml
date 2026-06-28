@@ -1,3 +1,3 @@
-<helden>
-    <held name="Testheld" description="Ein tapferer Testheld."/>
-</helden>
+<members>
+    <member name="Test-Member" description="A Test-Member."/>
+</members>

@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,13 +19,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.Type;
 
-import coach.zander.cfk.model.xml.BosparanDateAdapter;
+import coach.zander.chronicler.model.xml.BosparanDateAdapter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class CFKActivity implements Comparable<CFKActivity> {
+public abstract class ChroniclerActivity implements Comparable<ChroniclerActivity> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	@XmlTransient
@@ -33,7 +33,7 @@ public abstract class CFKActivity implements Comparable<CFKActivity> {
 	@XmlID
 	private String title;
 	@Column(name = "bdate")
-	@Type(type = "coach.zander.cfk.model.hibernate.BosparanDateUserType")
+	@Type(type = "coach.zander.chronicler.model.hibernate.BosparanDateUserType")
 	@XmlAttribute
 	@XmlJavaTypeAdapter(BosparanDateAdapter.class)
 	private BosparanDate date;
@@ -43,7 +43,7 @@ public abstract class CFKActivity implements Comparable<CFKActivity> {
 	@XmlAttribute
 	private String wikiPage;
 
-	public int compareTo(CFKActivity o) {
+	public int compareTo(ChroniclerActivity o) {
 		return date.compareTo(o.date);
 	}
 
@@ -58,7 +58,7 @@ public abstract class CFKActivity implements Comparable<CFKActivity> {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		CFKActivity other = (CFKActivity) obj;
+		ChroniclerActivity other = (ChroniclerActivity) obj;
 		if (id == null) {
 			if (other.id != null) {
 				return false;

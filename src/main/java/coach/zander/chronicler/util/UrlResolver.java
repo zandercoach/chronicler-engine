@@ -1,9 +1,9 @@
-package coach.zander.cfk.util;
+package coach.zander.chronicler.util;
 
 import java.net.URLEncoder;
 
-import coach.zander.cfk.model.CFKActivity;
-import coach.zander.cfk.model.CFKObject;
+import coach.zander.chronicler.model.ChroniclerActivity;
+import coach.zander.chronicler.model.ChroniclerObject;
 
 public abstract class UrlResolver {
 
@@ -36,11 +36,11 @@ public abstract class UrlResolver {
 		return EXT_IMG_PNG;
 	}
 
-	public String resolveImageUrlFor(CFKActivity activity) {
+	public String resolveImageUrlFor(ChroniclerActivity activity) {
 		return resolveImageUrlFor(activity.getTitle(), activity.getClass().getSimpleName());
 	}
 
-	public String resolveImageUrlFor(CFKObject object) {
+	public String resolveImageUrlFor(ChroniclerObject object) {
 		return resolveImageUrlFor(object.getName(), object.getClass().getSimpleName());
 	}
 
@@ -50,11 +50,11 @@ public abstract class UrlResolver {
 
 	public abstract String resolveImageUrlFor(String title, String type);
 
-	public String resolveUrlFor(CFKActivity activity) {
+	public String resolveUrlFor(ChroniclerActivity activity) {
 		return resolveUrlFor(activity.getTitle(), activity.getClass().getSimpleName());
 	}
 
-	public String resolveUrlFor(CFKObject object) {
+	public String resolveUrlFor(ChroniclerObject object) {
 		return resolveUrlFor(object.getName(), object.getClass().getSimpleName());
 	}
 

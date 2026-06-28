@@ -1,21 +1,21 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
-import coach.zander.cfk.model.CFKObject;
-import coach.zander.cfk.model.Kreatur;
+import coach.zander.chronicler.model.ChroniclerObject;
+import coach.zander.chronicler.model.Creature;
 
-public class KreaturBean extends CfkObjectBean {
-  private Kreatur kreatur;
+public class CreatureBean extends ChroniclerObjectBean {
+  private Creature creature;
 
-  public Kreatur getKreatur() {
-    return kreatur;
+  public Creature getCreature() {
+    return creature;
   }
 
   @Override
-  public CFKObject getObject() {
-    return getKreatur();
+  public ChroniclerObject getObject() {
+    return getCreature();
   }
 
-  public void setKreatur(Kreatur kreatur) {
-    this.kreatur = kreatur;
+  public void setCreature(Creature creature) {
+    this.creature = creature;
   }
 }

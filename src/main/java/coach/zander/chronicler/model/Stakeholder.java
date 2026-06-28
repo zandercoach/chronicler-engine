@@ -1,4 +1,4 @@
-package coach.zander.cfk.model;
+package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,34 +11,34 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
-@NamedQueries({ @NamedQuery(name = "Nsc.all", query = "SELECT n FROM Nsc n ORDER BY n.name"),
-    @NamedQuery(name = "Nsc.byName", query = "SELECT n FROM Nsc n WHERE n.name = ?") })
+@NamedQueries({ @NamedQuery(name = "Stakeholder.all", query = "SELECT s FROM Stakeholder s ORDER BY s.name"),
+    @NamedQuery(name = "Stakeholder.byName", query = "SELECT s FROM Stakeholder s WHERE s.name = ?") })
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Nsc extends Charakter {
-  @ManyToMany(mappedBy = "nscs")
+public class Stakeholder extends Person {
+  @ManyToMany(mappedBy = "stakeholders")
   @XmlTransient
-  private List<Ereignis> ereignisse = new ArrayList<Ereignis>();
+  private List<Event> events = new ArrayList<Event>();
 
-  public void add(Ereignis ereignis) {
-    if (ereignis != null) {
-      ereignisse.add(ereignis);
+  public void add(Event event) {
+    if (event != null) {
+      events.add(event);
     }
   }
 
   @Override
-  public List<Ereignis> getEreignisse() {
-    return ereignisse;
+  public List<Event> getEvents() {
+    return events;
   }
 
   @Override
-  public List<Nsc> getNscs() {
-    List<Nsc> nscs = super.getNscs();
-    nscs.remove(this);
-    return nscs;
+  public List<Stakeholder> getStakeholders() {
+    List<Stakeholder> stakeholders = super.getStakeholders();
+    stakeholders.remove(this);
+    return stakeholders;
   }
 
-  public void setEreignisse(List<Ereignis> ereignisse) {
-    this.ereignisse = ereignisse;
+  public void setEvents(List<Event> events) {
+    this.events = events;
   }
 }

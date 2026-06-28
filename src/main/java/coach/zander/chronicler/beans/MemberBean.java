@@ -1,21 +1,21 @@
-package coach.zander.cfk.beans;
+package coach.zander.chronicler.beans;
 
-import coach.zander.cfk.model.CFKObject;
-import coach.zander.cfk.model.Held;
+import coach.zander.chronicler.model.ChroniclerObject;
+import coach.zander.chronicler.model.Member;
 
-public class HeldBean extends CfkObjectBean {
-  private Held held;
+public class MemberBean extends ChroniclerObjectBean {
+  private Member member;
 
-  public Held getHeld() {
-    return held;
+  public Member getMember() {
+    return member;
   }
 
   @Override
-  public CFKObject getObject() {
-    return getHeld();
+  public ChroniclerObject getObject() {
+    return getMember();
   }
 
-  public void setHeld(Held held) {
-    this.held = held;
+  public void setMember(Member member) {
+    this.member = member;
   }
 }

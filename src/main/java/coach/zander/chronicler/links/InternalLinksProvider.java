@@ -1,4 +1,4 @@
-package coach.zander.cfk.links;
+package coach.zander.chronicler.links;
 
 import java.util.List;
 

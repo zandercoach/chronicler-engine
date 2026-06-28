@@ -1,10 +1,9 @@
-package coach.zander.cfk.cli.gen.xml;
+package coach.zander.chronicler.cli.gen.xml;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.xml.bind.JAXBException;
@@ -13,6 +12,9 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import coach.zander.chronicler.cli.gen.xml.XmlStaticSiteGenerator;
+import coach.zander.chronicler.cli.gen.xml.XmlStaticSiteGeneratorApp;
 
 /**
  * Characterization tests for the live XML generation pipeline (the one actually wired up in
@@ -28,19 +30,18 @@ class XmlStaticSiteGeneratorCharacterizationTest {
   Path destinationDir;
 
   @TempDir
-  Path xmlDataDir;
+  Path dataDir;
 
   private String destination;
-  private String xml;
 
   @BeforeEach
-  void copyXmlFixtureOutsideTheRepo() throws IOException {
+  void setupDataDirOutsideTheRepo() throws IOException {
     // Copying the xml-data fixture into a temp dir (away from the project's working directory)
     // is what actually exercises the entity-resolution fix: it proves entities resolve relative
     // to the document's own location, not to whatever the process CWD happens to be.
-    FileUtils.copyDirectory(new File(FIXTURE_ROOT, "xml-data"), xmlDataDir.toFile());
+    FileUtils.copyDirectory(new File(FIXTURE_ROOT, "xml-data"), dataDir.resolve("data").toFile());
+    FileUtils.copyDirectory(new File(FIXTURE_ROOT, "img"), dataDir.resolve("img").toFile());
     destination = destinationDir.toString();
-    xml = xmlDataDir.resolve("data.xml").toString();
   }
 
   @Test
@@ -78,15 +79,15 @@ class XmlStaticSiteGeneratorCharacterizationTest {
     assertTrue(new File(destination, "html/idx.html").isFile());
     assertTrue(new File(destination, "html/chronicles.html").isFile());
     assertTrue(new File(destination, "html/map.html").isFile());
-    assertTrue(new File(destination, "html/adventure_Das_Testabenteuer.html").isFile());
-    assertTrue(new File(destination, "html/held_Testheld.html").isFile());
-    assertTrue(new File(destination, "html/nsc_Test-NSC.html").isFile());
-    assertTrue(new File(destination, "html/kreatur_Testkreatur.html").isFile());
-    assertTrue(new File(destination, "html/ort_Testort.html").isFile());
+    assertTrue(new File(destination, "html/endeavor_Test-Endeavor.html").isFile());
+    assertTrue(new File(destination, "html/member_Test-Member.html").isFile());
+    assertTrue(new File(destination, "html/stakeholder_Test-Stakeholder.html").isFile());
+    assertTrue(new File(destination, "html/creature_Test-Creature.html").isFile());
+    assertTrue(new File(destination, "html/location_Test-Location.html").isFile());
   }
 
   private void runGenerator() throws IOException, JAXBException {
     XmlStaticSiteGenerator generator = new XmlStaticSiteGenerator();
-    generator.run(FIXTURE_ROOT + "/static", FIXTURE_ROOT + "/img", destination, xml, null, false, true);
+    generator.run(FIXTURE_ROOT + "/static", dataDir.toString(), destination, false, true, false);
   }
 }

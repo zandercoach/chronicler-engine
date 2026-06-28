@@ -1,20 +1,20 @@
-package coach.zander.cfk.links;
+package coach.zander.chronicler.links;
 
 import org.springframework.util.Assert;
 
-import coach.zander.cfk.model.CFKActivity;
-import coach.zander.cfk.model.CFKObject;
+import coach.zander.chronicler.model.ChroniclerActivity;
+import coach.zander.chronicler.model.ChroniclerObject;
 
 public final class InternalLink {
   private String name;
   private String type;
 
-  public InternalLink(CFKActivity activity) {
+  public InternalLink(ChroniclerActivity activity) {
     Assert.notNull(activity);
     init(activity.getTitle(), getTypeFor(activity));
   }
 
-  public InternalLink(CFKObject object) {
+  public InternalLink(ChroniclerObject object) {
     Assert.notNull(object);
     init(object.getName(), getTypeFor(object));
   }

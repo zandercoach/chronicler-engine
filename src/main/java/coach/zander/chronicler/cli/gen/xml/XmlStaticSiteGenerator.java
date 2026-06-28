@@ -1,4 +1,4 @@
-package coach.zander.cfk.cli.gen.xml;
+package coach.zander.chronicler.cli.gen.xml;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
@@ -24,210 +24,215 @@ import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
-import coach.zander.cfk.beans.AdventureBean;
-import coach.zander.cfk.beans.CfkPageBean;
-import coach.zander.cfk.beans.ChroniclesBean;
-import coach.zander.cfk.beans.HeldBean;
-import coach.zander.cfk.beans.HomeBean;
-import coach.zander.cfk.beans.IdxBean;
-import coach.zander.cfk.beans.KreaturBean;
-import coach.zander.cfk.beans.MapBean;
-import coach.zander.cfk.beans.NavigationBean;
-import coach.zander.cfk.beans.NscBean;
-import coach.zander.cfk.beans.OrtBean;
-import coach.zander.cfk.cli.gen.StaticUrlResolver;
-import coach.zander.cfk.links.CfkReferenceInsertionEventHandler;
-import coach.zander.cfk.model.Adventure;
-import coach.zander.cfk.model.CFKData;
-import coach.zander.cfk.model.Ereignis;
-import coach.zander.cfk.model.Held;
-import coach.zander.cfk.model.Kreatur;
-import coach.zander.cfk.model.Nsc;
-import coach.zander.cfk.model.Ort;
-import coach.zander.cfk.model.Wegpunkt;
-import coach.zander.cfk.util.DateFormatter;
-import coach.zander.cfk.util.UrlResolver;
+import coach.zander.chronicler.beans.ChroniclerPageBean;
+import coach.zander.chronicler.beans.ChroniclesBean;
+import coach.zander.chronicler.beans.CreatureBean;
+import coach.zander.chronicler.beans.EndeavorBean;
+import coach.zander.chronicler.beans.HomeBean;
+import coach.zander.chronicler.beans.IdxBean;
+import coach.zander.chronicler.beans.LocationBean;
+import coach.zander.chronicler.beans.MapBean;
+import coach.zander.chronicler.beans.MemberBean;
+import coach.zander.chronicler.beans.NavigationBean;
+import coach.zander.chronicler.beans.StakeholderBean;
+import coach.zander.chronicler.cli.gen.StaticUrlResolver;
+import coach.zander.chronicler.links.ChroniclerReferenceInsertionEventHandler;
+import coach.zander.chronicler.model.ChroniclerData;
+import coach.zander.chronicler.model.Creature;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Event;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Member;
+import coach.zander.chronicler.model.Stakeholder;
+import coach.zander.chronicler.model.Waypoint;
+import coach.zander.chronicler.util.DateFormatter;
+import coach.zander.chronicler.util.UrlResolver;
 
 public class XmlStaticSiteGenerator {
 
+  private static final String JS_PATH = "/js";
+  private static final String CSS_PATH = "/css";
+  private static final String TILES_PATH = "/av_tiles";
+  private static final String HTML_PATH = "/html";
+  private static final String IMG_PATH = "/img";
+  private static final String XML_PATH = "/data/data.xml";
+  private static final String MAP_PATH = "/data/map.jpg";
+
   private UrlResolver resolver;
-  private String source;
-  private String imgSource;
+  private String chroniclerSources;
+  private String projectSources;
   private String destination;
-  private VelocityContext baseCtx;
-  
-  private String htmlPath = "/html";
-  private String imgPath = "/img";
+  private VelocityContext baseCtx;  
 
   public void close() {
-    System.out.println("********** CFKGenerator - Close! **********");
+    System.out.println("********** ChroniclerGenerator - Close! **********");
   }
 
-  private void createPageChronicles(CFKData data) throws IOException {
+  private void createPageChronicles(ChroniclerData data) throws IOException {
 
     ChroniclesBean bean = new ChroniclesBean();
-    List<Adventure> adventures = data.getAdventures();
-    // IMPL: Order Adventures by Date!
+    List<Endeavor> endeavors = data.getEndeavors();
+    // IMPL: Order Endeavors by Date!
     bean.setPageTitle("Die Chroniken");
-    bean.setAdventures(adventures);
+    bean.setEndeavors(endeavors);
     mergeTemplateWithBeanDataToFile("chronicles", bean);
 
     System.out.println("--> Page 'chronicles' created!");
   }
 
-  private void createPageHome(CFKData data) throws ResourceNotFoundException, ParseErrorException, MethodInvocationException,
+  private void createPageHome(ChroniclerData data) throws ResourceNotFoundException, ParseErrorException, MethodInvocationException,
       IOException {
 
     HomeBean bean = new HomeBean();
-    List<Adventure> adventures = data.getAdventures();
+    List<Endeavor> endeavors = data.getEndeavors();
 
-    // Latest Adventure for index.html
-    Adventure adventure = adventures.get(0);
-    bean.setAdventure(adventure);
+    // Latest Endeavor for index.html
+    Endeavor endeavor = endeavors.get(0);
+    bean.setEndeavor(endeavor);
     bean.setPageTitle("Startseite");
     mergeTemplateWithBeanDataToFile("home", bean);
     
     System.out.println("--> Page 'home' created!");
   }
 
-  private void createPageIdx(CFKData data) throws IOException {
+  private void createPageIdx(ChroniclerData data) throws IOException {
 
     IdxBean bean = new IdxBean();
     bean.setPageTitle("Index");
-    bean.setAdventures(data.getAdventures());
-    bean.setHelden(data.getHelden());
-    bean.setOrte(data.getOrte());
-    bean.setNscs(data.getNscs());
-    bean.setKreaturen(data.getKreaturen());
+    bean.setEndeavors(data.getEndeavors());
+    bean.setMembers(data.getMembers());
+    bean.setLocations(data.getLocations());
+    bean.setStakeholders(data.getStakeholders());
+    bean.setCreatures(data.getCreatures());
     mergeTemplateWithBeanDataToFile("idx", bean);
 
     System.out.println("--> Page 'idx' created!");
   }
 
-  private void createPageMap(CFKData data) throws IOException {
+  private void createPageMap(ChroniclerData data) throws IOException {
     MapBean bean = new MapBean();
     bean.setPageTitle("Karte");
     bean.setMap("map");
 
-    List<Adventure> adventures = data.getAdventures();
+    List<Endeavor> endeavors = data.getEndeavors();
 
-    // IMPL: order adventures by date!
-    bean.setAdventures(adventures);
+    // IMPL: order endeavors by date!
+    bean.setEndeavors(endeavors);
 
     mergeTemplateWithBeanDataToFile("map", bean);
 
     System.out.println("--> Page 'map' created!");
   }
 
-  private void createPagesAdventure(CFKData data) throws IOException {
-    List<Adventure> adventures = data.getAdventures();
-    for (Adventure adventure : adventures) {
-      AdventureBean bean = new AdventureBean();
-      bean.setAdventure(adventure);
-      mergeTemplateWithBeanDataToFile("adventure", bean, resolver.resolveUrlFor(adventure));
+  private void createPagesEndeavors(ChroniclerData data) throws IOException {
+    List<Endeavor> endeavors = data.getEndeavors();
+    for (Endeavor endeavor : endeavors) {
+      EndeavorBean bean = new EndeavorBean();
+      bean.setEndeavor(endeavor);
+      mergeTemplateWithBeanDataToFile("endeavor", bean, resolver.resolveUrlFor(endeavor));
 
-      System.out.println("----> Adventure " + adventure.getTitle());
+      System.out.println("----> Endeavor " + endeavor.getTitle());
     }
 
-    System.out.println("--> Adventures created!");
+    System.out.println("--> Endeavors created!");
   }
 
-  private void createPagesHelden(CFKData data) throws IOException {
-    List<Held> helden = data.getHelden();
-    for (Held held : helden) {
-      HeldBean bean = new HeldBean();
-      bean.setHeld(held);
-      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(held));
+  private void createPagesMembers(ChroniclerData data) throws IOException {
+    List<Member> members = data.getMembers();
+    for (Member member : members) {
+      MemberBean bean = new MemberBean();
+      bean.setMember(member);
+      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(member));
 
-      System.out.println("----> Held " + held.getName());
+      System.out.println("----> Member " + member.getName());
     }
-    System.out.println("--> Helden created!");
+    System.out.println("--> Members created!");
   }
 
-  private void createPagesKreaturen(CFKData data) throws IOException {
-    List<Kreatur> kreaturen = data.getKreaturen();
-    for (Kreatur kreatur : kreaturen) {
-      KreaturBean bean = new KreaturBean();
-      bean.setKreatur(kreatur);
-      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(kreatur));
+  private void createPagesCreatures(ChroniclerData data) throws IOException {
+    List<Creature> creatures = data.getCreatures();
+    for (Creature creature : creatures) {
+      CreatureBean bean = new CreatureBean();
+      bean.setCreature(creature);
+      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(creature));
 
-      System.out.println("----> Kreatur " + kreatur.getName());
+      System.out.println("----> Creature " + creature.getName());
     }
-    System.out.println("--> Kreaturen created!");
+    System.out.println("--> Creatures created!");
   }
 
-  private void createPagesNscs(CFKData data) throws IOException {
-    List<Nsc> nscs = data.getNscs();
-    for (Nsc nsc : nscs) {
-      NscBean bean = new NscBean();
-      bean.setNsc(nsc);
-      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(nsc));
+  private void createPagesStakeholders(ChroniclerData data) throws IOException {
+    List<Stakeholder> stakeholders = data.getStakeholders();
+    for (Stakeholder stakeholder : stakeholders) {
+      StakeholderBean bean = new StakeholderBean();
+      bean.setStakeholder(stakeholder);
+      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(stakeholder));
       
-      System.out.println("----> NSC " + nsc.getName());
+      System.out.println("----> Stakeholder " + stakeholder.getName());
     }
-    System.out.println("--> NSCs created!");
+    System.out.println("--> Stakeholders created!");
   }
 
-  private void createPagesOrte(CFKData data) throws IOException {
-    List<Ort> orte = data.getOrte();
-    for (Ort ort : orte) {
-      OrtBean bean = new OrtBean();
-      bean.setOrt(ort);
-      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(ort));
+  private void createPagesLocations(ChroniclerData data) throws IOException {
+    List<Location> locations = data.getLocations();
+    for (Location location : locations) {
+      LocationBean bean = new LocationBean();
+      bean.setLocation(location);
+      mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(location));
       
-      System.out.println("----> Ort " + ort.getName());
+      System.out.println("----> Location " + location.getName());
     }
-    System.out.println("--> Orte created!");
+    System.out.println("--> Locations created!");
   }
 
-  private void generateMap(List<Adventure> adventures, String map) throws IOException {
-    Collections.reverse(adventures);
+  private void generateMap(List<Endeavor> endeavors, String map) throws IOException {
+    Collections.reverse(endeavors);
     BufferedImage img = ImageIO.read(new File(map));
     Graphics2D graphics = img.createGraphics();
     graphics.setStroke(new BasicStroke(50.0f));
-    Wegpunkt previous = null;
-    for (Adventure adventure : adventures) {
-      for (Wegpunkt current : adventure.getWegpunkte()) {
+    Waypoint previous = null;
+    for (Endeavor endeavor : endeavors) {
+      for (Waypoint current : endeavor.getWaypoints()) {
         if (previous != null) {
           graphics.drawLine(previous.getX(), previous.getY(), current.getX(), current.getY());
         }
         previous = current;
       }
     }
-    ImageIO.write(img, "jpg", new File(destination + imgPath + "/map.jpg"));
+    ImageIO.write(img, "jpg", new File(destination + IMG_PATH + "/map.jpg"));
 
     System.out.println("--> MAP created!");  
   }
 
-  private CFKData loadDataFromXml(String xml) throws JAXBException, IOException {
+  private ChroniclerData loadDataFromXml(String xml) throws JAXBException, IOException {
 	    System.setProperty("javax.xml.accessExternalDTD", "all");	  
 	  
 	    File file = new File(xml);
-	    JAXBContext jaxbContext = JAXBContext.newInstance(CFKData.class);
+	    JAXBContext jaxbContext = JAXBContext.newInstance(ChroniclerData.class);
 
 	    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-	    CFKData data = (CFKData) jaxbUnmarshaller.unmarshal(new StreamSource(file));
+	    ChroniclerData data = (ChroniclerData) jaxbUnmarshaller.unmarshal(new StreamSource(file));
 	    
-	    List<Adventure> adventures = data.getAdventures();
-	    for (Adventure adventure : adventures) {
-		    List<Ereignis> ereignisse = adventure.getEreignisse();
-	    	for (Ereignis ereignis : ereignisse) {
-	    		ereignis.setAdventure(adventure);
-		    	List<Held> helden = ereignis.getHelden();
-		    	for (Held held : helden) {
-		    		held.add(ereignis);
+	    List<Endeavor> endeavors = data.getEndeavors();
+	    for (Endeavor endeavor : endeavors) {
+		    List<Event> events = endeavor.getEvents();
+	    	for (Event event : events) {
+	    		event.setEndeavor(endeavor);
+		    	List<Member> members = event.getMembers();
+		    	for (Member member : members) {
+		    		member.add(event);
 		    	}
-		    	List<Nsc> nscs = ereignis.getNscs();
-		    	for (Nsc nsc : nscs) {
-		    		nsc.add(ereignis);
+		    	List<Stakeholder> stakeholders = event.getStakeholders();
+		    	for (Stakeholder stakeholder : stakeholders) {
+		    		stakeholder.add(event);
 		    	}
-		    	List<Kreatur> kreaturen = ereignis.getKreaturen();
-		    	for (Kreatur kreatur : kreaturen) {
-		    		kreatur.add(ereignis);
+		    	List<Creature> kreaturen = event.getCreatures();
+		    	for (Creature creature : kreaturen) {
+		    		creature.add(event);
 		    	}
-		    	Ort ort = ereignis.getOrt();
-		    		if (ort != null) {
-		    			ort.add(ereignis);
+		    	Location location = event.getLocation();
+		    		if (location != null) {
+		    			location.add(event);
 		    		}
 		    }
 	    }
@@ -235,15 +240,15 @@ public class XmlStaticSiteGenerator {
 	    return data;
 	  }
 
-  public void initialize(String source, String imgSource, String destination, CFKData data, boolean copyImages) throws IOException, JAXBException {
-    System.out.println("********** CFKGenerator - Initialize! **********");
-    this.source = source;
-    this.imgSource = imgSource;
+  public void initialize(String chroniclerSources, String projectSources, String destination, ChroniclerData data, boolean copyImages, boolean copyMapTiles) throws IOException, JAXBException {
+    System.out.println("********** ChroniclerGenerator - Initialize! **********");
+    this.chroniclerSources = chroniclerSources;
+    this.projectSources = projectSources;
     this.destination = destination;
 
-    resolver = new StaticUrlResolver(imgSource);
+    resolver = new StaticUrlResolver(projectSources + IMG_PATH);
 
-    prepareDestination(copyImages);
+    prepareDestination(copyImages, copyMapTiles);
 
     Velocity.init("src/main/resources/velocity.properties");
 
@@ -251,42 +256,45 @@ public class XmlStaticSiteGenerator {
     baseCtx.put("resolver", resolver);
     baseCtx.put("formatter", new DateFormatter());
     
-    List<Adventure> navAdventures = data.getAdventures();
-    List<Held> navHelden = data.getHelden();
+    List<Endeavor> navAdventures = data.getEndeavors();
+    List<Member> navHelden = data.getMembers();
     baseCtx.put("navigation", new NavigationBean(navAdventures, navHelden));
 
     EventCartridge ec = new EventCartridge();
-    ec.addEventHandler(new CfkReferenceInsertionEventHandler(new XmlInternalLinksProvider(data), resolver));
+    ec.addEventHandler(new ChroniclerReferenceInsertionEventHandler(new XmlInternalLinksProvider(data), resolver));
 
     ec.attachToContext(baseCtx);
   }
 
-  private void mergeTemplateWithBeanDataToFile(String templateBaseName, CfkPageBean bean) throws IOException {
+  private void mergeTemplateWithBeanDataToFile(String templateBaseName, ChroniclerPageBean bean) throws IOException {
     mergeTemplateWithBeanDataToFile(templateBaseName, bean, templateBaseName + ".html");
   }
 
-  private void mergeTemplateWithBeanDataToFile(String templateBaseName, CfkPageBean bean, String destinationFileName)
+  private void mergeTemplateWithBeanDataToFile(String templateBaseName, ChroniclerPageBean bean, String destinationFileName)
       throws IOException {
     VelocityContext ctx = new VelocityContext(baseCtx);
     ctx.put("bean", bean);
     Template tpl = Velocity.getTemplate(templateBaseName + ".vm");
-    try (FileWriter fw = new FileWriter(new File(destination + htmlPath + "/" + destinationFileName))) {
+    try (FileWriter fw = new FileWriter(new File(destination + HTML_PATH + "/" + destinationFileName))) {
       tpl.merge(ctx, fw);
       fw.flush();
     }
   }
 
-  private void prepareDestination(boolean copyImages) throws IOException {
-    copyDir(new File(source + "/css"), new File(destination + "/css"));
-    copyDir(new File(source + "/js"), new File(destination + "/js"));
-    FileUtils.copyFile(new File(source + "/index.html"), new File(destination + "/index.html"));
-    FileUtils.copyFile(new File(source + "/notfound.html"), new File(destination + "/notfound.html"));
+  private void prepareDestination(boolean copyImages, boolean copyTiles) throws IOException {
+    copyDir(new File(chroniclerSources + CSS_PATH), new File(destination + CSS_PATH));
+    copyDir(new File(chroniclerSources + JS_PATH), new File(destination + JS_PATH));
+    FileUtils.copyFile(new File(chroniclerSources + "/index.html"), new File(destination + "/index.html"));
+    FileUtils.copyFile(new File(chroniclerSources + "/notfound.html"), new File(destination + "/notfound.html"));
 
 	if (copyImages) {
-	  copyDir(new File(imgSource), new File(destination + imgPath));
+		  copyDir(new File(projectSources + IMG_PATH), new File(destination + IMG_PATH));
+	}
+	if (copyTiles) {
+		  copyDir(new File(projectSources + TILES_PATH), new File(destination + TILES_PATH));
 	}
 
-    copyDir(new File(source + htmlPath), new File(destination + htmlPath));
+    copyDir(new File(chroniclerSources + HTML_PATH), new File(destination + HTML_PATH));
   }
 
   private void copyDir(File from, File to) throws IOException {
@@ -298,23 +306,23 @@ public class XmlStaticSiteGenerator {
 	FileUtils.copyDirectory(from, to);
   }
 
-public void run(String source, String imgSource, String destination, String xml, String map, boolean generateMap, boolean copyImages) throws IOException, JAXBException {
-	CFKData data = loadDataFromXml(xml);
-    initialize(source, imgSource, destination, data, copyImages);
+public void run(String chroniclerSources, String projectSources, String destination, boolean generateMap, boolean copyImages, boolean copyTiles) throws IOException, JAXBException {
+	ChroniclerData data = loadDataFromXml(projectSources + XML_PATH);
+    initialize(chroniclerSources, projectSources, destination, data, copyImages, copyTiles);
 
     if (generateMap) {
-      generateMap(data.getAdventures(), map);
+      generateMap(data.getEndeavors(), projectSources + MAP_PATH);
     }
     
     createPageMap(data);
     createPageHome(data);
     createPageChronicles(data);
     createPageIdx(data);
-    createPagesAdventure(data);
-    createPagesOrte(data);
-    createPagesHelden(data);
-    createPagesNscs(data);
-    createPagesKreaturen(data);
+    createPagesEndeavors(data);
+    createPagesLocations(data);
+    createPagesMembers(data);
+    createPagesStakeholders(data);
+    createPagesCreatures(data);
 
     close();
   }
