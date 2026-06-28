@@ -1,0 +1,17 @@
+          <h4 name="title">$endeavor.date - $endeavor.title</h4>
+          <div class="row">
+            <div class="span2">
+#foreach($session in $endeavor.sessions)
+				$formatter.format($session.date), $session.location<br />
+#end
+            </div>
+            <div class="span8">
+            	$endeavor.description
+            </div>
+            <div class="span2">
+                <a href="$resolver.resolveUrlFor($endeavor)" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor($endeavor)" alt="$endeavor.title" />
+                </a>
+            </div>
+          </div>
+          <p><a class="btn" href="$resolver.resolveUrlFor($endeavor)">Mehr &raquo;</a></p>

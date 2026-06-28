@@ -3,34 +3,34 @@
               <img src="$resolver.resolveImageUrlFor($bean.object)" alt="$bean.object.name" />
             </a>
             <ul class="nav nav-list">
-#if($bean.object.adventures)
+#if($bean.object.endeavors)
               <li class="nav-header">Abenteuer</li>
-#foreach($a in $bean.object.adventures)
-              <li><a href="$resolver.resolveUrlFor($a)">$a.title</a></li>
+#foreach($endeavor in $bean.object.endeavors)
+              <li><a href="$resolver.resolveUrlFor($endeavor)">$endeavor.title</a></li>
 #end
 #end
-#if($bean.object.orte)
+#if($bean.object.locations)
               <li class="nav-header">Orte</li>
-#foreach($o in $bean.object.orte)
-              <li><a href="$resolver.resolveUrlFor($o)">$o.name</a></li>
+#foreach($location in $bean.object.locations)
+              <li><a href="$resolver.resolveUrlFor($location)">$location.name</a></li>
 #end
 #end
-#if($bean.object.kreaturen)
+#if($bean.object.creatures)
               <li class="nav-header">Kreaturen</li>
-#foreach($k in $bean.object.kreaturen)
-              <li><a href="$resolver.resolveUrlFor($k)">$k.name</a></li>
+#foreach($creature in $bean.object.creatures)
+              <li><a href="$resolver.resolveUrlFor($creature)">$creature.name</a></li>
 #end
 #end
-#if($bean.object.nscs)
+#if($bean.object.stakeholders)
               <li class="nav-header">Meisterpersonen</li>
-#foreach($n in $bean.object.nscs)
-              <li><a href="$resolver.resolveUrlFor($n)">$n.name</a></li>
+#foreach($stakeholder in $bean.object.stakeholders)
+              <li><a href="$resolver.resolveUrlFor($stakeholder)">$stakeholder.name</a></li>
 #end
 #end
-#if($bean.object.helden)
+#if($bean.object.members)
               <li class="nav-header">Helden</li>
-#foreach($h in $bean.object.helden)
-              <li><a href="$resolver.resolveUrlFor($h)">$h.name</a></li>
+#foreach($member in $bean.object.members)
+              <li><a href="$resolver.resolveUrlFor($member)">$member.name</a></li>
 #end
 #end
             </ul>

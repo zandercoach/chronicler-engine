@@ -17,16 +17,16 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Abenteuer <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-#foreach($a in $navigation.adventures)
-                  <li><a href="$resolver.resolveUrlFor($a)">$a.title</a></li>
+#foreach($endeavor in $navigation.endeavors)
+                  <li><a href="$resolver.resolveUrlFor($endeavor)">$endeavor.title</a></li>
 #end
                 </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Helden <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-#foreach($h in $navigation.helden)
-                  <li><a href="$resolver.resolveUrlFor($h)">$h.name</a></li>
+#foreach($member in $navigation.members)
+                  <li><a href="$resolver.resolveUrlFor($member)">$member.name</a></li>
 #end
                 </ul>
               </li>

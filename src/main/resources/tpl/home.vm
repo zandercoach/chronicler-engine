@@ -9,7 +9,7 @@
 
 <!-- CONTENT -->
     <div class="container">
-      <div class="cfk-unit">
+      <div class="chronicler-unit">
         <h1>Die Chroniken des Fliegenden Kessels</h1>
         <p>Willkommen bei den ruhmreichen Taten der Dere-weit bekannten und verehrten Helden des Fliegenden Kessels:</p>
         <p>
@@ -17,26 +17,26 @@
             <ul class="thumbnails">
               <li class="span3">
                 <h3>Belgarion</h3>
-                <a href="$resolver.resolveUrlFor('Belgarion', 'Held')" class="thumbnail">
-                  <img src="$resolver.resolveImageUrlFor('Belgarion', 'Held')" alt="Belgarion" id="img:held:belgarion" />
+                <a href="$resolver.resolveUrlFor('Belgarion', 'Member')" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor('Belgarion', 'Member')" alt="Belgarion" id="img:held:belgarion" />
                 </a>
               </li>
               <li class="span3">
                 <h3>Kassandra</h3>
-                <a href="$resolver.resolveUrlFor('Kassandra', 'Held')" class="thumbnail">
-                  <img src="$resolver.resolveImageUrlFor('Kassandra', 'Held')" alt="Kassandra" id="img:held:kassandra" />
+                <a href="$resolver.resolveUrlFor('Kassandra', 'Member')" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor('Kassandra', 'Member')" alt="Kassandra" id="img:held:kassandra" />
                 </a>
               </li>
               <li class="span3">
                 <h3>Kjaska</h3>
-                <a href="$resolver.resolveUrlFor('Kjaska', 'Held')" class="thumbnail">
-                  <img src="$resolver.resolveImageUrlFor('Kjaska', 'Held')" alt="Kjaska" id="img:held:kjaska" />
+                <a href="$resolver.resolveUrlFor('Kjaska', 'Member')" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor('Kjaska', 'Member')" alt="Kjaska" id="img:held:kjaska" />
                 </a>
               </li>
               <li class="span3">
                 <h3>Volpierro</h3>
-                <a href="$resolver.resolveUrlFor('Volpierro', 'Held')" class="thumbnail">
-                  <img src="$resolver.resolveImageUrlFor('Volpierro', 'Held')" alt="Volpierro" id="img:held:volpierro" />
+                <a href="$resolver.resolveUrlFor('Volpierro', 'Member')" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor('Volpierro', 'Member')" alt="Volpierro" id="img:held:volpierro" />
                 </a>
               </li>
             </ul>
@@ -47,26 +47,26 @@
             <ul class="thumbnails">
               <li class="span3">
                 <h3>Zanrix</h3>
-                <a href="$resolver.resolveUrlFor('Zanrix', 'Held')" class="thumbnail">
-                  <img src="$resolver.resolveImageUrlFor('Zanrix', 'Held')" alt="Gilmon" id="img:held:zanrix" />
+                <a href="$resolver.resolveUrlFor('Zanrix', 'Member')" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor('Zanrix', 'Member')" alt="Gilmon" id="img:held:zanrix" />
                 </a>
               </li>
               <li class="span3">
                 <h3>Yona</h3>
-                <a href="$resolver.resolveUrlFor('Yona', 'Held')" class="thumbnail">
-                  <img src="$resolver.resolveImageUrlFor('Yona', 'Held')" alt="Yona" id="img:held:yona" />
+                <a href="$resolver.resolveUrlFor('Yona', 'Member')" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor('Yona', 'Member')" alt="Yona" id="img:held:yona" />
                 </a>
               </li>
               <li class="span3">
                 <h3>Salogni (Elfeninseln)</h3>
-                <a href="$resolver.resolveUrlFor('Salogni', 'Held')" class="thumbnail">
-                  <img src="$resolver.resolveImageUrlFor('Salogni', 'Held')" alt="Salogni" id="img:held:salogni" />
+                <a href="$resolver.resolveUrlFor('Salogni', 'Member')" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor('Salogni', 'Member')" alt="Salogni" id="img:held:salogni" />
                 </a>
               </li>
               <li class="span3">
                 <h3>Bruno (R.I.P.)</h3>
-                <a href="$resolver.resolveUrlFor('Bruno', 'Held')" class="thumbnail">
-                  <img src="$resolver.resolveImageUrlFor('Bruno', 'Held')" alt="Bruno" id="img:held:bruno" />
+                <a href="$resolver.resolveUrlFor('Bruno', 'Member')" class="thumbnail">
+                  <img src="$resolver.resolveImageUrlFor('Bruno', 'Member')" alt="Bruno" id="img:held:bruno" />
                 </a>
               </li>
             </ul>
@@ -75,11 +75,11 @@
       </div>
 
       <div class="row">
-        <div class="span12" id="teaser:abenteuer">
+        <div class="span12" id="teaser:endeavor">
           <h2>Letztes Abenteuer</h2>
           <hr />
-#set( $adventure = $bean.adventure )
-#parse("inc_adv_teaser.vm")
+#set( $endeavor = $bean.endeavor )
+#parse("inc_endeavor_teaser.vm")
         </div>
       </div>
 

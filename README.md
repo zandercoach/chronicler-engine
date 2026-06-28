@@ -1,7 +1,7 @@
 # Chroniken des Fliegenden Kessels — Engine
 
 Generator that turns XML-described campaign content (heroes, monsters, NPCs,
-locations, adventures, sessions) into a static HTML website, using JAXB for
+locations, endeavors, sessions) into a static HTML website, using JAXB for
 XML binding and Velocity for templating.
 
 This repository contains only the **engine**: Java source, page templates,
@@ -22,12 +22,12 @@ mvn clean compile
 
 ```
 mvn org.codehaus.mojo:exec-maven-plugin:3.1.0:java \
-  -Dexec.mainClass=coach.zander.cfk.cli.gen.xml.XmlStaticSiteGeneratorApp
+  -Dexec.mainClass=coach.zander.chronicler.cli.gen.xml.XmlStaticSiteGeneratorApp
 ```
 
-This expects a sibling directory `../coach.zander.cfk.data` containing the content data
+This expects a sibling directory `../chronicler-data-cfk` containing the content data
 (see `XmlStaticSiteGeneratorApp` for the exact expected layout: `data/`,
-`img/`). Output is written to `target/cfk`.
+`img/`). Output is written to `target/chronicler`.
 
 ## Status
 

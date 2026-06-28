@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!DOCTYPE doc [
-<!ENTITY abenteuerXml SYSTEM "abenteuer.xml">
-<!ENTITY heldenXml SYSTEM "helden.xml">
-<!ENTITY kreaturenXml SYSTEM "kreaturen.xml">
-<!ENTITY nscsXml SYSTEM "nscs.xml">
-<!ENTITY orteXml SYSTEM "orte.xml">
+<!ENTITY endeavorXml SYSTEM "endeavor.xml">
+<!ENTITY membersXml SYSTEM "members.xml">
+<!ENTITY creaturesXml SYSTEM "creatures.xml">
+<!ENTITY stakeholdersXml SYSTEM "stakeholders.xml">
+<!ENTITY locationsXml SYSTEM "locations.xml">
 <!ENTITY sessionsXml SYSTEM "sessions.xml">
 ]>
 
-<cfkData>
+<chroniclerData>
 
-    &abenteuerXml;
+    &endeavorXml;
 
-    &heldenXml;
-    &kreaturenXml;
-    &nscsXml;
-    &orteXml;
+    &membersXml;
+    &creaturesXml;
+    &stakeholdersXml;
+    &locationsXml;
     &sessionsXml;
 
-</cfkData>
+</chroniclerData>

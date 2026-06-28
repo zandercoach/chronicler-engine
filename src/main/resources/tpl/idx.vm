@@ -19,40 +19,40 @@
         <div class="span4">
           <h4>Abenteuer</h4>
             <ul class="nav nav-list">
-#foreach($a in $bean.adventures)
-              <li><a href="$resolver.resolveUrlFor($a)">$a.title</a></li>
+#foreach($endeavor in $bean.endeavors)
+              <li><a href="$resolver.resolveUrlFor($endeavor)">$endeavor.title</a></li>
 #end
             </ul>
         </div>
         <div class="span2">
           <h4>Helden</h4>
             <ul class="nav nav-list">
-#foreach($h in $bean.helden)
-              <li><a href="$resolver.resolveUrlFor($h)">$h.name</a></li>
+#foreach($member in $bean.members)
+              <li><a href="$resolver.resolveUrlFor($member)">$member.name</a></li>
 #end
             </ul>
         </div>
         <div class="span2">
           <h4>Meisterpersonen</h4>
             <ul class="nav nav-list">
-#foreach($n in $bean.nscs)
-              <li><a href="$resolver.resolveUrlFor($n)">$n.name</a></li>
+#foreach($stakeholder in $bean.stakeholders)
+              <li><a href="$resolver.resolveUrlFor($stakeholder)">$stakeholder.name</a></li>
 #end
             </ul>
         </div>
         <div class="span2">
           <h4>Kreaturen</h4>
             <ul class="nav nav-list">
-#foreach($k in $bean.kreaturen)
-              <li><a href="$resolver.resolveUrlFor($k)">$k.name</a></li>
+#foreach($creature in $bean.creatures)
+              <li><a href="$resolver.resolveUrlFor($creature)">$creature.name</a></li>
 #end
             </ul>
         </div>
         <div class="span2">
           <h4>Schaupl&auml;tze</h4>
             <ul class="nav nav-list">
-#foreach($o in $bean.orte)
-              <li><a href="$resolver.resolveUrlFor($o)">$o.name</a></li>
+#foreach($location in $bean.locations)
+              <li><a href="$resolver.resolveUrlFor($location)">$location.name</a></li>
 #end
             </ul>
         </div>

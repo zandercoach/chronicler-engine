@@ -40,18 +40,18 @@
         
         var routeCoordinates;
 
-#foreach($adventure in $bean.adventures)
+#foreach($endeavor in $bean.endeavors)
         routeCoordinates = [
 
-  #foreach($wegpunkt in $adventure.wegpunkte)
-          getLatLng($wegpunkt.x, $wegpunkt.y), // $wegpunkt.ort.name
+  #foreach($waypoint in $endeavor.waypoints)
+          getLatLng($waypoint.x, $waypoint.y), // $waypoint.ort.name
   #end
         ];
         new google.maps.Polyline({map: map, path: routeCoordinates, strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2});
 
-  #foreach($ereignis in $adventure.ereignisse)
-    #if($ereignis.ort)
-        new MapLabel({text: '$ereignis.ort.name', position: getLatLng($ereignis.ort.x, $ereignis.ort.y), map: map, fontSize: 12});
+  #foreach($event in $endeavor.events)
+    #if($event.location)
+        new MapLabel({text: '$event.location.name', position: getLatLng($event.location.x, $event.location.y), map: map, fontSize: 12});
     #end
   #end
 #end

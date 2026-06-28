@@ -11,16 +11,16 @@
     <div class="container">
       <div class="row">
         <div class="span9">
-          <h2>$bean.object.name</h2>
-#if($bean.object.wikiPage && !$resolver.resolveWikiUrlFor($bean.object.wikiPage).isEmpty())
-          (siehe auch <a href="$resolver.resolveWikiUrlFor($bean.object.wikiPage)" target="wiki-aventurica" class="chronicler-wiki-aventurica-link">Wiki Aventurica</a>)
+          <h2>$bean.endeavor.title</h2>
+#if($bean.endeavor.wikiPage && !$resolver.resolveWikiUrlFor($bean.endeavor.wikiPage).isEmpty())
+          (siehe auch <a href="$resolver.resolveWikiUrlFor($bean.endeavor.wikiPage)" target="wiki-aventurica" class="chronicler-wiki-aventurica-link">Wiki Aventurica</a>)
 #end
-        <hr />
+          <hr />
           <h4>Kurzbeschreibung</h4>
-          $bean.object.description
-        <hr />
+          $bean.endeavor.description
+          <hr />
           <h4>Ereignisse</h4>
-#foreach($event in $bean.object.events)
+#foreach($event in $bean.endeavor.events)
 #if($event.location)
           <h5>$event.date - $event.location.name - $event.title</h5>
 #else
@@ -28,10 +28,10 @@
 #end
           $event.description
 #end
-#parse("inc_obj_${bean.object.class.simpleName}.vm")
+#parse("inc_endeavor_detailed.vm")
         </div>
         <div class="span3">
-#parse("inc_obj_references.vm")
+#parse("inc_endeavor_references.vm")
         </div>
       </div>
 
@@ -39,7 +39,7 @@
 
 #parse("inc_footer.vm")
     </div> <!-- /container -->
-    
+
 #parse("inc_js.vm")
   </body>
 </html>

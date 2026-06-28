@@ -12,9 +12,9 @@
       <div class="row">
         <div class="span12">
           <h2>$bean.pageTitle</h2>
-#foreach($adventure in $bean.adventures)
+#foreach($endeavor in $bean.endeavors)
           <hr />
-#parse("inc_adv_teaser.vm")
+#parse("inc_endeavor_teaser.vm")
 #end
         </div>
       </div>
