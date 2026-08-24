@@ -1,4 +1,13 @@
-# Keine Zeilenenden-Umwandlung. Der Arbeitsstand ist byte-genau das,
-# was im Repo liegt — sonst schreibt ein Rollback CRLF zurueck
-# (core.autocrlf ist auf diesem Rechner systemweit auf true).
-* -text
+# LF ist der Standard, auch unter Windows — GitHub, Linux, WSL, Docker und CI
+# erwarten es. Git speichert LF und checkt LF aus; das systemweite
+# core.autocrlf=true wird dadurch ausser Kraft gesetzt, und ein Rollback per
+# git checkout gibt wieder byte-genau das zurueck, was im Repo liegt.
+* text=auto eol=lf
+
+# Windows-Formate, die CRLF tatsaechlich brauchen.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.reg text eol=crlf
+
+# Unangetastet: Design-Master, die als Text daherkommen.
+*.eps -text
