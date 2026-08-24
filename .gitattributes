@@ -1,0 +1,4 @@
+# Keine Zeilenenden-Umwandlung. Der Arbeitsstand ist byte-genau das,
+# was im Repo liegt — sonst schreibt ein Rollback CRLF zurueck
+# (core.autocrlf ist auf diesem Rechner systemweit auf true).
+* -text
