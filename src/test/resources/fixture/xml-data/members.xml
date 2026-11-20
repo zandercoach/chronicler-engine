@@ -1,3 +1,5 @@
 <members>
     <member name="Test-Member" description="A Test-Member."/>
+    <member name="Jörn Eisenfaust" wikiPage="Schmied" description="Jörn Eisenfaust is a [[Schmied|smith]] who travels with Test-Member and trusts no map he did not draw himself."/>
+    <member name="Ylva" description="TODO"/>
 </members>
