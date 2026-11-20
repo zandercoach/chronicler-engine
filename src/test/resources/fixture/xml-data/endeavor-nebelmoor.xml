@@ -1,0 +1,31 @@
+    <endeavor date="12.RAH 1003 BF" wikiPage="Nebelmoor">
+        <title>Der Turm im Nebelmoor</title>
+        <description>Two years after the Test-Endeavor, Test-Member and Jörn Eisenfaust follow a rumour of a drowned tower into the [[Moor|Nebelmoor]]. Their guide is Mirela vom Mühlbach, who knows the paths &amp; the price of losing them.
+A second paragraph, so that line breaks inside a description are covered as well.</description>
+        <event date="12.RAH 1003 BF" location="Mühlbach">
+            <title>Ein Führer mit Preis</title>
+            <description>In the mill at Mühlbach, Mirela vom Mühlbach names her price: "half of whatever the tower gives up". Jörn Eisenfaust haggles, Test-Member pays.</description>
+            <stakeholder>Mirela vom Mühlbach</stakeholder>
+            <member>Test-Member</member>
+            <member>Jörn Eisenfaust</member>
+        </event>
+        <event date="1.NAM 1003 BF" location="Turm im Nebelmoor">
+            <title>Lichter über dem Wasser</title>
+            <description>On the first of the nameless days the Moorlicht lead the heroes off the path. Jörn Eisenfaust recognises them as [[Irrlicht|will-o'-the-wisps]] just in time.</description>
+            <stakeholder>Mirela vom Mühlbach</stakeholder>
+            <member>Test-Member</member>
+            <member>Jörn Eisenfaust</member>
+            <creature>Moorlicht</creature>
+            <creature>Test-Creature</creature>
+        </event>
+        <event date="3.NAM 1003 BF">
+            <title>Rückweg ohne Karte</title>
+            <description>An event without a location, as the data allows.</description>
+            <member>Jörn Eisenfaust</member>
+        </event>
+        <waypoint location="Mühlbach"/>
+        <waypoint location="Turm im Nebelmoor"/>
+        <waypoint x="420" y="310"/>
+        <session>2024-03-09</session>
+        <session>2024-04-20</session>
+    </endeavor>

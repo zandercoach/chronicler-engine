@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <!DOCTYPE doc [
+<!ENTITY nebelmoorXml SYSTEM "endeavor-nebelmoor.xml">
 <!ENTITY endeavorXml SYSTEM "endeavor.xml">
 <!ENTITY membersXml SYSTEM "members.xml">
 <!ENTITY creaturesXml SYSTEM "creatures.xml">
@@ -11,6 +12,7 @@
 
 <chroniclerData>
 
+    &nebelmoorXml;
     &endeavorXml;
 
     &membersXml;

@@ -1,3 +1,4 @@
 <creatures>
     <creature name="Test-Creature" description="A Test-Creature."/>
+    <creature name="Moorlicht" wikiPage="Irrlicht" description="Lights over the Nebelmoor that lure travellers off the path."/>
 </creatures>

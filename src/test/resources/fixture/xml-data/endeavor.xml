@@ -1,12 +1,13 @@
     <endeavor date="1.PER 1001 BF" wikiPage="Test-Endeavor">
         <title>Test-Endeavor</title>
         <description>A test endeavor description without links.</description>
-        <ereignis date="1.PER 1001 BF" ort="Testort">
+        <event date="1.PER 1001 BF" location="Test-Location">
             <title>Test-Event</title>
             <description>A test event description.</description>
-            <held>Test-Member</held>
             <stakeholder>Test-Stakeholder</stakeholder>
-            <kreatur>Test-Creature</kreatur>
-        </ereignis>
+            <member>Test-Member</member>
+            <creature>Test-Creature</creature>
+        </event>
         <waypoint x="100" y="100"/>
+        <session>2023-11-17</session>
     </endeavor>
