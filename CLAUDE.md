@@ -17,7 +17,7 @@ this repo; whoever starts work here reads the latest entry there first.
 JDK 21. There is **no local Maven installation** on this machine — use the
 wrapper, which fetches its own Maven 3.9.9 into `~/.m2/wrapper/dists/`:
 
-    ./mvnw clean test          4 characterization tests, currently green
+    ./mvnw clean test          27 tests, currently green
     ./mvnw clean package
 
 Running the generator:
@@ -59,15 +59,17 @@ name is its provenance.
 
 ## The tests
 
-`XmlStaticSiteGeneratorCharacterizationTest` pins down **observed behaviour, not
-a specification.** A red test means behaviour changed — first decide whether the
-change was wanted, then adjust the test, never the other way round.
+The tests pin down **observed behaviour, not a specification.** A red test means behaviour changed — first decide whether the change was wanted, then adjust the test, never the other way round.
 
-It runs against a small fixture under `src/test/resources/fixture/` instead of
-the private data repo, so the public repo tests on its own. The fixture is copied
-into a temp directory on purpose: that is what exercises XML entity resolution
-relative to the data file, and copying it in place would silently defeat the
-test.
+All of them run against a small, invented fixture under `src/test/resources/fixture/` instead of the private data repo, so the public repo tests on its own. The fixture is copied into a temp directory on purpose: that is what exercises XML entity resolution relative to the data file, and copying it in place would silently defeat the test. JAXB skips unknown elements without a word, so fixture XML must use the element names the model reads.
+
+- `XmlStaticSiteGeneratorCharacterizationTest` — files and pages exist.
+- `GeneratedPagesApprovalTest` — **golden master** (ApprovalTests): every generated page, and the list of pages, against its approved version in `src/test/resources/.../approved/`. It says *that* something changed. On a difference a `*.received.*` file appears next to the approved one (git-ignored); if the change is wanted, rename it to `*.approved.*` and commit it — the diff in the pull request is the review.
+- `GeneratedSiteInvariantsTest` — rules every page keeps (jsoup, AssertJ): local links resolve, no Velocity reference printed as text, entity pages have heading, navigation and description, every entity page is linked from the index, every event appears on the pages of everyone involved. It says *that* something is broken, and needs no approved files. `KNOWN_BROKEN_LINKS` pins the hardcoded heroes of `home.vm`; it fails as soon as one of them works, so the entry goes with the fix.
+
+`FixtureSite` generates with the engine's real static assets (`src/main/resources/static`). Its empty `html/` folder is kept by a `.gitkeep`; without it a fresh clone cannot run the generator.
+
+CI (`.github/workflows/ci.yml`) runs `./mvnw verify` on every push to `main` and every pull request. `main` is protected: the `Build and test` check and a review by the code owner are required.
 
 ## Naming
 
