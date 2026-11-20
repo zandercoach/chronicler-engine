@@ -1,0 +1,3 @@
+# Review gate: every pull request needs a review from the human.
+# Agents propose (branches + PRs), Christian decides and merges.
+* @christian-ulrich-zander
