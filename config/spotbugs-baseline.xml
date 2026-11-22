@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <!-- Policy: JAXB models and Velocity beans hand out their lists on purpose; exposing internal
+       representation is how they work, not a defect. Excluded everywhere, not baselined. -->
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+  </Match>
+
+  <!-- Baseline (ratchet): findings that existed on 2026-11-22. This list only ever shrinks;
+       fix a finding, then delete its entry. A new finding fails the build. -->
+  <Match>
+    <Class name="coach.zander.chronicler.model.ChronicleDate"/>
+    <Method name="&lt;init&gt;"/>
+    <Bug pattern="CT_CONSTRUCTOR_THROW"/>
+  </Match>
+  <Match>
+    <Class name="coach.zander.chronicler.model.Session"/>
+    <Bug pattern="UWF_UNWRITTEN_FIELD"/>
+  </Match>
+  <Match>
+    <Class name="coach.zander.chronicler.util.DateFormatter"/>
+    <Method name="format"/>
+    <Bug pattern="STCAL_INVOKE_ON_STATIC_DATE_FORMAT_INSTANCE"/>
+  </Match>
+</FindBugsFilter>
