@@ -1,24 +1,24 @@
-    <endeavor date="12.RAH 1003 BF" wikiPage="Moor">
+    <endeavor date="12.FRO 1003 n. F." wikiPage="Moor">
         <title>Der Turm im Nebelmoor</title>
         <description>Zwei Jahre nach Der verlorene Zehnt folgen Alrik Rabenstein und Jörn Eisenfaust dem Gerücht eines versunkenen Turms ins [[Moor|Nebelmoor]]. Ihre Führerin ist Mirela vom Mühlbach, die die Pfade kennt &amp; den Preis, sie zu verlieren.
 Ein zweiter Absatz, damit auch Zeilenumbrüche in einer Beschreibung abgedeckt sind.</description>
-        <event date="12.RAH 1003 BF" location="Mühlbach">
+        <event date="12.FRO 1003 n. F." location="Mühlbach">
             <title>Ein Führer mit Preis</title>
             <description>In der Mühle von Mühlbach nennt Mirela vom Mühlbach ihren Preis: "die Hälfte von allem, was der Turm hergibt". Jörn Eisenfaust feilscht, Alrik Rabenstein zahlt.</description>
             <stakeholder>Mirela vom Mühlbach</stakeholder>
             <member>Alrik Rabenstein</member>
             <member>Jörn Eisenfaust</member>
         </event>
-        <event date="1.NAM 1003 BF" location="Turm im Nebelmoor">
+        <event date="1.FLU 1003 n. F." location="Turm im Nebelmoor">
             <title>Lichter über dem Wasser</title>
-            <description>Am ersten der Namenlosen Tage locken die Moorlicht die Helden vom Pfad. Jörn Eisenfaust erkennt sie gerade noch rechtzeitig als [[Irrlicht|Irrlichter]].</description>
+            <description>In der ersten Flutnacht locken die Moorlicht die Helden vom Pfad. Jörn Eisenfaust erkennt sie gerade noch rechtzeitig als [[Irrlicht|Irrlichter]].</description>
             <stakeholder>Mirela vom Mühlbach</stakeholder>
             <member>Alrik Rabenstein</member>
             <member>Jörn Eisenfaust</member>
             <creature>Moorlicht</creature>
             <creature>Furtnix</creature>
         </event>
-        <event date="3.NAM 1003 BF">
+        <event date="3.FLU 1003 n. F.">
             <title>Rückweg ohne Karte</title>
             <description>Ein Ereignis ohne Ort, wie es die Daten erlauben.</description>
             <member>Jörn Eisenfaust</member>

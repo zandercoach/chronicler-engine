@@ -19,7 +19,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.hibernate.annotations.Type;
 
-import coach.zander.chronicler.model.xml.BosparanDateAdapter;
+import coach.zander.chronicler.model.xml.ChronicleDateAdapter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -33,10 +33,10 @@ public abstract class ChroniclerActivity implements Comparable<ChroniclerActivit
 	@XmlID
 	private String title;
 	@Column(name = "bdate")
-	@Type(type = "coach.zander.chronicler.model.hibernate.BosparanDateUserType")
+	@Type(type = "coach.zander.chronicler.model.hibernate.ChronicleDateUserType")
 	@XmlAttribute
-	@XmlJavaTypeAdapter(BosparanDateAdapter.class)
-	private BosparanDate date;
+	@XmlJavaTypeAdapter(ChronicleDateAdapter.class)
+	private ChronicleDate date;
 	@Column(columnDefinition = "LONGTEXT")
 	@XmlElement
 	private String description;
@@ -69,7 +69,7 @@ public abstract class ChroniclerActivity implements Comparable<ChroniclerActivit
 		return true;
 	}
 
-	public BosparanDate getDate() {
+	public ChronicleDate getDate() {
 		return date;
 	}
 
@@ -97,7 +97,7 @@ public abstract class ChroniclerActivity implements Comparable<ChroniclerActivit
 		return result;
 	}
 
-	public void setDate(BosparanDate date) {
+	public void setDate(ChronicleDate date) {
 		this.date = date;
 	}
 

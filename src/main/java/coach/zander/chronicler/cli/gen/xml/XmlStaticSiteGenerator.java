@@ -38,6 +38,7 @@ import coach.zander.chronicler.beans.SiteBean;
 import coach.zander.chronicler.beans.StakeholderBean;
 import coach.zander.chronicler.cli.gen.StaticUrlResolver;
 import coach.zander.chronicler.links.ChroniclerReferenceInsertionEventHandler;
+import coach.zander.chronicler.model.ChronicleCalendar;
 import coach.zander.chronicler.model.ChroniclerConfig;
 import coach.zander.chronicler.model.ChroniclerData;
 import coach.zander.chronicler.model.Creature;
@@ -47,6 +48,7 @@ import coach.zander.chronicler.model.Location;
 import coach.zander.chronicler.model.Member;
 import coach.zander.chronicler.model.Stakeholder;
 import coach.zander.chronicler.model.Waypoint;
+import coach.zander.chronicler.model.xml.ChronicleDateAdapter;
 import coach.zander.chronicler.util.DateFormatter;
 import coach.zander.chronicler.util.UrlResolver;
 
@@ -208,13 +210,14 @@ public class XmlStaticSiteGenerator {
     System.out.println("--> MAP created!");  
   }
 
-  private ChroniclerData loadDataFromXml(String xml) throws JAXBException, IOException {
+  private ChroniclerData loadDataFromXml(String xml, ChronicleCalendar calendar) throws JAXBException, IOException {
 	    System.setProperty("javax.xml.accessExternalDTD", "all");	  
 	  
 	    File file = new File(xml);
 	    JAXBContext jaxbContext = JAXBContext.newInstance(ChroniclerData.class);
 
 	    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+	    jaxbUnmarshaller.setAdapter(ChronicleDateAdapter.class, new ChronicleDateAdapter(calendar));
 	    ChroniclerData data = (ChroniclerData) jaxbUnmarshaller.unmarshal(new StreamSource(file));
 	    
 	    List<Endeavor> endeavors = data.getEndeavors();
@@ -317,7 +320,9 @@ public class XmlStaticSiteGenerator {
   }
 
 public void run(String chroniclerSources, String projectSources, String destination, boolean generateMap, boolean copyImages, boolean copyTiles) throws IOException, JAXBException {
-	ChroniclerData data = loadDataFromXml(projectSources + XML_PATH);
+	// The calendar comes from the instance configuration, so it is read before the data.
+	ChronicleCalendar calendar = ChroniclerConfig.load(new File(projectSources + CONFIG_PATH)).getCalendar();
+	ChroniclerData data = loadDataFromXml(projectSources + XML_PATH, calendar);
     initialize(chroniclerSources, projectSources, destination, data, copyImages, copyTiles);
 
     if (generateMap) {

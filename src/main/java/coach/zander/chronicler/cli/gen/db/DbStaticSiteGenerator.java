@@ -53,6 +53,7 @@ import coach.zander.chronicler.model.Member;
 import coach.zander.chronicler.model.Stakeholder;
 import coach.zander.chronicler.model.Waypoint;
 import coach.zander.chronicler.util.DateFormatter;
+import coach.zander.chronicler.model.ChronicleCalendar;
 import coach.zander.chronicler.model.ChroniclerConfig;
 import coach.zander.chronicler.util.UrlResolver;
 
@@ -233,6 +234,7 @@ public class DbStaticSiteGenerator {
     } catch (javax.xml.bind.JAXBException e) {
       throw new IOException(e);
     }
+    ChronicleCalendar.setCurrent(config.getCalendar());
     resolver = new StaticUrlResolver(source + "/static/img");
     if (config.getWiki() != null) {
       resolver.setWikiBaseUrl(config.getWiki().getUrl());
