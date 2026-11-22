@@ -34,9 +34,11 @@ import coach.zander.chronicler.beans.LocationBean;
 import coach.zander.chronicler.beans.MapBean;
 import coach.zander.chronicler.beans.MemberBean;
 import coach.zander.chronicler.beans.NavigationBean;
+import coach.zander.chronicler.beans.SiteBean;
 import coach.zander.chronicler.beans.StakeholderBean;
 import coach.zander.chronicler.cli.gen.StaticUrlResolver;
 import coach.zander.chronicler.links.ChroniclerReferenceInsertionEventHandler;
+import coach.zander.chronicler.model.ChroniclerConfig;
 import coach.zander.chronicler.model.ChroniclerData;
 import coach.zander.chronicler.model.Creature;
 import coach.zander.chronicler.model.Endeavor;
@@ -56,6 +58,7 @@ public class XmlStaticSiteGenerator {
   private static final String HTML_PATH = "/html";
   private static final String IMG_PATH = "/img";
   private static final String XML_PATH = "/data/data.xml";
+  private static final String CONFIG_PATH = "/data/chronicler.xml";
   private static final String MAP_PATH = "/data/map.jpg";
 
   private UrlResolver resolver;
@@ -89,6 +92,7 @@ public class XmlStaticSiteGenerator {
     // Latest Endeavor for index.html
     Endeavor endeavor = endeavors.get(0);
     bean.setEndeavor(endeavor);
+    bean.setMembers(data.getMembers());
     bean.setPageTitle("Startseite");
     mergeTemplateWithBeanDataToFile("home", bean);
     
@@ -246,7 +250,12 @@ public class XmlStaticSiteGenerator {
     this.projectSources = projectSources;
     this.destination = destination;
 
+    ChroniclerConfig config = ChroniclerConfig.load(new File(projectSources + CONFIG_PATH));
+
     resolver = new StaticUrlResolver(projectSources + IMG_PATH);
+    if (config.getWiki() != null) {
+      resolver.setWikiBaseUrl(config.getWiki().getUrl());
+    }
 
     prepareDestination(copyImages, copyMapTiles);
 
@@ -255,6 +264,7 @@ public class XmlStaticSiteGenerator {
     baseCtx = new VelocityContext();
     baseCtx.put("resolver", resolver);
     baseCtx.put("formatter", new DateFormatter());
+    baseCtx.put("site", new SiteBean(config, data.getSessions()));
     
     List<Endeavor> navAdventures = data.getEndeavors();
     List<Member> navHelden = data.getMembers();

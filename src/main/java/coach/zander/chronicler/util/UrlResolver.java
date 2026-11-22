@@ -12,6 +12,8 @@ public abstract class UrlResolver {
 	private static final String[] IMG_EXTENSIONS = { EXT_IMG_PNG, EXT_IMG_JPG };
 	private static final String DEFAULT_IMAGE = "not_available";
 
+	private String wikiBaseUrl;
+
 	public UrlResolver() {
 		super();
 	}
@@ -64,7 +66,15 @@ public abstract class UrlResolver {
 
 	public abstract String resolveUrlFor(String title, String type);
 
+	/** The instance's wiki, e.g. "https://de.wikipedia.org/wiki/"; without one, wiki links resolve to "". */
+	public void setWikiBaseUrl(String wikiBaseUrl) {
+		this.wikiBaseUrl = wikiBaseUrl;
+	}
+
 	public String resolveWikiUrlFor(String smartLink) {
-		return "http://www.wiki-aventurica.de/wiki/" + URLEncoder.encode(smartLink.replace(' ', '_'));
+		if (wikiBaseUrl == null || wikiBaseUrl.isEmpty()) {
+			return "";
+		}
+		return wikiBaseUrl + URLEncoder.encode(smartLink.replace(' ', '_'));
 	}
 }

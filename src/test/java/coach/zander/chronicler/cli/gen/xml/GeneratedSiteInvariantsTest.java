@@ -48,21 +48,6 @@ class GeneratedSiteInvariantsTest {
   private static final List<String> ENTITY_PAGE_PREFIXES = List.of("endeavor_", "member_", "stakeholder_", "creature_",
       "location_");
 
-  /**
-   * Known defect, pinned rather than hidden: home.vm hardcodes the heroes of the real campaign
-   * instead of reading them from the data, so on any other data these links lead nowhere. The test
-   * also fails once one of them works again - then the fix has landed and the entry goes.
-   */
-  private static final List<String> KNOWN_BROKEN_LINKS = List.of(
-      "home.html -> member_Belgarion.html",
-      "home.html -> member_Kassandra.html",
-      "home.html -> member_Kjaska.html",
-      "home.html -> member_Volpierro.html",
-      "home.html -> member_Zanrix.html",
-      "home.html -> member_Yona.html",
-      "home.html -> member_Salogni.html",
-      "home.html -> member_Bruno.html");
-
   private Path site;
   private Map<String, Document> pages;
   private Map<String, String> sources;
@@ -116,8 +101,6 @@ class GeneratedSiteInvariantsTest {
         }
       }
     });
-    assertThat(broken).as("local links without a target, beyond the known ones").containsAll(KNOWN_BROKEN_LINKS);
-    broken.removeAll(KNOWN_BROKEN_LINKS);
     assertThat(broken).as("local links without a target").isEmpty();
   }
 

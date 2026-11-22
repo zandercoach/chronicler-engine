@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="$resolver.resolveUrlFor('home')">Die Chroniken des fliegenden Kessels</a>
+          <a class="brand" href="$resolver.resolveUrlFor('home')">$site.title</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="$resolver.resolveUrlFor('home')">Startseite</a></li>

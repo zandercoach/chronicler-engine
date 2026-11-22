@@ -10,6 +10,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 
 @NamedQueries({ @NamedQuery(name = "Member.all", query = "SELECT m FROM Member m ORDER BY m.name"),
@@ -20,6 +21,20 @@ public class Member extends Person {
   @ManyToMany(mappedBy = "members")
   @XmlTransient
   private List<Event> events = new ArrayList<Event>();
+  /** Not shown on the home page; the member keeps every other page. */
+  @XmlAttribute
+  private Boolean hide;
+  /** Shown in brackets after the name on the home page, e.g. "R.I.P.". */
+  @XmlAttribute
+  private String status;
+
+  public boolean isHidden() {
+    return Boolean.TRUE.equals(hide);
+  }
+
+  public String getStatus() {
+    return status;
+  }
 
   public void add(Event event) {
     if (event != null) {
