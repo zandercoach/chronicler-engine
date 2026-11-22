@@ -5,34 +5,16 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 
-@NamedQueries({ @NamedQuery(name = "Endeavor.all", query = "SELECT e FROM Endeavor e ORDER BY e.title"),
-    @NamedQuery(name = "Endeavor.byTitle", query = "SELECT e FROM Endeavor e WHERE e.title = ?") })
-@Entity
 public class Endeavor extends ChroniclerActivity {
-  @OneToMany(mappedBy = "endeavor", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @XmlElement(name = "event")
   private List<Event> events = new ArrayList<Event>();
 
-  @OneToMany(mappedBy = "endeavor", cascade = CascadeType.ALL)
   @XmlElement(name = "waypoint")
   private final List<Waypoint> waypoints = new ArrayList<Waypoint>();
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  @OrderBy("id DESC")
-  @JoinTable(joinColumns = @JoinColumn(name = "end_id"), inverseJoinColumns = @JoinColumn(name = "ses_id"))
   @XmlIDREF
   @XmlElement(name = "session")
   private final List<Session> sessions = new ArrayList<Session>();

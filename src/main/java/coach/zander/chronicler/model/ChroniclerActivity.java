@@ -1,12 +1,5 @@
 package coach.zander.chronicler.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -17,27 +10,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.hibernate.annotations.Type;
 
 import coach.zander.chronicler.model.xml.ChronicleDateAdapter;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class ChroniclerActivity implements Comparable<ChroniclerActivity> {
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
 	@XmlTransient
 	private Integer id;
 	@XmlID
 	private String title;
-	@Column(name = "bdate")
-	@Type(type = "coach.zander.chronicler.model.hibernate.ChronicleDateUserType")
 	@XmlAttribute
 	@XmlJavaTypeAdapter(ChronicleDateAdapter.class)
 	private ChronicleDate date;
-	@Column(columnDefinition = "LONGTEXT")
 	@XmlElement
 	private String description;
 	@XmlAttribute

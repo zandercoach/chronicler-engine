@@ -5,14 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OrderBy;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -22,21 +14,14 @@ import org.apache.commons.lang.builder.ToStringStyle;
 
 import coach.zander.chronicler.model.xml.DateAdapter;
 
-@NamedQueries({ @NamedQuery(name = "Session.all", query = "SELECT s FROM Session s ORDER BY s.id") })
-@Entity
 public class Session implements Comparable<Session> {
-  @Id
-  @GeneratedValue
   private Integer id;
-  @Column(name = "sdate")
   @XmlAttribute
   @XmlJavaTypeAdapter(DateAdapter.class)
   @XmlID
   private Date date;
   @XmlAttribute
   private String location;
-  @ManyToMany(mappedBy = "sessions")
-  @OrderBy("id")
   private final List<Endeavor> endeavors = new ArrayList<Endeavor>();
 
   public void addEndeavor(Endeavor endeavor) {
