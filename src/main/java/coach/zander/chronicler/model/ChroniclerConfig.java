@@ -31,6 +31,23 @@ public class ChroniclerConfig {
     }
   }
 
+  /** Where the instance's imprint and privacy notice live; linked from every page's footer. */
+  @XmlAccessorType(XmlAccessType.FIELD)
+  public static class Legal {
+    @XmlAttribute
+    private String imprint;
+    @XmlAttribute
+    private String privacy;
+
+    public String getImprint() {
+      return imprint;
+    }
+
+    public String getPrivacy() {
+      return privacy;
+    }
+  }
+
   @XmlElement
   private String title;
   @XmlElement
@@ -39,6 +56,8 @@ public class ChroniclerConfig {
   private String copyright;
   @XmlElement
   private Wiki wiki;
+  @XmlElement
+  private Legal legal;
 
   public static ChroniclerConfig load(File file) throws JAXBException {
     if (!file.isFile()) {
@@ -61,5 +80,9 @@ public class ChroniclerConfig {
 
   public Wiki getWiki() {
     return wiki;
+  }
+
+  public Legal getLegal() {
+    return legal;
   }
 }
