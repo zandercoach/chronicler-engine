@@ -10,6 +10,9 @@
 		<maven.compiler.release>21</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>5.10.2</junit.version>
+		<!-- Coverage ratchet: today's values; raise them in the same PR when coverage rises. -->
+		<coverage.line.minimum>0.72</coverage.line.minimum>
+		<coverage.branch.minimum>0.51</coverage.branch.minimum>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -68,6 +71,12 @@
 			<version>3.27.7</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit-junit5</artifactId>
+			<version>1.5.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -75,6 +84,104 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
+			</plugin>
+			<!-- Coverage (ratchet): fails when line or branch coverage drops below the minimum. -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.16</version>
+				<configuration>
+					<excludes>
+						<exclude>be/devijver/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>check</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>BUNDLE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>${coverage.line.minimum}</minimum>
+										</limit>
+										<limit>
+											<counter>BRANCH</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>${coverage.branch.minimum}</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Bugs (ratchet): today's findings are the baseline in config/spotbugs-baseline.xml; a new one fails. -->
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>4.10.5.0</version>
+				<configuration>
+					<onlyAnalyze>coach.zander.chronicler.-</onlyAnalyze>
+					<excludeFilterFile>config/spotbugs-baseline.xml</excludeFilterFile>
+					<effort>Max</effort>
+					<threshold>Medium</threshold>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Maintainability (ratchet): config/pmd-ruleset.xml; today's findings in config/pmd-baseline.properties. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.28.0</version>
+				<configuration>
+					<rulesets>
+						<ruleset>config/pmd-ruleset.xml</ruleset>
+					</rulesets>
+					<excludes>
+						<exclude>be/devijver/**</exclude>
+					</excludes>
+					<excludeFromFailureFile>config/pmd-baseline.properties</excludeFromFailureFile>
+					<printFailingErrors>true</printFailingErrors>
+					<linkXRef>false</linkXRef>
+					<targetJdk>21</targetJdk>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<!-- Formatting: google-java-format, checked on every build. Fix with ./mvnw spotless:apply. -->
 			<plugin>

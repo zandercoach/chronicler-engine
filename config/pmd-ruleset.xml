@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Chronicler maintainability"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.github.io/ruleset_2_0_0.xsd">
+
+  <description>
+    Maintainability, not style: complexity, dead code and error-prone patterns. Formatting belongs
+    to Spotless. Findings that existed on 2026-11-22 are listed in pmd-baseline.properties.
+  </description>
+
+  <!-- Complexity: code an agent or a person can still change safely. -->
+  <rule ref="category/java/design.xml/CyclomaticComplexity"/>
+  <rule ref="category/java/design.xml/CognitiveComplexity"/>
+  <rule ref="category/java/design.xml/NPathComplexity"/>
+  <rule ref="category/java/design.xml/NcssCount"/>
+  <rule ref="category/java/design.xml/GodClass"/>
+  <rule ref="category/java/design.xml/ExcessiveParameterList"/>
+  <rule ref="category/java/design.xml/AvoidDeeplyNestedIfStmts"/>
+  <rule ref="category/java/design.xml/SimplifyBooleanReturns"/>
+
+  <!-- Dead code. -->
+  <rule ref="category/java/bestpractices.xml/UnusedPrivateField"/>
+  <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod"/>
+  <rule ref="category/java/bestpractices.xml/UnusedLocalVariable"/>
+  <rule ref="category/java/bestpractices.xml/UnusedFormalParameter"/>
+  <rule ref="category/java/bestpractices.xml/UnusedAssignment"/>
+  <rule ref="category/java/codestyle.xml/UnnecessaryImport"/>
+
+  <!-- Error-prone patterns. -->
+  <rule ref="category/java/errorprone.xml/EmptyCatchBlock"/>
+  <rule ref="category/java/errorprone.xml/CompareObjectsWithEquals"/>
+  <rule ref="category/java/errorprone.xml/OverrideBothEqualsAndHashcode"/>
+  <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod"/>
+  <rule ref="category/java/errorprone.xml/CloseResource"/>
+  <rule ref="category/java/errorprone.xml/ReturnEmptyCollectionRatherThanNull"/>
+  <rule ref="category/java/errorprone.xml/AvoidCatchingNPE"/>
+  <rule ref="category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop"/>
+  <rule ref="category/java/bestpractices.xml/PreserveStackTrace"/>
+  <rule ref="category/java/bestpractices.xml/MissingOverride"/>
+</ruleset>
