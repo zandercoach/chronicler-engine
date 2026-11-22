@@ -19,7 +19,7 @@ public class HomeBean extends ChroniclerPageBean {
     this.setPageTitle("Startseite");
   }
 
-  /** The heroes on the home page: all members in data order, except the hidden ones. */
+  /** The heroes on the home page: all members in data order, except the retired ones. */
   public List<Member> getMembers() {
     return members;
   }
@@ -28,7 +28,7 @@ public class HomeBean extends ChroniclerPageBean {
     members = new ArrayList<Member>();
     if (all != null) {
       for (Member member : all) {
-        if (!member.isHidden()) {
+        if (!member.isRetired()) {
           members.add(member);
         }
       }
