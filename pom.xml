@@ -5,7 +5,7 @@
 	<groupId>coach.zander</groupId>
 	<artifactId>coach.zander.chronicler</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Chroniken des Fliegenden Kessels</name>
+	<name>Chronicler</name>
 	<properties>
 		<maven.compiler.release>21</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
