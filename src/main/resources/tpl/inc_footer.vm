@@ -1,3 +1,3 @@
       <footer>
-        <p>&copy; $site.copyright $site.years</p>
+        <p>&copy; $site.copyright $site.years#if($site.imprint) &middot; <a href="$site.imprint">Impressum</a>#end#if($site.privacy) &middot; <a href="$site.privacy">Datenschutz</a>#end</p>
       </footer>

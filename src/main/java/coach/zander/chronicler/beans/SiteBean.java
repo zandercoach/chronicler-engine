@@ -59,4 +59,14 @@ public class SiteBean {
   public String getYears() {
     return years;
   }
+
+  /** URL of the imprint, or null when the instance configures none. */
+  public String getImprint() {
+    return config.getLegal() == null ? null : config.getLegal().getImprint();
+  }
+
+  /** URL of the privacy notice, or null when the instance configures none. */
+  public String getPrivacy() {
+    return config.getLegal() == null ? null : config.getLegal().getPrivacy();
+  }
 }
