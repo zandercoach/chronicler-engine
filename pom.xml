@@ -76,6 +76,35 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
 			</plugin>
+			<!-- Formatting: google-java-format, checked on every build. Fix with ./mvnw spotless:apply. -->
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>3.12.0</version>
+				<configuration>
+					<java>
+						<includes>
+							<include>src/main/java/**/*.java</include>
+							<include>src/test/java/**/*.java</include>
+						</includes>
+						<!-- Third-party wiki parser: its form is part of its provenance. -->
+						<excludes>
+							<exclude>src/main/java/be/devijver/**</exclude>
+						</excludes>
+						<googleJavaFormat>
+							<version>2.0.0</version>
+						</googleJavaFormat>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
