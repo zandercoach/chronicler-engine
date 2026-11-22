@@ -21,19 +21,24 @@ public class Member extends Person {
   @ManyToMany(mappedBy = "members")
   @XmlTransient
   private List<Event> events = new ArrayList<Event>();
-  /** Not shown on the home page; the member keeps every other page. */
-  @XmlAttribute
-  private Boolean hide;
-  /** Shown in brackets after the name on the home page, e.g. "R.I.P.". */
+  /** Short reason a member has retired, e.g. "R.I.P."; a member with a status is retired. */
   @XmlAttribute
   private String status;
+  /** One sentence explaining the status, shown with it on the member's page. */
+  @XmlAttribute
+  private String statusNote;
 
-  public boolean isHidden() {
-    return Boolean.TRUE.equals(hide);
+  /** Retired members keep their page but are not shown on the home page. */
+  public boolean isRetired() {
+    return status != null && !status.trim().isEmpty();
   }
 
   public String getStatus() {
     return status;
+  }
+
+  public String getStatusNote() {
+    return statusNote;
   }
 
   public void add(Event event) {

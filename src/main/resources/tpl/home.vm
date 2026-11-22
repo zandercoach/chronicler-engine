@@ -19,7 +19,7 @@
             <ul class="thumbnails">
 #end
               <li class="span3">
-                <h3>$member.name#if($member.status) ($member.status)#end</h3>
+                <h3>$member.name</h3>
                 <a href="$resolver.resolveUrlFor($member)" class="thumbnail">
                   <img src="$resolver.resolveImageUrlFor($member)" alt="$member.name" id="img:held:$member.name.toLowerCase().replace(' ', '_')" />
                 </a>

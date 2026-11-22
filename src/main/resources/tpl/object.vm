@@ -12,6 +12,9 @@
       <div class="row">
         <div class="span9">
           <h2>$bean.object.name</h2>
+#if($bean.member && $bean.member.retired)
+          <p class="chronicler-status"><em>$bean.member.status#if($bean.member.statusNote):#end</em>#if($bean.member.statusNote) $bean.member.statusNote#end</p>
+#end
 #if($bean.object.wikiPage && !$resolver.resolveWikiUrlFor($bean.object.wikiPage).isEmpty())
           (siehe auch <a href="$resolver.resolveWikiUrlFor($bean.object.wikiPage)" target="wiki" class="chronicler-wiki-link">$site.wikiName</a>)
 #end
