@@ -1,86 +1,78 @@
 # CLAUDE.md
 
-The **Chronicler engine**: a static site generator in Java that turns
-XML-described campaign content into an HTML site (JAXB for binding, Velocity for
-templating). Public repo under `zandercoach/chronicler-engine`, MIT-licensed.
+The **Chronicler engine**: a static site generator in Java that turns an XML-described chronicle into an HTML site (JAXB for binding, Velocity for templating). Public, MIT-licensed, `zandercoach/chronicler-engine`.
 
-This repo holds the engine only. The content — XML data and artwork — lives in
-the private sibling repo `chronicler-data-cfk` and stays out of here, because
-much of it references the copyrighted DSA/Aventuria setting.
-
-The engine is the vehicle of the "Adaptive × AI" learning journey. Decisions and
-milestones made here are recorded in `projects/adaptive-x-ai/research/`, not in
-this repo; whoever starts work here reads the latest entry there first.
+The engine holds no content. Each **instance** is a data repo of its own: `chronicler-data-cfk` (private campaign, DSA material, published to dsa.zander.coach) and `chronicler-data-demo` (public, invented, published to chronicler.adaptive-x-ai.org). The engine is the vehicle of the "Adaptive × AI" learning journey; decisions and milestones go to `projects/adaptive-x-ai/research/`, and whoever starts work here reads the latest entry there first.
 
 ## Build and run
 
-JDK 21. There is **no local Maven installation** on this machine — use the
-wrapper, which fetches its own Maven 3.9.9 into `~/.m2/wrapper/dists/`:
+JDK 21, no local Maven — use the wrapper:
 
-    ./mvnw clean test          27 tests, currently green
-    ./mvnw clean package
+    ./mvnw verify                 build, all tests, all quality gates (what CI runs)
+    ./mvnw spotless:apply         fix formatting
 
-Running the generator:
+The generator, from the engine folder (paths relative to it):
 
-    ./mvnw org.codehaus.mojo:exec-maven-plugin:3.1.0:java \
-      -Dexec.mainClass=coach.zander.chronicler.cli.gen.xml.XmlStaticSiteGeneratorApp
+    java -cp "target/classes;<classpath>" coach.zander.chronicler.cli.gen.xml.XmlStaticSiteGeneratorApp \
+      --data=../chronicler-data-demo --out=target/chronicler [--images] [--tiles] [--map]
 
-Output goes to `target/chronicler`.
+Without arguments it reads `../chronicler-data-cfk` and writes `target/chronicler`. Get the classpath with `./mvnw dependency:build-classpath -Dmdep.outputFile=target/cp.txt`.
 
-## The coupling you have to know about
+## Instance configuration
 
-`XmlStaticSiteGeneratorApp` expects the data repo as a **sibling folder** under
-`../chronicler-data-cfk`. The path is hardcoded there, as are the destination and
-three switches:
+Everything that differs between instances lives in the data repo's `data/chronicler.xml`, read by `model/ChroniclerConfig`: `title`, `welcome`, `copyright`, `wiki` (`name`, `url`, optional `icon` in the instance's `img/`), `legal` (`imprint`, `privacy`), `map` (`enabled="true"` loads Google Maps, otherwise its text is shown — nothing from Google by default), `calendar` (`era`, `before`, `month` with `abbr`, `name`, `days`). Missing `chronicler.xml` or `calendar` stops the generator with a message — never add a silent default that brings instance-specific values back into the engine.
 
-    boolean generateMap = false;
-    boolean copyImages  = false;
-    boolean copyTiles   = false;
+## Where things are
 
-A run therefore produces pages but **no map, no images and no tiles** unless
-those are flipped. That is a configuration living in source, not a bug — but it
-is the first thing to check when generated output looks empty.
+- `cli/gen/xml/` — the generator: reads `chronicler.xml`, then `data.xml` (the calendar goes to JAXB via `setAdapter`), renders `tpl/*.vm` into pages.
+- `model/` — plain data: JAXB-annotated entities, `ChronicleCalendar` and `ChronicleDate`. No generator, no beans, no Velocity (enforced).
+- `beans/` — page beans for the templates; `SiteBean` carries instance-wide values.
+- `links/` — internal and wiki links; the only package that uses the wiki parser (enforced).
+- `src/main/resources/tpl/` templates, `static/` CSS, JS and the engine's own icon.
+- **`be/devijver/wikipedia/` is third-party code** (wikitext parser). Do not rename, tidy, format or analyse it; its form is its provenance. Every gate excludes it.
 
-## What is alive and what is legacy
+## Tests
 
-The **XML path is the living one**: `cli/gen/xml/`, `model/xml/`, `tpl/*.vm`,
-`resources/static/`. That is what the app wires up and what the tests cover.
+The tests pin down **observed behaviour, not a specification.** A red test means behaviour changed — decide whether that was wanted, then adjust the test, never the other way round.
 
-There is no other path: the database path (Hibernate, DAOs, the XML/DB converters) was removed on 2026-11-22. Git history holds it. The JAXB implementation (`jaxb-runtime`) is declared on its own in the POM; it used to arrive only through Hibernate.
+- `GeneratedPagesApprovalTest` — **golden master** over the fixture (`src/test/resources/fixture/`, invented, German): every page and the page list against `src/test/resources/.../approved/`. On a difference a `*.received.*` file appears; if the change is wanted, rename it to `*.approved.*` — the diff in the pull request is the review.
+- `GeneratedSiteInvariantsTest` — rules every page keeps: local links resolve, no Velocity reference printed, entity pages complete and in the index, every event on the pages of those involved. `-Dchronicler.data=<data repo>` runs it against a real instance; the campaign repo's CI does that on every push.
+- `XmlStaticSiteGeneratorCharacterizationTest`, `ChronicleDateTest`, `ArchitectureTest`.
 
-**`be/devijver/wikipedia/` is third-party code** — a wikitext-to-HTML parser
-carried in the source tree, 52 of the 110 Java files. Do not rename it, do not
-tidy it, do not pull it into the `coach.zander.chronicler` packages: the package
-name is its provenance.
+JAXB skips unknown XML elements silently, so fixture XML must use the element names the model reads.
 
-## The tests
+## The quality frame
 
-The tests pin down **observed behaviour, not a specification.** A red test means behaviour changed — first decide whether the change was wanted, then adjust the test, never the other way round.
+`./mvnw verify` runs these gates; CI runs `verify` on every pull request, and `main` requires it.
 
-All of them run against a small, invented fixture under `src/test/resources/fixture/` instead of the private data repo, so the public repo tests on its own. The fixture is copied into a temp directory on purpose: that is what exercises XML entity resolution relative to the data file, and copying it in place would silently defeat the test. JAXB skips unknown elements without a word, so fixture XML must use the element names the model reads.
+| Gate | Checks | Baseline |
+|---|---|---|
+| Spotless | google-java-format | — |
+| JaCoCo | line and branch coverage | `coverage.line.minimum`, `coverage.branch.minimum` in `pom.xml` |
+| SpotBugs | bugs | `config/spotbugs-baseline.xml` |
+| PMD | complexity, dead code, error-prone patterns (`config/pmd-ruleset.xml`) | `config/pmd-baseline.properties` |
+| ArchUnit | package boundaries (`ArchitectureTest`) | none — all rules hold |
 
-- `XmlStaticSiteGeneratorCharacterizationTest` — files and pages exist.
-- `GeneratedPagesApprovalTest` — **golden master** (ApprovalTests): every generated page, and the list of pages, against its approved version in `src/test/resources/.../approved/`. It says *that* something changed. On a difference a `*.received.*` file appears next to the approved one (git-ignored); if the change is wanted, rename it to `*.approved.*` and commit it — the diff in the pull request is the review.
-- `GeneratedSiteInvariantsTest` — rules every page keeps (jsoup, AssertJ): local links resolve, no Velocity reference printed as text, entity pages have heading, navigation and description, every entity page is linked from the index, every event appears on the pages of everyone involved. It says *that* something is broken, and needs no approved files. `KNOWN_BROKEN_LINKS` pins the hardcoded heroes of `home.vm`; it fails as soon as one of them works, so the entry goes with the fix.
+They are **ratchets**: today's state is the baseline and only getting worse fails. So:
 
-`FixtureSite` generates with the engine's real static assets (`src/main/resources/static`). Its empty `html/` folder is kept by a `.gitkeep`; without it a fresh clone cannot run the generator.
+- **A baseline only shrinks.** Fix a baselined finding, then delete its entry. Never add an entry to make a build green — fix the code, or ask Christian.
+- **A minimum only rises.** When coverage goes up, raise the minimum in the same pull request (two decimals, rounded down).
+- SpotBugs `EI_EXPOSE_REP`/`EI_EXPOSE_REP2` are excluded by policy: models and beans hand out their lists on purpose.
+- A new architecture rule the code does not keep yet goes in as `FreezingArchRule.freeze(...)`; its existing violations become the baseline.
 
-CI (`.github/workflows/ci.yml`) runs `./mvnw verify` on every push to `main` and every pull request. `main` is protected: the `Build and test` check and a review by the code owner are required.
+## Definition of Done
 
-## Naming
+A change is done when:
 
-The rename from `coach.zander.cfk` to `chronicler` is **done** — packages,
-classes, templates and fixtures. The only `cfk` left is the path to the data
-repo, and that is intended: the data repo stays campaign-specific. The POM's
-`<name>` is still the campaign title ("Chroniken des Fliegenden Kessels"); the
-`artifactId` carries the new name.
+1. `./mvnw verify` is green — tests and every gate.
+2. The golden master diff, if any, is reviewed and approved on purpose.
+3. Where data handling changed: invariants green against the campaign (`-Dchronicler.data=../chronicler-data-cfk`), and campaign and demo regenerated and compared with the output before.
+4. Coverage minimum raised if coverage rose; baselines shortened if findings were fixed.
+5. This file describes the engine as it now is.
 
-Eclipse metadata (`.classpath`, `.project`, `.settings/`) is versioned along with
-the rest. Only `/target/` is ignored.
+## Working here
 
-## Rules
-
-- **Public repo:** commit only when explicitly asked, and push only when
-  explicitly asked.
-- Line endings are frozen by `.gitattributes` (LF everywhere, CRLF only for
-  `.bat`/`.cmd`/`.reg`). Do not change it — see the root `CLAUDE.md` for why.
+- One pull request per change, **straight onto `main`** — no stacked pull requests. Head branches are deleted on merge.
+- Commit and push only when Christian asks; that includes local commits.
+- A formatting-only commit is merged with a merge commit and listed in `.git-blame-ignore-revs` (`git config blame.ignoreRevsFile .git-blame-ignore-revs`).
+- Changes that need data on both sides (engine and instances) are merged in the order the pull requests state: an older engine ignores unknown configuration elements, but cannot read new data formats.
