@@ -1,4 +1,4 @@
 <creatures>
-    <creature name="Test-Creature" description="A Test-Creature."/>
-    <creature name="Moorlicht" wikiPage="Irrlicht" description="Lights over the Nebelmoor that lure travellers off the path."/>
+    <creature name="Furtnix" description="Ein Wassergeist, der unter der Furt bei Graufurt haust und nimmt, was sie ohne Zoll überquert."/>
+    <creature name="Moorlicht" wikiPage="Irrlicht" description="Lichter über dem Nebelmoor, die Reisende vom Pfad locken."/>
 </creatures>

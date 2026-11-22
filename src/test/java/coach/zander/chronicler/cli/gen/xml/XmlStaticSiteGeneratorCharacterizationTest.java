@@ -79,11 +79,11 @@ class XmlStaticSiteGeneratorCharacterizationTest {
     assertTrue(new File(destination, "html/idx.html").isFile());
     assertTrue(new File(destination, "html/chronicles.html").isFile());
     assertTrue(new File(destination, "html/map.html").isFile());
-    assertTrue(new File(destination, "html/endeavor_Test-Endeavor.html").isFile());
-    assertTrue(new File(destination, "html/member_Test-Member.html").isFile());
-    assertTrue(new File(destination, "html/stakeholder_Test-Stakeholder.html").isFile());
-    assertTrue(new File(destination, "html/creature_Test-Creature.html").isFile());
-    assertTrue(new File(destination, "html/location_Test-Location.html").isFile());
+    assertTrue(new File(destination, "html/endeavor_Der_verlorene_Zehnt.html").isFile());
+    assertTrue(new File(destination, "html/member_Alrik_Rabenstein.html").isFile());
+    assertTrue(new File(destination, "html/stakeholder_Bosper_der_Fuhrmann.html").isFile());
+    assertTrue(new File(destination, "html/creature_Furtnix.html").isFile());
+    assertTrue(new File(destination, "html/location_Graufurt.html").isFile());
   }
 
   private void runGenerator() throws IOException, JAXBException {

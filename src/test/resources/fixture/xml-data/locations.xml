@@ -1,6 +1,6 @@
 <locations>
-    <location name="Test-Location" region="Test-Region" x="100" y="100" description="A Test-Location."/>
-    <location name="Mühlbach" region="Nebelmark" x="400" y="300" description="A mill village at the edge of the Nebelmoor."/>
-    <location name="Turm im Nebelmoor" region="Nebelmark" x="460" y="340" description="A tower half sunk into the moor."/>
-    <location name="Unbetretene Lichtung" region="Nebelmark" x="500" y="280" description="A location no event has reached yet."/>
+    <location name="Graufurt" region="Ulmenau" x="100" y="100" description="Eine Furt an der Straße zur Burg des Grafen, wo das Wasser ohne Regen steigt."/>
+    <location name="Mühlbach" region="Nebelmark" x="400" y="300" description="Ein Mühlendorf am Rand des Nebelmoors."/>
+    <location name="Turm im Nebelmoor" region="Nebelmark" x="460" y="340" description="Ein Turm, halb im Moor versunken."/>
+    <location name="Unbetretene Lichtung" region="Nebelmark" x="500" y="280" description="Ein Ort, den noch kein Ereignis erreicht hat."/>
 </locations>
