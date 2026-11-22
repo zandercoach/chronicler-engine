@@ -6,8 +6,8 @@ import coach.zander.chronicler.model.ChronicleCalendar;
 import coach.zander.chronicler.model.ChronicleDate;
 
 /**
- * Reads and writes dates in the data format of the instance's calendar. The XML generator hands one
- * with its calendar to the unmarshaller; JAXB's own instance falls back to the current calendar.
+ * Reads and writes dates in the data format of the instance's calendar. The generator hands one
+ * with its calendar to the unmarshaller; an instance JAXB creates on its own has none and fails.
  */
 public class ChronicleDateAdapter extends XmlAdapter<String, ChronicleDate> {
   private final ChronicleCalendar calendar;
@@ -21,7 +21,11 @@ public class ChronicleDateAdapter extends XmlAdapter<String, ChronicleDate> {
   }
 
   private ChronicleCalendar calendar() {
-    return calendar != null ? calendar : ChronicleCalendar.current();
+    if (calendar == null) {
+      throw new IllegalStateException(
+          "No calendar: set this adapter with the instance's calendar on the unmarshaller");
+    }
+    return calendar;
   }
 
   @Override

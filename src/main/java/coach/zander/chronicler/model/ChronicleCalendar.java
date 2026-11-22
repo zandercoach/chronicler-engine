@@ -21,9 +21,6 @@ import coach.zander.chronicler.exception.IllegalDateException;
 public class ChronicleCalendar implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  /** Only for the legacy database path, which cannot hand the calendar to its dates otherwise. */
-  private static ChronicleCalendar current;
-
   @XmlAccessorType(XmlAccessType.FIELD)
   public static class Month implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -78,17 +75,6 @@ public class ChronicleCalendar implements Serializable {
     this.era = era;
     this.before = before;
     this.months = new ArrayList<Month>(months);
-  }
-
-  public static ChronicleCalendar current() {
-    if (current == null) {
-      throw new IllegalStateException("No calendar set: the instance configuration must be loaded first");
-    }
-    return current;
-  }
-
-  public static void setCurrent(ChronicleCalendar calendar) {
-    current = calendar;
   }
 
   public String getEra() {

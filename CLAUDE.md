@@ -46,11 +46,7 @@ is the first thing to check when generated output looks empty.
 The **XML path is the living one**: `cli/gen/xml/`, `model/xml/`, `tpl/*.vm`,
 `resources/static/`. That is what the app wires up and what the tests cover.
 
-The **database path is legacy and untouched**: `cli/db/`, `cli/xml/`
-(`Db2XmlExporter`, `Xml2DbLoader`), `cli/util/HibernateUtil`, `dao/` and
-`model/hibernate/`, together with the Spring/Hibernate dependencies in the POM.
-It still compiles, nothing runs it, nothing tests it. Verify before relying on
-any of it.
+There is no other path: the database path (Hibernate, DAOs, the XML/DB converters) was removed on 2026-11-22. Git history holds it. The JAXB implementation (`jaxb-runtime`) is declared on its own in the POM; it used to arrive only through Hibernate.
 
 **`be/devijver/wikipedia/` is third-party code** — a wikitext-to-HTML parser
 carried in the source tree, 52 of the 110 Java files. Do not rename it, do not

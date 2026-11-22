@@ -1,11 +1,5 @@
 package coach.zander.chronicler.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -15,19 +9,12 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-@Entity(name = "Waypoint")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Waypoint {
-  @Id
-  @GeneratedValue(strategy = GenerationType.TABLE)
   @XmlTransient
   private Integer id;
-  @ManyToOne
-  @JoinColumn(name = "end_id", nullable = false)
   @XmlTransient
   private Endeavor endeavor;
-  @ManyToOne
-  @JoinColumn(name = "location")
   @XmlIDREF
   @XmlAttribute
   private Location location;

@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -17,15 +14,12 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-@MappedSuperclass
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class ChroniclerObject implements Comparable<ChroniclerObject> {
-	@Id
 	@XmlAttribute
 	@XmlID
 	private String name;
-	@Column(columnDefinition = "LONGTEXT")
 	@XmlAttribute
 	private String description;
 	@XmlAttribute
