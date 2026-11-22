@@ -10,11 +10,12 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.StringType;
 import org.hibernate.usertype.UserType;
 
-import coach.zander.chronicler.exception.IllegalBosparanDateException;
-import coach.zander.chronicler.model.BosparanDate;
-import coach.zander.chronicler.util.SimpleBosparanDateFormat;
+import coach.zander.chronicler.exception.IllegalDateException;
+import coach.zander.chronicler.model.ChronicleCalendar;
+import coach.zander.chronicler.model.ChronicleDate;
 
-public class BosparanDateUserType implements UserType {
+/** Legacy database path: stores a date in its data format, read back with the current calendar. */
+public class ChronicleDateUserType implements UserType {
 
 	public Object assemble(Serializable cached, Object owner) {
 		return cached;
@@ -28,7 +29,7 @@ public class BosparanDateUserType implements UserType {
 	}
 
 	public Serializable disassemble(Object value) {
-		return (BosparanDate) value;
+		return (ChronicleDate) value;
 	}
 
 	public boolean equals(Object x, Object y) {
@@ -47,8 +48,8 @@ public class BosparanDateUserType implements UserType {
 		return original;
 	}
 
-	public Class<BosparanDate> returnedClass() {
-		return BosparanDate.class;
+	public Class<ChronicleDate> returnedClass() {
+		return ChronicleDate.class;
 	}
 
 	public int[] sqlTypes() {
@@ -60,9 +61,9 @@ public class BosparanDateUserType implements UserType {
 		assert names.length == 1;
 		String string = (String) StringType.INSTANCE.get(rs, names[0], session);
 		try {
-			return string == null ? null : SimpleBosparanDateFormat.parse(string);
-		} catch (IllegalBosparanDateException e) {
-			throw new SQLException("Invalid Bosparan Date: " + string, e);
+			return string == null ? null : ChronicleCalendar.current().parse(string);
+		} catch (IllegalDateException e) {
+			throw new SQLException("Invalid date: " + string, e);
 		}
 	}
 
@@ -71,8 +72,8 @@ public class BosparanDateUserType implements UserType {
 		if (value == null) {
 			StringType.INSTANCE.set(st, null, index, session);
 		} else {
-			final BosparanDate date = (BosparanDate) value;
-			StringType.INSTANCE.set(st, SimpleBosparanDateFormat.format(date), index, session);
+			final ChronicleDate date = (ChronicleDate) value;
+			StringType.INSTANCE.set(st, ChronicleCalendar.current().format(date), index, session);
 		}
 	}
 }

@@ -81,12 +81,19 @@ public class ChroniclerConfig {
   private Legal legal;
   @XmlElement
   private MapPage map;
+  @XmlElement
+  private ChronicleCalendar calendar;
 
   public static ChroniclerConfig load(File file) throws JAXBException {
     if (!file.isFile()) {
       throw new IllegalStateException("Instance configuration missing: " + file.getPath());
     }
-    return (ChroniclerConfig) JAXBContext.newInstance(ChroniclerConfig.class).createUnmarshaller().unmarshal(file);
+    ChroniclerConfig config = (ChroniclerConfig) JAXBContext.newInstance(ChroniclerConfig.class).createUnmarshaller()
+        .unmarshal(file);
+    if (config.calendar == null || config.calendar.getMonths().isEmpty() || config.calendar.getEra() == null) {
+      throw new IllegalStateException("Instance configuration lacks a <calendar> with an era and months: " + file.getPath());
+    }
+    return config;
   }
 
   public String getTitle() {
@@ -111,5 +118,9 @@ public class ChroniclerConfig {
 
   public MapPage getMap() {
     return map;
+  }
+
+  public ChronicleCalendar getCalendar() {
+    return calendar;
   }
 }

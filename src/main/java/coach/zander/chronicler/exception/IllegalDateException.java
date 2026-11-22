@@ -1,7 +1,7 @@
 package coach.zander.chronicler.exception;
 
-public class IllegalBosparanDateException extends Exception {
-  public IllegalBosparanDateException(String message) {
+public class IllegalDateException extends Exception {
+  public IllegalDateException(String message) {
     super(message);
   }
 

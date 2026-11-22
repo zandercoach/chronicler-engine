@@ -6,4 +6,19 @@
     <wiki name="Wikipedia" url="https://de.wikipedia.org/wiki/"/>
     <legal imprint="https://www.zander.coach/impressum/" privacy="https://www.zander.coach/datenschutz/"/>
     <map enabled="true"/>
+    <calendar era="n. F." before="v. F.">
+        <month abbr="EIS" name="Eismond" days="30"/>
+        <month abbr="TAU" name="Taumond" days="30"/>
+        <month abbr="SAA" name="Saatmond" days="30"/>
+        <month abbr="BLU" name="Blütenmond" days="30"/>
+        <month abbr="WEI" name="Weidemond" days="30"/>
+        <month abbr="SON" name="Sonnmond" days="30"/>
+        <month abbr="HEU" name="Heumond" days="30"/>
+        <month abbr="ERN" name="Erntemond" days="30"/>
+        <month abbr="WEN" name="Weinmond" days="30"/>
+        <month abbr="NEB" name="Nebelmond" days="30"/>
+        <month abbr="WIN" name="Windmond" days="30"/>
+        <month abbr="FRO" name="Frostmond" days="30"/>
+        <month abbr="FLU" name="Flutnacht" days="5"/>
+    </calendar>
 </chronicler>

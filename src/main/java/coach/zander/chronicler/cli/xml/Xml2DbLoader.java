@@ -15,6 +15,8 @@ import coach.zander.chronicler.model.Location;
 import coach.zander.chronicler.model.Member;
 import coach.zander.chronicler.model.Session;
 import coach.zander.chronicler.model.Stakeholder;
+import coach.zander.chronicler.model.ChronicleCalendar;
+import coach.zander.chronicler.model.ChroniclerConfig;
 
 public class Xml2DbLoader {
   private static final String DATA_XML = "data.xml";
@@ -55,6 +57,8 @@ public class Xml2DbLoader {
     System.out.println("JAXB Context: " + jaxbContext.getClass());
 
     Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+    // Dates follow the instance's calendar, configured next to data.xml.
+    ChronicleCalendar.setCurrent(ChroniclerConfig.load(new File(source + "/chronicler.xml")).getCalendar());
     ChroniclerData data = (ChroniclerData) jaxbUnmarshaller.unmarshal(file);
 
     return data;
