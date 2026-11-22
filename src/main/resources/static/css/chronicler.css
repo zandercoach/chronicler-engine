@@ -34,7 +34,8 @@ a.thumbnail:hover {
 }
 a.chronicler-wiki-link {
   background-color: transparent;
-  background-image: url("../img/wiki-logo.png");
+  /* The engine's neutral icon; an instance sets its own with <wiki icon="…"> in chronicler.xml. */
+  background-image: url("external-link.svg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: left center;
