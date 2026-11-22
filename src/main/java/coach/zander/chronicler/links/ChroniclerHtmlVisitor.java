@@ -35,8 +35,8 @@ public class ChroniclerHtmlVisitor extends HtmlVisitor {
     append(resolvedLink);
     append("\"");
     if (resolvedLink.startsWith("http")) {
-      append(" target=\"wiki-aventurica\"");
-      append(" class=\"chronicler-wiki-aventurica-link\"");
+      append(" target=\"wiki\"");
+      append(" class=\"chronicler-wiki-link\"");
     }
     append(">");
   }

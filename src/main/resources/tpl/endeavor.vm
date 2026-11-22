@@ -13,7 +13,7 @@
         <div class="span9">
           <h2>$bean.endeavor.title</h2>
 #if($bean.endeavor.wikiPage && !$resolver.resolveWikiUrlFor($bean.endeavor.wikiPage).isEmpty())
-          (siehe auch <a href="$resolver.resolveWikiUrlFor($bean.endeavor.wikiPage)" target="wiki-aventurica" class="chronicler-wiki-aventurica-link">Wiki Aventurica</a>)
+          (siehe auch <a href="$resolver.resolveWikiUrlFor($bean.endeavor.wikiPage)" target="wiki" class="chronicler-wiki-link">$site.wikiName</a>)
 #end
           <hr />
           <h4>Kurzbeschreibung</h4>

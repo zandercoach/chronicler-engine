@@ -35,6 +35,7 @@ import coach.zander.chronicler.beans.LocationBean;
 import coach.zander.chronicler.beans.MapBean;
 import coach.zander.chronicler.beans.MemberBean;
 import coach.zander.chronicler.beans.NavigationBean;
+import coach.zander.chronicler.beans.SiteBean;
 import coach.zander.chronicler.beans.StakeholderBean;
 import coach.zander.chronicler.cli.gen.StaticUrlResolver;
 import coach.zander.chronicler.dao.CreatureDao;
@@ -52,6 +53,7 @@ import coach.zander.chronicler.model.Member;
 import coach.zander.chronicler.model.Stakeholder;
 import coach.zander.chronicler.model.Waypoint;
 import coach.zander.chronicler.util.DateFormatter;
+import coach.zander.chronicler.model.ChroniclerConfig;
 import coach.zander.chronicler.util.UrlResolver;
 
 @ComponentScan("coach.zander.chronicler.dao")
@@ -224,7 +226,17 @@ public class DbStaticSiteGenerator {
     this.source = source;
     this.destination = destination;
 
+    // Legacy path, untested: same instance configuration; footer years stay empty (no sessions here).
+    ChroniclerConfig config;
+    try {
+      config = ChroniclerConfig.load(new java.io.File(source + "/data/chronicler.xml"));
+    } catch (javax.xml.bind.JAXBException e) {
+      throw new IOException(e);
+    }
     resolver = new StaticUrlResolver(source + "/static/img");
+    if (config.getWiki() != null) {
+      resolver.setWikiBaseUrl(config.getWiki().getUrl());
+    }
 
     prepareDestination();
 
@@ -233,6 +245,7 @@ public class DbStaticSiteGenerator {
     baseCtx = new VelocityContext();
     baseCtx.put("resolver", resolver);
     baseCtx.put("formatter", new DateFormatter());
+    baseCtx.put("site", new SiteBean(config, null));
 
     List<Endeavor> navAdventures = endeavorDao.readAll();
     List<Member> navHelden = memberDao.readAll();

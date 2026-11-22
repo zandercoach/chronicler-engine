@@ -1,5 +1,5 @@
 <members>
     <member name="Alrik Rabenstein" description="Alrik Rabenstein ist ein ehemaliger Steuereintreiber, der jede Münze zweimal zählt, die eigenen eingeschlossen."/>
-    <member name="Jörn Eisenfaust" wikiPage="Schmied" description="Jörn Eisenfaust ist ein [[Schmied|Schmiedemeister]], der mit Alrik Rabenstein reist und keiner Karte traut, die er nicht selbst gezeichnet hat."/>
-    <member name="Ylva" description="Ylva stieß nach dem Turm zur Gruppe. Die Chronik hat sie noch nicht eingeholt."/>
+    <member name="Jörn Eisenfaust" status="verschollen" wikiPage="Schmied" description="Jörn Eisenfaust ist ein [[Schmied|Schmiedemeister]], der mit Alrik Rabenstein reist und keiner Karte traut, die er nicht selbst gezeichnet hat."/>
+    <member name="Ylva" hide="true" description="Ylva stieß nach dem Turm zur Gruppe. Die Chronik hat sie noch nicht eingeholt."/>
 </members>
