@@ -55,6 +55,11 @@ public class SiteBean {
     return config.getWiki() == null ? null : config.getWiki().getName();
   }
 
+  /** The instance's icon for wiki links, a file in its img/, or null for the engine's own. */
+  public String getWikiIcon() {
+    return config.getWiki() == null ? null : config.getWiki().getIcon();
+  }
+
   /** "2011 - 2025", or a single year when all sessions fall into one. */
   public String getYears() {
     return years;

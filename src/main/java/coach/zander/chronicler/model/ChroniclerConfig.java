@@ -22,6 +22,9 @@ public class ChroniclerConfig {
     private String name;
     @XmlAttribute
     private String url;
+    /** A file in the instance's img/ shown before every wiki link; optional. */
+    @XmlAttribute
+    private String icon;
 
     public String getName() {
       return name;
@@ -29,6 +32,10 @@ public class ChroniclerConfig {
 
     public String getUrl() {
       return url;
+    }
+
+    public String getIcon() {
+      return icon;
     }
   }
 
