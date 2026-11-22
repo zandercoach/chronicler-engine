@@ -13,18 +13,18 @@
         <h1>$site.title</h1>
         <p>$site.welcome</p>
 #foreach($member in $bean.members)
-#if($foreach.index % 4 == 0)
+#if($foreach.index % 3 == 0)
         <p>
           <div class="row-fluid">
             <ul class="thumbnails">
 #end
-              <li class="span3">
+              <li class="span4">
                 <h3>$member.name</h3>
                 <a href="$resolver.resolveUrlFor($member)" class="thumbnail">
                   <img src="$resolver.resolveImageUrlFor($member)" alt="$member.name" id="img:held:$member.name.toLowerCase().replace(' ', '_')" />
                 </a>
               </li>
-#if($foreach.index % 4 == 3 || !$foreach.hasNext)
+#if($foreach.index % 3 == 2 || !$foreach.hasNext)
             </ul>
           </div>
         </p>
