@@ -1,26 +1,26 @@
     <endeavor date="12.RAH 1003 BF" wikiPage="Nebelmoor">
         <title>Der Turm im Nebelmoor</title>
-        <description>Two years after the Test-Endeavor, Test-Member and Jörn Eisenfaust follow a rumour of a drowned tower into the [[Moor|Nebelmoor]]. Their guide is Mirela vom Mühlbach, who knows the paths &amp; the price of losing them.
-A second paragraph, so that line breaks inside a description are covered as well.</description>
+        <description>Zwei Jahre nach Der verlorene Zehnt folgen Alrik Rabenstein und Jörn Eisenfaust dem Gerücht eines versunkenen Turms ins [[Moor|Nebelmoor]]. Ihre Führerin ist Mirela vom Mühlbach, die die Pfade kennt &amp; den Preis, sie zu verlieren.
+Ein zweiter Absatz, damit auch Zeilenumbrüche in einer Beschreibung abgedeckt sind.</description>
         <event date="12.RAH 1003 BF" location="Mühlbach">
             <title>Ein Führer mit Preis</title>
-            <description>In the mill at Mühlbach, Mirela vom Mühlbach names her price: "half of whatever the tower gives up". Jörn Eisenfaust haggles, Test-Member pays.</description>
+            <description>In der Mühle von Mühlbach nennt Mirela vom Mühlbach ihren Preis: "die Hälfte von allem, was der Turm hergibt". Jörn Eisenfaust feilscht, Alrik Rabenstein zahlt.</description>
             <stakeholder>Mirela vom Mühlbach</stakeholder>
-            <member>Test-Member</member>
+            <member>Alrik Rabenstein</member>
             <member>Jörn Eisenfaust</member>
         </event>
         <event date="1.NAM 1003 BF" location="Turm im Nebelmoor">
             <title>Lichter über dem Wasser</title>
-            <description>On the first of the nameless days the Moorlicht lead the heroes off the path. Jörn Eisenfaust recognises them as [[Irrlicht|will-o'-the-wisps]] just in time.</description>
+            <description>Am ersten der Namenlosen Tage locken die Moorlicht die Helden vom Pfad. Jörn Eisenfaust erkennt sie gerade noch rechtzeitig als [[Irrlicht|Irrlichter]].</description>
             <stakeholder>Mirela vom Mühlbach</stakeholder>
-            <member>Test-Member</member>
+            <member>Alrik Rabenstein</member>
             <member>Jörn Eisenfaust</member>
             <creature>Moorlicht</creature>
-            <creature>Test-Creature</creature>
+            <creature>Furtnix</creature>
         </event>
         <event date="3.NAM 1003 BF">
             <title>Rückweg ohne Karte</title>
-            <description>An event without a location, as the data allows.</description>
+            <description>Ein Ereignis ohne Ort, wie es die Daten erlauben.</description>
             <member>Jörn Eisenfaust</member>
         </event>
         <waypoint location="Mühlbach"/>

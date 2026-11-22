@@ -1,0 +1,189 @@
+package coach.zander.chronicler.cli.gen.xml;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.stream.StreamSource;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.io.TempDir;
+
+import coach.zander.chronicler.cli.gen.StaticUrlResolver;
+import coach.zander.chronicler.model.ChroniclerData;
+import coach.zander.chronicler.model.ChroniclerObject;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Event;
+
+/**
+ * Rules every generated page must keep, whatever its content. Where the golden master says that
+ * something changed, these say that something is broken. They need no approved files, so they can
+ * run against real campaign data as well.
+ */
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class GeneratedSiteInvariantsTest {
+
+  private static final Pattern UNRESOLVED_VELOCITY_REFERENCE = Pattern.compile("\\$!?\\{?[a-zA-Z][a-zA-Z0-9_.]*");
+  private static final Pattern EXTERNAL = Pattern.compile("^(https?:|mailto:|javascript:|#).*");
+  private static final List<String> ENTITY_PAGE_PREFIXES = List.of("endeavor_", "member_", "stakeholder_", "creature_",
+      "location_");
+
+  /**
+   * Known defect, pinned rather than hidden: home.vm hardcodes the heroes of the real campaign
+   * instead of reading them from the data, so on any other data these links lead nowhere. The test
+   * also fails once one of them works again - then the fix has landed and the entry goes.
+   */
+  private static final List<String> KNOWN_BROKEN_LINKS = List.of(
+      "home.html -> member_Belgarion.html",
+      "home.html -> member_Kassandra.html",
+      "home.html -> member_Kjaska.html",
+      "home.html -> member_Volpierro.html",
+      "home.html -> member_Zanrix.html",
+      "home.html -> member_Yona.html",
+      "home.html -> member_Salogni.html",
+      "home.html -> member_Bruno.html");
+
+  private Path site;
+  private Map<String, Document> pages;
+  private Map<String, String> sources;
+
+  @BeforeAll
+  void generateOnce(@TempDir Path workDir) throws IOException, JAXBException {
+    site = FixtureSite.generate(workDir);
+    pages = new LinkedHashMap<>();
+    sources = new LinkedHashMap<>();
+    try (Stream<Path> files = Files.list(site.resolve("html"))) {
+      for (Path page : files.filter(p -> p.toString().endsWith(".html")).sorted().collect(Collectors.toList())) {
+        String html = Files.readString(page, StandardCharsets.UTF_8);
+        String name = page.getFileName().toString();
+        sources.put(name, html);
+        pages.put(name, Jsoup.parse(html, page.toUri().toString()));
+      }
+    }
+    assertThat(pages).as("generated pages").isNotEmpty();
+  }
+
+  /**
+   * Today this cannot fail: ChroniclerReferenceInsertionEventHandler turns every unresolved reference
+   * into an empty string, so a missing value vanishes silently and only the golden master sees it.
+   * The test guards the day the handler is no longer attached - a Velocity upgrade changes that API -
+   * when Velocity would print the references as text instead.
+   */
+  @Test
+  void noPageContainsAnUnresolvedVelocityReference() {
+    List<String> leftovers = new ArrayList<>();
+    sources.forEach((name, html) -> {
+      Matcher m = UNRESOLVED_VELOCITY_REFERENCE.matcher(html);
+      while (m.find()) {
+        leftovers.add(name + ": " + m.group());
+      }
+    });
+    assertThat(leftovers).as("Velocity references rendered as text").isEmpty();
+  }
+
+  @Test
+  void everyLocalLinkPointsToAFileThatExists() {
+    List<String> broken = new ArrayList<>();
+    pages.forEach((name, doc) -> {
+      for (Element el : doc.select("a[href], link[href], script[src], img[src]")) {
+        String target = el.hasAttr("href") ? el.attr("href") : el.attr("src");
+        if (target.isEmpty() || EXTERNAL.matcher(target).matches()) {
+          continue;
+        }
+        String path = URLDecoder.decode(target.replaceFirst("[#?].*$", ""), StandardCharsets.UTF_8);
+        if (!Files.exists(site.resolve("html").resolve(path).normalize())) {
+          broken.add(name + " -> " + target);
+        }
+      }
+    });
+    assertThat(broken).as("local links without a target, beyond the known ones").containsAll(KNOWN_BROKEN_LINKS);
+    broken.removeAll(KNOWN_BROKEN_LINKS);
+    assertThat(broken).as("local links without a target").isEmpty();
+  }
+
+  @Test
+  void everyEntityPageHasAHeadingTheNavigationAndADescription() {
+    List<String> incomplete = new ArrayList<>();
+    pages.forEach((name, doc) -> {
+      if (ENTITY_PAGE_PREFIXES.stream().noneMatch(name::startsWith)) {
+        return;
+      }
+      if (doc.select(".span9 h2").text().isBlank()) {
+        incomplete.add(name + ": no heading");
+      }
+      if (doc.select(".navbar a[href=home.html]").isEmpty()) {
+        incomplete.add(name + ": no navigation");
+      }
+      Element description = doc.selectFirst(".span9 h4:contains(Kurzbeschreibung)");
+      Element next = description == null ? null : description.nextElementSibling();
+      if (next == null || !"p".equals(next.tagName()) || next.text().isBlank()) {
+        incomplete.add(name + ": no description");
+      }
+    });
+    assertThat(incomplete).isEmpty();
+  }
+
+  @Test
+  void everyEntityPageIsLinkedFromTheIndex() {
+    List<String> linked = pages.get("idx.html").select("a[href]").eachAttr("href");
+    List<String> entityPages = pages.keySet().stream()
+        .filter(name -> ENTITY_PAGE_PREFIXES.stream().anyMatch(name::startsWith))
+        .collect(Collectors.toList());
+    assertThat(entityPages).isNotEmpty();
+    assertThat(linked).as("links on idx.html").containsAll(entityPages);
+  }
+
+  @Test
+  void everyEventAppearsOnThePageOfItsEndeavorAndOfEveryoneInvolved() throws JAXBException {
+    StaticUrlResolver resolver = new StaticUrlResolver("");
+    List<String> missing = new ArrayList<>();
+    for (Endeavor endeavor : loadFixtureData().getEndeavors()) {
+      for (Event event : endeavor.getEvents()) {
+        List<String> involved = new ArrayList<>();
+        involved.add(resolver.resolveUrlFor(endeavor));
+        Stream.of(event.getMembers(), event.getStakeholders(), event.getCreatures())
+            .flatMap(List::stream)
+            .map(ChroniclerObject.class::cast)
+            .forEach(object -> involved.add(resolver.resolveUrlFor(object)));
+        if (event.getLocation() != null) {
+          involved.add(resolver.resolveUrlFor(event.getLocation()));
+        }
+        for (String page : involved) {
+          Document doc = pages.get(page);
+          boolean listed = doc != null && doc.select(".span9 h5").stream().anyMatch(h5 -> h5.text().endsWith(event.getTitle()));
+          if (!listed) {
+            missing.add("'" + event.getTitle() + "' on " + page);
+          }
+        }
+      }
+    }
+    assertThat(missing).as("events missing from the pages of those involved").isEmpty();
+  }
+
+  private ChroniclerData loadFixtureData() throws JAXBException {
+    System.setProperty("javax.xml.accessExternalDTD", "all");
+    File data = new File(FixtureSite.FIXTURE_ROOT, "xml-data/data.xml");
+    return (ChroniclerData) JAXBContext.newInstance(ChroniclerData.class).createUnmarshaller()
+        .unmarshal(new StreamSource(data));
+  }
+}

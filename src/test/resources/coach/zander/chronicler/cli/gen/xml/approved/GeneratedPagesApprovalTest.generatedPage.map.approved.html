@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>Chronicler - Karte</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../css/chronicler.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="../js/projection.js"></script>
+    <script src="../js/maplabel.js"></script>
+    <script>
+      var avMapTypeOptions = {
+        getTileUrl: function(coord, zoom) {
+          var normalized = getNormalizedCoord(coord, zoom);
+          if (!normalized) {
+            return null;
+          }
+          var bound = Math.pow(2, zoom);
+          return '../av_tiles/' + zoom + '/' + normalized.x + '/' + (bound - normalized.y -1) + '.png';
+        },
+        tileSize: new google.maps.Size(TILE_SIZE, TILE_SIZE),
+        maxZoom: 6,
+        minZoom: 2,
+        radius: 1,
+        name: 'Aventurien'
+      };
+
+      var avMapType = new google.maps.ImageMapType(avMapTypeOptions);
+
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(0, 0),
+          zoom: 2,
+          streetViewControl: false,
+          mapTypeControlOptions: {
+            mapTypeIds: ['av']
+          }
+        };
+
+        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        map.mapTypes.set('av', avMapType);
+        map.setMapTypeId('av');
+        
+        var routeCoordinates;
+
+        routeCoordinates = [
+
+            getLatLng(400, 300), // 
+            getLatLng(460, 340), // 
+            getLatLng(420, 310), // 
+          ];
+        new google.maps.Polyline({map: map, path: routeCoordinates, strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2});
+
+              new MapLabel({text: 'M&uuml;hlbach', position: getLatLng(400, 300), map: map, fontSize: 12});
+                  new MapLabel({text: 'Turm im Nebelmoor', position: getLatLng(460, 340), map: map, fontSize: 12});
+                    routeCoordinates = [
+
+            getLatLng(100, 100), // 
+          ];
+        new google.maps.Polyline({map: map, path: routeCoordinates, strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2});
+
+              new MapLabel({text: 'Graufurt', position: getLatLng(100, 100), map: map, fontSize: 12});
+            }
+    </script>
+  </head>
+
+  <body onload="initialize()">
+    <!-- NAVIGATION -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="home.html">Die Chroniken des fliegenden Kessels</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="home.html">Startseite</a></li>
+              <li><a href="chronicles.html">Chronik</a></li>
+              <li><a href="idx.html">Index</a></li>
+              <li><a href="map.html">Karte</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Abenteuer <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="endeavor_Der_Turm_im_Nebelmoor.html">Der Turm im Nebelmoor</a></li>
+                  <li><a href="endeavor_Der_verlorene_Zehnt.html">Der verlorene Zehnt</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Helden <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="member_Alrik_Rabenstein.html">Alrik Rabenstein</a></li>
+                  <li><a href="member_J&ouml;rn_Eisenfaust.html">J&ouml;rn Eisenfaust</a></li>
+                  <li><a href="member_Ylva.html">Ylva</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+<!-- CONTENT -->
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <h2>Karte</h2>
+          <hr />
+        </div>
+      </div>
+      <div id="map_canvas" style="width: 100%; height: 1200px; background-color: #11aed9;"></div>
+
+      <footer>
+        <p>&copy; Christian Zander 2012 - 2024</p>
+      </footer>
+    </div> <!-- /container -->
+    
+    <!-- JAVASCRIPT -->
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.js"></script>
+  </body>
+</html>
