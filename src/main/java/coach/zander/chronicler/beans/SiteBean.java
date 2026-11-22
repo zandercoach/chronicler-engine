@@ -1,11 +1,10 @@
 package coach.zander.chronicler.beans;
 
+import coach.zander.chronicler.model.ChroniclerConfig;
+import coach.zander.chronicler.model.Session;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import coach.zander.chronicler.model.ChroniclerConfig;
-import coach.zander.chronicler.model.Session;
 
 /** Instance-wide values every page needs: the configuration plus the years the sessions span. */
 public class SiteBean {

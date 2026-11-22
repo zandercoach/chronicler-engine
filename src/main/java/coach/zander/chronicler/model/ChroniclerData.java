@@ -1,11 +1,9 @@
 package coach.zander.chronicler.model;
 
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-
 
 @XmlRootElement
 public class ChroniclerData {
@@ -27,25 +25,25 @@ public class ChroniclerData {
     return members;
   }
 
-  @XmlElementWrapper(name="creatures")
+  @XmlElementWrapper(name = "creatures")
   @XmlElement(name = "creature")
   public List<Creature> getCreatures() {
     return creatures;
   }
 
-  @XmlElementWrapper(name="stakeholders")
+  @XmlElementWrapper(name = "stakeholders")
   @XmlElement(name = "stakeholder")
   public List<Stakeholder> getStakeholders() {
     return stakeholders;
   }
 
-  @XmlElementWrapper(name="locations")
+  @XmlElementWrapper(name = "locations")
   @XmlElement(name = "location")
   public List<Location> getLocations() {
     return locations;
   }
 
-  @XmlElementWrapper(name="sessions")
+  @XmlElementWrapper(name = "sessions")
   @XmlElement(name = "session")
   public List<Session> getSessions() {
     return sessions;
@@ -88,8 +86,18 @@ public class ChroniclerData {
 
   @Override
   public String toString() {
-    return "ChroniclerData [locations=" + locations + ", members=" + members + ", stakeholders=" + stakeholders + ", creatures=" + creatures
-        + ", endeavors=" + endeavors + ", sessions=" + sessions + "]";
+    return "ChroniclerData [locations="
+        + locations
+        + ", members="
+        + members
+        + ", stakeholders="
+        + stakeholders
+        + ", creatures="
+        + creatures
+        + ", endeavors="
+        + endeavors
+        + ", sessions="
+        + sessions
+        + "]";
   }
-
 }

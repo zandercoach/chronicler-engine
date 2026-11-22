@@ -1,7 +1,6 @@
 package coach.zander.chronicler.model;
 
 import java.io.File;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -18,13 +17,11 @@ public class ChroniclerConfig {
 
   @XmlAccessorType(XmlAccessType.FIELD)
   public static class Wiki {
-    @XmlAttribute
-    private String name;
-    @XmlAttribute
-    private String url;
+    @XmlAttribute private String name;
+    @XmlAttribute private String url;
+
     /** A file in the instance's img/ shown before every wiki link; optional. */
-    @XmlAttribute
-    private String icon;
+    @XmlAttribute private String icon;
 
     public String getName() {
       return name;
@@ -42,10 +39,8 @@ public class ChroniclerConfig {
   /** Where the instance's imprint and privacy notice live; linked from every page's footer. */
   @XmlAccessorType(XmlAccessType.FIELD)
   public static class Legal {
-    @XmlAttribute
-    private String imprint;
-    @XmlAttribute
-    private String privacy;
+    @XmlAttribute private String imprint;
+    @XmlAttribute private String privacy;
 
     public String getImprint() {
       return imprint;
@@ -62,10 +57,8 @@ public class ChroniclerConfig {
    */
   @XmlAccessorType(XmlAccessType.FIELD)
   public static class MapPage {
-    @XmlAttribute
-    private Boolean enabled;
-    @XmlValue
-    private String note;
+    @XmlAttribute private Boolean enabled;
+    @XmlValue private String note;
 
     public boolean isEnabled() {
       return Boolean.TRUE.equals(enabled);
@@ -76,29 +69,26 @@ public class ChroniclerConfig {
     }
   }
 
-  @XmlElement
-  private String title;
-  @XmlElement
-  private String welcome;
-  @XmlElement
-  private String copyright;
-  @XmlElement
-  private Wiki wiki;
-  @XmlElement
-  private Legal legal;
-  @XmlElement
-  private MapPage map;
-  @XmlElement
-  private ChronicleCalendar calendar;
+  @XmlElement private String title;
+  @XmlElement private String welcome;
+  @XmlElement private String copyright;
+  @XmlElement private Wiki wiki;
+  @XmlElement private Legal legal;
+  @XmlElement private MapPage map;
+  @XmlElement private ChronicleCalendar calendar;
 
   public static ChroniclerConfig load(File file) throws JAXBException {
     if (!file.isFile()) {
       throw new IllegalStateException("Instance configuration missing: " + file.getPath());
     }
-    ChroniclerConfig config = (ChroniclerConfig) JAXBContext.newInstance(ChroniclerConfig.class).createUnmarshaller()
-        .unmarshal(file);
-    if (config.calendar == null || config.calendar.getMonths().isEmpty() || config.calendar.getEra() == null) {
-      throw new IllegalStateException("Instance configuration lacks a <calendar> with an era and months: " + file.getPath());
+    ChroniclerConfig config =
+        (ChroniclerConfig)
+            JAXBContext.newInstance(ChroniclerConfig.class).createUnmarshaller().unmarshal(file);
+    if (config.calendar == null
+        || config.calendar.getMonths().isEmpty()
+        || config.calendar.getEra() == null) {
+      throw new IllegalStateException(
+          "Instance configuration lacks a <calendar> with an era and months: " + file.getPath());
     }
     return config;
   }

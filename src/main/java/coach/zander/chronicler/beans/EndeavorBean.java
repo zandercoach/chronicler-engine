@@ -1,15 +1,13 @@
 package coach.zander.chronicler.beans;
 
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
 import coach.zander.chronicler.model.Creature;
 import coach.zander.chronicler.model.Endeavor;
 import coach.zander.chronicler.model.Location;
 import coach.zander.chronicler.model.Member;
 import coach.zander.chronicler.model.Stakeholder;
+import java.util.List;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 @Component
 public class EndeavorBean extends ChroniclerPageBean {

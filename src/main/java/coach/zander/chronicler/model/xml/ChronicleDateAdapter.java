@@ -1,9 +1,8 @@
 package coach.zander.chronicler.model.xml;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
 import coach.zander.chronicler.model.ChronicleCalendar;
 import coach.zander.chronicler.model.ChronicleDate;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * Reads and writes dates in the data format of the instance's calendar. The generator hands one

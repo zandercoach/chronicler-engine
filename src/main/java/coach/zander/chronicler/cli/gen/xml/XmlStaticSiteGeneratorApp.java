@@ -1,9 +1,7 @@
 package coach.zander.chronicler.cli.gen.xml;
 
 import java.io.IOException;
-
 import javax.xml.bind.JAXBException;
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -44,7 +42,8 @@ public class XmlStaticSiteGeneratorApp {
         generateMap = true;
       } else {
         System.err.println("Unknown argument: " + arg);
-        System.err.println("Usage: [--data=DIR] [--out=DIR] [--static=DIR] [--images] [--tiles] [--map]");
+        System.err.println(
+            "Usage: [--data=DIR] [--out=DIR] [--static=DIR] [--images] [--tiles] [--map]");
         System.exit(2);
       }
     }
@@ -55,7 +54,8 @@ public class XmlStaticSiteGeneratorApp {
 
     XmlStaticSiteGenerator generator = context.getBean(XmlStaticSiteGenerator.class);
 
-    generator.run(chroniclerSources, projectSources, destination, generateMap, copyImages, copyTiles);
+    generator.run(
+        chroniclerSources, projectSources, destination, generateMap, copyImages, copyTiles);
 
     context.close();
   }

@@ -1,10 +1,9 @@
 package coach.zander.chronicler.beans;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import coach.zander.chronicler.model.Endeavor;
 import coach.zander.chronicler.model.Member;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeBean extends ChroniclerPageBean {
   private Endeavor endeavor;

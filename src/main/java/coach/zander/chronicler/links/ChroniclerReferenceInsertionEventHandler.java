@@ -1,18 +1,16 @@
 package coach.zander.chronicler.links;
 
+import be.devijver.wikipedia.Parser;
+import be.devijver.wikipedia.SmartLinkResolver;
+import be.devijver.wikipedia.Visitor;
+import coach.zander.chronicler.util.UrlResolver;
 import java.io.StringWriter;
 import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.app.event.ReferenceInsertionEventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import be.devijver.wikipedia.Parser;
-import be.devijver.wikipedia.SmartLinkResolver;
-import be.devijver.wikipedia.Visitor;
-import coach.zander.chronicler.util.UrlResolver;
 
 @Service
 public class ChroniclerReferenceInsertionEventHandler implements ReferenceInsertionEventHandler {
@@ -22,7 +20,8 @@ public class ChroniclerReferenceInsertionEventHandler implements ReferenceInsert
   private final SmartLinkResolver smartLinkResolver;
 
   @Autowired
-  public ChroniclerReferenceInsertionEventHandler(InternalLinksProvider provider, UrlResolver resolver) {
+  public ChroniclerReferenceInsertionEventHandler(
+      InternalLinksProvider provider, UrlResolver resolver) {
     Assert.notNull(provider);
     Assert.notNull(resolver);
     List<InternalLink> internalLinks = provider.getInternalLinks();

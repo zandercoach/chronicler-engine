@@ -1,0 +1,3 @@
+# Formatting-only commits, skipped by git blame (git config blame.ignoreRevsFile .git-blame-ignore-revs).
+# Format the engine with google-java-format
+ae15fcf8f2c805af6a8f67863232352445da4dc9

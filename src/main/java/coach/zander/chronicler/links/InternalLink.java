@@ -1,9 +1,8 @@
 package coach.zander.chronicler.links;
 
-import org.springframework.util.Assert;
-
 import coach.zander.chronicler.model.ChroniclerActivity;
 import coach.zander.chronicler.model.ChroniclerObject;
+import org.springframework.util.Assert;
 
 public final class InternalLink {
   private String name;

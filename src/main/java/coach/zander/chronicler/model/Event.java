@@ -2,29 +2,27 @@ package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-@XmlType(propOrder = { "title", "description", "stakeholders", "members", "creatures" })
+@XmlType(propOrder = {"title", "description", "stakeholders", "members", "creatures"})
 public class Event extends ChroniclerActivity {
-  @XmlTransient
-  private Endeavor endeavor;
-  @XmlIDREF
-  @XmlAttribute
-  private Location location;
+  @XmlTransient private Endeavor endeavor;
+  @XmlIDREF @XmlAttribute private Location location;
+
   @XmlElement(name = "stakeholder")
   @XmlIDREF
   private List<Stakeholder> stakeholders = new ArrayList<Stakeholder>();
+
   @XmlElement(name = "member")
   @XmlIDREF
   private List<Member> members = new ArrayList<Member>();
+
   @XmlElement(name = "creature")
   @XmlIDREF
   private List<Creature> creatures = new ArrayList<Creature>();

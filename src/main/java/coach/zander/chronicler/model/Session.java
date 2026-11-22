@@ -1,27 +1,25 @@
 package coach.zander.chronicler.model;
 
+import coach.zander.chronicler.model.xml.DateAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import coach.zander.chronicler.model.xml.DateAdapter;
-
 public class Session implements Comparable<Session> {
   private Integer id;
+
   @XmlAttribute
   @XmlJavaTypeAdapter(DateAdapter.class)
   @XmlID
   private Date date;
-  @XmlAttribute
-  private String location;
+
+  @XmlAttribute private String location;
   private final List<Endeavor> endeavors = new ArrayList<Endeavor>();
 
   public void addEndeavor(Endeavor endeavor) {
@@ -81,7 +79,8 @@ public class Session implements Comparable<Session> {
 
   @Override
   public String toString() {
-    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("date",
-        new SimpleDateFormat("yyyy-MM-dd").format(date)).toString();
+    return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+        .append("date", new SimpleDateFormat("yyyy-MM-dd").format(date))
+        .toString();
   }
 }

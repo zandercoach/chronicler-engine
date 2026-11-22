@@ -1,8 +1,7 @@
 package coach.zander.chronicler.beans;
 
-import java.util.List;
-
 import coach.zander.chronicler.model.Endeavor;
+import java.util.List;
 
 public class ChroniclesBean extends ChroniclerPageBean {
   private List<Endeavor> endeavors;

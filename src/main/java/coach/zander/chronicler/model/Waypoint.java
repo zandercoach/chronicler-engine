@@ -5,23 +5,16 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.XmlTransient;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Waypoint {
-  @XmlTransient
-  private Integer id;
-  @XmlTransient
-  private Endeavor endeavor;
-  @XmlIDREF
-  @XmlAttribute
-  private Location location;
-  @XmlAttribute
-  private Integer x;
-  @XmlAttribute
-  private Integer y;
+  @XmlTransient private Integer id;
+  @XmlTransient private Endeavor endeavor;
+  @XmlIDREF @XmlAttribute private Location location;
+  @XmlAttribute private Integer x;
+  @XmlAttribute private Integer y;
 
   public Endeavor getEndeavor() {
     return endeavor;

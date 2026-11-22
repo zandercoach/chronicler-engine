@@ -3,19 +3,28 @@ package coach.zander.chronicler.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import coach.zander.chronicler.exception.IllegalDateException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
-import coach.zander.chronicler.exception.IllegalDateException;
 
 class ChronicleDateTest {
 
   private static ChronicleCalendar aventurian() {
-    String[][] months = { { "PRA", "Praios" }, { "RON", "Rondra" }, { "EFF", "Efferd" }, { "TRA", "Travia" },
-        { "BOR", "Boron" }, { "HES", "Hesinde" }, { "FIR", "Firun" }, { "TSA", "Tsa" }, { "PHE", "Phex" },
-        { "PER", "Peraine" }, { "ING", "Ingerimm" }, { "RAH", "Rahja" } };
+    String[][] months = {
+      {"PRA", "Praios"},
+      {"RON", "Rondra"},
+      {"EFF", "Efferd"},
+      {"TRA", "Travia"},
+      {"BOR", "Boron"},
+      {"HES", "Hesinde"},
+      {"FIR", "Firun"},
+      {"TSA", "Tsa"},
+      {"PHE", "Phex"},
+      {"PER", "Peraine"},
+      {"ING", "Ingerimm"},
+      {"RAH", "Rahja"}
+    };
     List<ChronicleCalendar.Month> list = new ArrayList<>();
     for (String[] m : months) {
       list.add(new ChronicleCalendar.Month(m[0], m[1], 30));
@@ -61,14 +70,19 @@ class ChronicleDateTest {
 
   @Test
   void refusesWhatTheCalendarDoesNotHave() {
-    assertThatThrownBy(() -> aventurian().parse("6.NAM 1003 BF")).isInstanceOf(IllegalDateException.class)
+    assertThatThrownBy(() -> aventurian().parse("6.NAM 1003 BF"))
+        .isInstanceOf(IllegalDateException.class)
         .hasMessageContaining("1 to 5");
-    assertThatThrownBy(() -> aventurian().parse("1.NEB 1003 BF")).isInstanceOf(IllegalDateException.class)
+    assertThatThrownBy(() -> aventurian().parse("1.NEB 1003 BF"))
+        .isInstanceOf(IllegalDateException.class)
         .hasMessageContaining("Unknown month");
-    assertThatThrownBy(() -> aventurian().parse("1.PRA 1003 n. F.")).isInstanceOf(IllegalDateException.class)
+    assertThatThrownBy(() -> aventurian().parse("1.PRA 1003 n. F."))
+        .isInstanceOf(IllegalDateException.class)
         .hasMessageContaining("Unknown era");
-    assertThatThrownBy(() -> flood().parse("1.NEB 1003 v. F.")).isInstanceOf(IllegalDateException.class)
+    assertThatThrownBy(() -> flood().parse("1.NEB 1003 v. F."))
+        .isInstanceOf(IllegalDateException.class)
         .hasMessageContaining("Unknown era");
-    assertThatThrownBy(() -> aventurian().parse("PRA 1003")).isInstanceOf(IllegalDateException.class);
+    assertThatThrownBy(() -> aventurian().parse("PRA 1003"))
+        .isInstanceOf(IllegalDateException.class);
   }
 }

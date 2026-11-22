@@ -1,29 +1,5 @@
 package coach.zander.chronicler.cli.gen.xml;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.event.EventCartridge;
-import org.apache.velocity.exception.MethodInvocationException;
-import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.exception.ResourceNotFoundException;
-
 import coach.zander.chronicler.beans.ChroniclerPageBean;
 import coach.zander.chronicler.beans.ChroniclesBean;
 import coach.zander.chronicler.beans.CreatureBean;
@@ -51,6 +27,27 @@ import coach.zander.chronicler.model.Waypoint;
 import coach.zander.chronicler.model.xml.ChronicleDateAdapter;
 import coach.zander.chronicler.util.DateFormatter;
 import coach.zander.chronicler.util.UrlResolver;
+import java.awt.BasicStroke;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import javax.imageio.ImageIO;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import org.apache.commons.io.FileUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.event.EventCartridge;
+import org.apache.velocity.exception.MethodInvocationException;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 
 public class XmlStaticSiteGenerator {
 
@@ -67,7 +64,7 @@ public class XmlStaticSiteGenerator {
   private String chroniclerSources;
   private String projectSources;
   private String destination;
-  private VelocityContext baseCtx;  
+  private VelocityContext baseCtx;
 
   public void close() {
     System.out.println("********** ChroniclerGenerator - Close! **********");
@@ -85,8 +82,11 @@ public class XmlStaticSiteGenerator {
     System.out.println("--> Page 'chronicles' created!");
   }
 
-  private void createPageHome(ChroniclerData data) throws ResourceNotFoundException, ParseErrorException, MethodInvocationException,
-      IOException {
+  private void createPageHome(ChroniclerData data)
+      throws ResourceNotFoundException,
+          ParseErrorException,
+          MethodInvocationException,
+          IOException {
 
     HomeBean bean = new HomeBean();
     List<Endeavor> endeavors = data.getEndeavors();
@@ -97,7 +97,7 @@ public class XmlStaticSiteGenerator {
     bean.setMembers(data.getMembers());
     bean.setPageTitle("Startseite");
     mergeTemplateWithBeanDataToFile("home", bean);
-    
+
     System.out.println("--> Page 'home' created!");
   }
 
@@ -173,7 +173,7 @@ public class XmlStaticSiteGenerator {
       StakeholderBean bean = new StakeholderBean();
       bean.setStakeholder(stakeholder);
       mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(stakeholder));
-      
+
       System.out.println("----> Stakeholder " + stakeholder.getName());
     }
     System.out.println("--> Stakeholders created!");
@@ -185,7 +185,7 @@ public class XmlStaticSiteGenerator {
       LocationBean bean = new LocationBean();
       bean.setLocation(location);
       mergeTemplateWithBeanDataToFile("object", bean, resolver.resolveUrlFor(location));
-      
+
       System.out.println("----> Location " + location.getName());
     }
     System.out.println("--> Locations created!");
@@ -207,47 +207,55 @@ public class XmlStaticSiteGenerator {
     }
     ImageIO.write(img, "jpg", new File(destination + IMG_PATH + "/map.jpg"));
 
-    System.out.println("--> MAP created!");  
+    System.out.println("--> MAP created!");
   }
 
-  private ChroniclerData loadDataFromXml(String xml, ChronicleCalendar calendar) throws JAXBException, IOException {
-	    System.setProperty("javax.xml.accessExternalDTD", "all");	  
-	  
-	    File file = new File(xml);
-	    JAXBContext jaxbContext = JAXBContext.newInstance(ChroniclerData.class);
+  private ChroniclerData loadDataFromXml(String xml, ChronicleCalendar calendar)
+      throws JAXBException, IOException {
+    System.setProperty("javax.xml.accessExternalDTD", "all");
 
-	    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-	    jaxbUnmarshaller.setAdapter(ChronicleDateAdapter.class, new ChronicleDateAdapter(calendar));
-	    ChroniclerData data = (ChroniclerData) jaxbUnmarshaller.unmarshal(new StreamSource(file));
-	    
-	    List<Endeavor> endeavors = data.getEndeavors();
-	    for (Endeavor endeavor : endeavors) {
-		    List<Event> events = endeavor.getEvents();
-	    	for (Event event : events) {
-	    		event.setEndeavor(endeavor);
-		    	List<Member> members = event.getMembers();
-		    	for (Member member : members) {
-		    		member.add(event);
-		    	}
-		    	List<Stakeholder> stakeholders = event.getStakeholders();
-		    	for (Stakeholder stakeholder : stakeholders) {
-		    		stakeholder.add(event);
-		    	}
-		    	List<Creature> kreaturen = event.getCreatures();
-		    	for (Creature creature : kreaturen) {
-		    		creature.add(event);
-		    	}
-		    	Location location = event.getLocation();
-		    		if (location != null) {
-		    			location.add(event);
-		    		}
-		    }
-	    }
+    File file = new File(xml);
+    JAXBContext jaxbContext = JAXBContext.newInstance(ChroniclerData.class);
 
-	    return data;
-	  }
+    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+    jaxbUnmarshaller.setAdapter(ChronicleDateAdapter.class, new ChronicleDateAdapter(calendar));
+    ChroniclerData data = (ChroniclerData) jaxbUnmarshaller.unmarshal(new StreamSource(file));
 
-  public void initialize(String chroniclerSources, String projectSources, String destination, ChroniclerData data, boolean copyImages, boolean copyMapTiles) throws IOException, JAXBException {
+    List<Endeavor> endeavors = data.getEndeavors();
+    for (Endeavor endeavor : endeavors) {
+      List<Event> events = endeavor.getEvents();
+      for (Event event : events) {
+        event.setEndeavor(endeavor);
+        List<Member> members = event.getMembers();
+        for (Member member : members) {
+          member.add(event);
+        }
+        List<Stakeholder> stakeholders = event.getStakeholders();
+        for (Stakeholder stakeholder : stakeholders) {
+          stakeholder.add(event);
+        }
+        List<Creature> kreaturen = event.getCreatures();
+        for (Creature creature : kreaturen) {
+          creature.add(event);
+        }
+        Location location = event.getLocation();
+        if (location != null) {
+          location.add(event);
+        }
+      }
+    }
+
+    return data;
+  }
+
+  public void initialize(
+      String chroniclerSources,
+      String projectSources,
+      String destination,
+      ChroniclerData data,
+      boolean copyImages,
+      boolean copyMapTiles)
+      throws IOException, JAXBException {
     System.out.println("********** ChroniclerGenerator - Initialize! **********");
     this.chroniclerSources = chroniclerSources;
     this.projectSources = projectSources;
@@ -268,27 +276,31 @@ public class XmlStaticSiteGenerator {
     baseCtx.put("resolver", resolver);
     baseCtx.put("formatter", new DateFormatter());
     baseCtx.put("site", new SiteBean(config, data.getSessions()));
-    
+
     List<Endeavor> navAdventures = data.getEndeavors();
     List<Member> navHelden = data.getMembers();
     baseCtx.put("navigation", new NavigationBean(navAdventures, navHelden));
 
     EventCartridge ec = new EventCartridge();
-    ec.addEventHandler(new ChroniclerReferenceInsertionEventHandler(new XmlInternalLinksProvider(data), resolver));
+    ec.addEventHandler(
+        new ChroniclerReferenceInsertionEventHandler(new XmlInternalLinksProvider(data), resolver));
 
     ec.attachToContext(baseCtx);
   }
 
-  private void mergeTemplateWithBeanDataToFile(String templateBaseName, ChroniclerPageBean bean) throws IOException {
+  private void mergeTemplateWithBeanDataToFile(String templateBaseName, ChroniclerPageBean bean)
+      throws IOException {
     mergeTemplateWithBeanDataToFile(templateBaseName, bean, templateBaseName + ".html");
   }
 
-  private void mergeTemplateWithBeanDataToFile(String templateBaseName, ChroniclerPageBean bean, String destinationFileName)
+  private void mergeTemplateWithBeanDataToFile(
+      String templateBaseName, ChroniclerPageBean bean, String destinationFileName)
       throws IOException {
     VelocityContext ctx = new VelocityContext(baseCtx);
     ctx.put("bean", bean);
     Template tpl = Velocity.getTemplate(templateBaseName + ".vm");
-    try (FileWriter fw = new FileWriter(new File(destination + HTML_PATH + "/" + destinationFileName))) {
+    try (FileWriter fw =
+        new FileWriter(new File(destination + HTML_PATH + "/" + destinationFileName))) {
       tpl.merge(ctx, fw);
       fw.flush();
     }
@@ -297,15 +309,17 @@ public class XmlStaticSiteGenerator {
   private void prepareDestination(boolean copyImages, boolean copyTiles) throws IOException {
     copyDir(new File(chroniclerSources + CSS_PATH), new File(destination + CSS_PATH));
     copyDir(new File(chroniclerSources + JS_PATH), new File(destination + JS_PATH));
-    FileUtils.copyFile(new File(chroniclerSources + "/index.html"), new File(destination + "/index.html"));
-    FileUtils.copyFile(new File(chroniclerSources + "/notfound.html"), new File(destination + "/notfound.html"));
+    FileUtils.copyFile(
+        new File(chroniclerSources + "/index.html"), new File(destination + "/index.html"));
+    FileUtils.copyFile(
+        new File(chroniclerSources + "/notfound.html"), new File(destination + "/notfound.html"));
 
-	if (copyImages) {
-		  copyDir(new File(projectSources + IMG_PATH), new File(destination + IMG_PATH));
-	}
-	if (copyTiles) {
-		  copyDir(new File(projectSources + TILES_PATH), new File(destination + TILES_PATH));
-	}
+    if (copyImages) {
+      copyDir(new File(projectSources + IMG_PATH), new File(destination + IMG_PATH));
+    }
+    if (copyTiles) {
+      copyDir(new File(projectSources + TILES_PATH), new File(destination + TILES_PATH));
+    }
 
     copyDir(new File(chroniclerSources + HTML_PATH), new File(destination + HTML_PATH));
   }
@@ -313,22 +327,30 @@ public class XmlStaticSiteGenerator {
   private void copyDir(File from, File to) throws IOException {
     if (to.exists()) {
       System.out.println("Removing direcory: " + to.getPath());
-	  FileUtils.deleteDirectory(to);
-	}
+      FileUtils.deleteDirectory(to);
+    }
 
-	FileUtils.copyDirectory(from, to);
+    FileUtils.copyDirectory(from, to);
   }
 
-public void run(String chroniclerSources, String projectSources, String destination, boolean generateMap, boolean copyImages, boolean copyTiles) throws IOException, JAXBException {
-	// The calendar comes from the instance configuration, so it is read before the data.
-	ChronicleCalendar calendar = ChroniclerConfig.load(new File(projectSources + CONFIG_PATH)).getCalendar();
-	ChroniclerData data = loadDataFromXml(projectSources + XML_PATH, calendar);
+  public void run(
+      String chroniclerSources,
+      String projectSources,
+      String destination,
+      boolean generateMap,
+      boolean copyImages,
+      boolean copyTiles)
+      throws IOException, JAXBException {
+    // The calendar comes from the instance configuration, so it is read before the data.
+    ChronicleCalendar calendar =
+        ChroniclerConfig.load(new File(projectSources + CONFIG_PATH)).getCalendar();
+    ChroniclerData data = loadDataFromXml(projectSources + XML_PATH, calendar);
     initialize(chroniclerSources, projectSources, destination, data, copyImages, copyTiles);
 
     if (generateMap) {
       generateMap(data.getEndeavors(), projectSources + MAP_PATH);
     }
-    
+
     createPageMap(data);
     createPageHome(data);
     createPageChronicles(data);

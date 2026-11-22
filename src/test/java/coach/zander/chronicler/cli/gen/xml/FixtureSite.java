@@ -3,9 +3,7 @@ package coach.zander.chronicler.cli.gen.xml;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-
 import javax.xml.bind.JAXBException;
-
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -18,8 +16,7 @@ final class FixtureSite {
   static final String FIXTURE_ROOT = "src/test/resources/fixture";
   static final String ENGINE_STATIC = "src/main/resources/static";
 
-  private FixtureSite() {
-  }
+  private FixtureSite() {}
 
   /** Generates into {@code workDir}/site and returns that directory. */
   static Path generate(Path workDir) throws IOException, JAXBException {
@@ -27,7 +24,8 @@ final class FixtureSite {
     FileUtils.copyDirectory(new File(FIXTURE_ROOT, "xml-data"), data.resolve("data").toFile());
     FileUtils.copyDirectory(new File(FIXTURE_ROOT, "img"), data.resolve("img").toFile());
     Path site = workDir.resolve("site");
-    new XmlStaticSiteGenerator().run(ENGINE_STATIC, data.toString(), site.toString(), false, true, false);
+    new XmlStaticSiteGenerator()
+        .run(ENGINE_STATIC, data.toString(), site.toString(), false, true, false);
     return site;
   }
 }
