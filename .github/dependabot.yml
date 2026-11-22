@@ -1,4 +1,5 @@
-# Weekly update pull requests, grouped so they arrive as one per ecosystem.
+# Weekly updates. Minor and patch updates arrive grouped, one pull request per ecosystem;
+# a major version comes on its own, because it usually needs a migration, not just a bump.
 version: 2
 updates:
   - package-ecosystem: maven
@@ -6,12 +7,12 @@ updates:
     schedule:
       interval: weekly
     groups:
-      maven:
-        patterns: ["*"]
+      maven-minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
     groups:
-      actions:
-        patterns: ["*"]
+      actions-minor-and-patch:
+        update-types: ["minor", "patch"]
