@@ -38,7 +38,8 @@ import coach.zander.chronicler.model.Event;
 /**
  * Rules every generated page must keep, whatever its content. Where the golden master says that
  * something changed, these say that something is broken. They need no approved files, so they can
- * run against real campaign data as well.
+ * run against real campaign data as well: {@code -Dchronicler.data=<path of a data repo>} generates
+ * from that repo instead of the fixture.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GeneratedSiteInvariantsTest {
@@ -48,13 +49,24 @@ class GeneratedSiteInvariantsTest {
   private static final List<String> ENTITY_PAGE_PREFIXES = List.of("endeavor_", "member_", "stakeholder_", "creature_",
       "location_");
 
+  private static final String DATA_PROPERTY = "chronicler.data";
+
+  /** The data repo the site is generated from; null means the fixture. */
+  private String dataRepo;
   private Path site;
   private Map<String, Document> pages;
   private Map<String, String> sources;
 
   @BeforeAll
   void generateOnce(@TempDir Path workDir) throws IOException, JAXBException {
-    site = FixtureSite.generate(workDir);
+    String property = System.getProperty(DATA_PROPERTY);
+    if (property == null || property.isBlank()) {
+      site = FixtureSite.generate(workDir);
+    } else {
+      dataRepo = property;
+      site = workDir.resolve("site");
+      new XmlStaticSiteGenerator().run(FixtureSite.ENGINE_STATIC, dataRepo, site.toString(), false, true, false);
+    }
     pages = new LinkedHashMap<>();
     sources = new LinkedHashMap<>();
     try (Stream<Path> files = Files.list(site.resolve("html"))) {
@@ -140,7 +152,7 @@ class GeneratedSiteInvariantsTest {
   void everyEventAppearsOnThePageOfItsEndeavorAndOfEveryoneInvolved() throws JAXBException {
     StaticUrlResolver resolver = new StaticUrlResolver("");
     List<String> missing = new ArrayList<>();
-    for (Endeavor endeavor : loadFixtureData().getEndeavors()) {
+    for (Endeavor endeavor : loadData().getEndeavors()) {
       for (Event event : endeavor.getEvents()) {
         List<String> involved = new ArrayList<>();
         involved.add(resolver.resolveUrlFor(endeavor));
@@ -151,9 +163,10 @@ class GeneratedSiteInvariantsTest {
         if (event.getLocation() != null) {
           involved.add(resolver.resolveUrlFor(event.getLocation()));
         }
+        String shownTitle = asRendered(event.getTitle());
         for (String page : involved) {
           Document doc = pages.get(page);
-          boolean listed = doc != null && doc.select(".span9 h5").stream().anyMatch(h5 -> h5.text().endsWith(event.getTitle()));
+          boolean listed = doc != null && doc.select(".span9 h5").stream().anyMatch(h5 -> h5.text().endsWith(shownTitle));
           if (!listed) {
             missing.add("'" + event.getTitle() + "' on " + page);
           }
@@ -163,9 +176,14 @@ class GeneratedSiteInvariantsTest {
     assertThat(missing).as("events missing from the pages of those involved").isEmpty();
   }
 
-  private ChroniclerData loadFixtureData() throws JAXBException {
+  /** A title as the page shows it: wiki links "[[Page|Caption]]" and "[[Page]]" render as their caption. */
+  private static String asRendered(String title) {
+    return title.replaceAll("\\[\\[[^\\]|]*\\|([^\\]]*)\\]\\]", "$1").replaceAll("\\[\\[([^\\]]*)\\]\\]", "$1");
+  }
+
+  private ChroniclerData loadData() throws JAXBException {
     System.setProperty("javax.xml.accessExternalDTD", "all");
-    File data = new File(FixtureSite.FIXTURE_ROOT, "xml-data/data.xml");
+    File data = dataRepo == null ? new File(FixtureSite.FIXTURE_ROOT, "xml-data/data.xml") : new File(dataRepo, "data/data.xml");
     return (ChroniclerData) JAXBContext.newInstance(ChroniclerData.class).createUnmarshaller()
         .unmarshal(new StreamSource(data));
   }
