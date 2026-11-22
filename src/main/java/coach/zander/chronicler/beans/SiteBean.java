@@ -60,6 +60,16 @@ public class SiteBean {
     return years;
   }
 
+  /** Whether the map page loads Google Maps; only when the instance enables it. */
+  public boolean isMapEnabled() {
+    return config.getMap() != null && config.getMap().isEnabled();
+  }
+
+  /** The text the map page shows instead of the map, or null. */
+  public String getMapNote() {
+    return config.getMap() == null ? null : config.getMap().getNote();
+  }
+
   /** URL of the imprint, or null when the instance configures none. */
   public String getImprint() {
     return config.getLegal() == null ? null : config.getLegal().getImprint();

@@ -5,4 +5,5 @@
     <copyright>Christian Zander</copyright>
     <wiki name="Wikipedia" url="https://de.wikipedia.org/wiki/"/>
     <legal imprint="https://www.zander.coach/impressum/" privacy="https://www.zander.coach/datenschutz/"/>
+    <map enabled="true"/>
 </chronicler>

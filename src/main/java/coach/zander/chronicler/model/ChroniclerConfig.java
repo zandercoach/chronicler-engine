@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 /** What makes one chronicle instance differ from another: read from {@code data/chronicler.xml}. */
 @XmlRootElement(name = "chronicler")
@@ -48,6 +49,26 @@ public class ChroniclerConfig {
     }
   }
 
+  /**
+   * The map page. It loads Google Maps only when enabled="true"; otherwise it shows the element's
+   * text, if any. Without the element there is no Google map either.
+   */
+  @XmlAccessorType(XmlAccessType.FIELD)
+  public static class MapPage {
+    @XmlAttribute
+    private Boolean enabled;
+    @XmlValue
+    private String note;
+
+    public boolean isEnabled() {
+      return Boolean.TRUE.equals(enabled);
+    }
+
+    public String getNote() {
+      return note == null || note.trim().isEmpty() ? null : note.trim();
+    }
+  }
+
   @XmlElement
   private String title;
   @XmlElement
@@ -58,6 +79,8 @@ public class ChroniclerConfig {
   private Wiki wiki;
   @XmlElement
   private Legal legal;
+  @XmlElement
+  private MapPage map;
 
   public static ChroniclerConfig load(File file) throws JAXBException {
     if (!file.isFile()) {
@@ -84,5 +107,9 @@ public class ChroniclerConfig {
 
   public Legal getLegal() {
     return legal;
+  }
+
+  public MapPage getMap() {
+    return map;
   }
 }

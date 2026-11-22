@@ -2,6 +2,7 @@
 <html lang="de">
   <head>
 #parse("inc_head.vm")
+#if($site.mapEnabled)
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="../js/projection.js"></script>
     <script src="../js/maplabel.js"></script>
@@ -57,9 +58,14 @@
 #end
       }
     </script>
+#end
   </head>
 
+#if($site.mapEnabled)
   <body onload="initialize()">
+#else
+  <body>
+#end
 #parse("inc_navigation.vm")
 
 <!-- CONTENT -->
@@ -70,7 +76,15 @@
           <hr />
         </div>
       </div>
+#if($site.mapEnabled)
       <div id="map_canvas" style="width: 100%; height: 1200px; background-color: #11aed9;"></div>
+#elseif($site.mapNote)
+      <div class="row">
+        <div class="span12">
+          <p>$site.mapNote</p>
+        </div>
+      </div>
+#end
 
 #parse("inc_footer.vm")
     </div> <!-- /container -->
