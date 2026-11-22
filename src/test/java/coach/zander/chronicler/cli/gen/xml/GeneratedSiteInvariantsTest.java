@@ -2,6 +2,11 @@ package coach.zander.chronicler.cli.gen.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import coach.zander.chronicler.cli.gen.StaticUrlResolver;
+import coach.zander.chronicler.model.ChroniclerData;
+import coach.zander.chronicler.model.ChroniclerObject;
+import coach.zander.chronicler.model.Endeavor;
+import coach.zander.chronicler.model.Event;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -16,11 +21,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.stream.StreamSource;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -28,12 +31,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.io.TempDir;
-
-import coach.zander.chronicler.cli.gen.StaticUrlResolver;
-import coach.zander.chronicler.model.ChroniclerData;
-import coach.zander.chronicler.model.ChroniclerObject;
-import coach.zander.chronicler.model.Endeavor;
-import coach.zander.chronicler.model.Event;
 
 /**
  * Rules every generated page must keep, whatever its content. Where the golden master says that
@@ -44,15 +41,17 @@ import coach.zander.chronicler.model.Event;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GeneratedSiteInvariantsTest {
 
-  private static final Pattern UNRESOLVED_VELOCITY_REFERENCE = Pattern.compile("\\$!?\\{?[a-zA-Z][a-zA-Z0-9_.]*");
+  private static final Pattern UNRESOLVED_VELOCITY_REFERENCE =
+      Pattern.compile("\\$!?\\{?[a-zA-Z][a-zA-Z0-9_.]*");
   private static final Pattern EXTERNAL = Pattern.compile("^(https?:|mailto:|javascript:|#).*");
-  private static final List<String> ENTITY_PAGE_PREFIXES = List.of("endeavor_", "member_", "stakeholder_", "creature_",
-      "location_");
+  private static final List<String> ENTITY_PAGE_PREFIXES =
+      List.of("endeavor_", "member_", "stakeholder_", "creature_", "location_");
 
   private static final String DATA_PROPERTY = "chronicler.data";
 
   /** The data repo the site is generated from; null means the fixture. */
   private String dataRepo;
+
   private Path site;
   private Map<String, Document> pages;
   private Map<String, String> sources;
@@ -65,12 +64,14 @@ class GeneratedSiteInvariantsTest {
     } else {
       dataRepo = property;
       site = workDir.resolve("site");
-      new XmlStaticSiteGenerator().run(FixtureSite.ENGINE_STATIC, dataRepo, site.toString(), false, true, false);
+      new XmlStaticSiteGenerator()
+          .run(FixtureSite.ENGINE_STATIC, dataRepo, site.toString(), false, true, false);
     }
     pages = new LinkedHashMap<>();
     sources = new LinkedHashMap<>();
     try (Stream<Path> files = Files.list(site.resolve("html"))) {
-      for (Path page : files.filter(p -> p.toString().endsWith(".html")).sorted().collect(Collectors.toList())) {
+      for (Path page :
+          files.filter(p -> p.toString().endsWith(".html")).sorted().collect(Collectors.toList())) {
         String html = Files.readString(page, StandardCharsets.UTF_8);
         String name = page.getFileName().toString();
         sources.put(name, html);
@@ -81,10 +82,10 @@ class GeneratedSiteInvariantsTest {
   }
 
   /**
-   * Today this cannot fail: ChroniclerReferenceInsertionEventHandler turns every unresolved reference
-   * into an empty string, so a missing value vanishes silently and only the golden master sees it.
-   * The test guards the day the handler is no longer attached - a Velocity upgrade changes that API -
-   * when Velocity would print the references as text instead.
+   * Today this cannot fail: ChroniclerReferenceInsertionEventHandler turns every unresolved
+   * reference into an empty string, so a missing value vanishes silently and only the golden master
+   * sees it. The test guards the day the handler is no longer attached - a Velocity upgrade changes
+   * that API - when Velocity would print the references as text instead.
    */
   @Test
   void noPageContainsAnUnresolvedVelocityReference() {
@@ -141,9 +142,10 @@ class GeneratedSiteInvariantsTest {
   @Test
   void everyEntityPageIsLinkedFromTheIndex() {
     List<String> linked = pages.get("idx.html").select("a[href]").eachAttr("href");
-    List<String> entityPages = pages.keySet().stream()
-        .filter(name -> ENTITY_PAGE_PREFIXES.stream().anyMatch(name::startsWith))
-        .collect(Collectors.toList());
+    List<String> entityPages =
+        pages.keySet().stream()
+            .filter(name -> ENTITY_PAGE_PREFIXES.stream().anyMatch(name::startsWith))
+            .collect(Collectors.toList());
     assertThat(entityPages).isNotEmpty();
     assertThat(linked).as("links on idx.html").containsAll(entityPages);
   }
@@ -166,7 +168,10 @@ class GeneratedSiteInvariantsTest {
         String shownTitle = asRendered(event.getTitle());
         for (String page : involved) {
           Document doc = pages.get(page);
-          boolean listed = doc != null && doc.select(".span9 h5").stream().anyMatch(h5 -> h5.text().endsWith(shownTitle));
+          boolean listed =
+              doc != null
+                  && doc.select(".span9 h5").stream()
+                      .anyMatch(h5 -> h5.text().endsWith(shownTitle));
           if (!listed) {
             missing.add("'" + event.getTitle() + "' on " + page);
           }
@@ -176,15 +181,25 @@ class GeneratedSiteInvariantsTest {
     assertThat(missing).as("events missing from the pages of those involved").isEmpty();
   }
 
-  /** A title as the page shows it: wiki links "[[Page|Caption]]" and "[[Page]]" render as their caption. */
+  /**
+   * A title as the page shows it: wiki links "[[Page|Caption]]" and "[[Page]]" render as their
+   * caption.
+   */
   private static String asRendered(String title) {
-    return title.replaceAll("\\[\\[[^\\]|]*\\|([^\\]]*)\\]\\]", "$1").replaceAll("\\[\\[([^\\]]*)\\]\\]", "$1");
+    return title
+        .replaceAll("\\[\\[[^\\]|]*\\|([^\\]]*)\\]\\]", "$1")
+        .replaceAll("\\[\\[([^\\]]*)\\]\\]", "$1");
   }
 
   private ChroniclerData loadData() throws JAXBException {
     System.setProperty("javax.xml.accessExternalDTD", "all");
-    File data = dataRepo == null ? new File(FixtureSite.FIXTURE_ROOT, "xml-data/data.xml") : new File(dataRepo, "data/data.xml");
-    return (ChroniclerData) JAXBContext.newInstance(ChroniclerData.class).createUnmarshaller()
-        .unmarshal(new StreamSource(data));
+    File data =
+        dataRepo == null
+            ? new File(FixtureSite.FIXTURE_ROOT, "xml-data/data.xml")
+            : new File(dataRepo, "data/data.xml");
+    return (ChroniclerData)
+        JAXBContext.newInstance(ChroniclerData.class)
+            .createUnmarshaller()
+            .unmarshal(new StreamSource(data));
   }
 }

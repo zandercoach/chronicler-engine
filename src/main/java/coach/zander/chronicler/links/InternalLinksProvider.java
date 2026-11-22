@@ -4,6 +4,5 @@ import java.util.List;
 
 public interface InternalLinksProvider {
 
-	List<InternalLink> getInternalLinks();
-
+  List<InternalLink> getInternalLinks();
 }

@@ -1,12 +1,11 @@
 package coach.zander.chronicler.beans;
 
-import java.util.List;
-
 import coach.zander.chronicler.model.Creature;
 import coach.zander.chronicler.model.Endeavor;
 import coach.zander.chronicler.model.Location;
 import coach.zander.chronicler.model.Member;
 import coach.zander.chronicler.model.Stakeholder;
+import java.util.List;
 
 public class IdxBean extends ChroniclerPageBean {
   private List<Endeavor> endeavors;

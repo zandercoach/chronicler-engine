@@ -1,9 +1,8 @@
 package coach.zander.chronicler.links;
 
-import java.io.Writer;
-
 import be.devijver.wikipedia.SmartLinkResolver;
 import be.devijver.wikipedia.html.HtmlVisitor;
+import java.io.Writer;
 
 public class ChroniclerHtmlVisitor extends HtmlVisitor {
 
@@ -25,8 +24,7 @@ public class ChroniclerHtmlVisitor extends HtmlVisitor {
   }
 
   @Override
-  public void startDocument() {
-  }
+  public void startDocument() {}
 
   @Override
   public void startSmartLinkWithCaption(String s) {

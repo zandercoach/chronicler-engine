@@ -10,9 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.xml.bind.JAXBException;
-
 import org.approvaltests.Approvals;
 import org.approvaltests.integrations.junit5.JupiterApprovals;
 import org.junit.jupiter.api.DynamicTest;
@@ -26,25 +24,32 @@ import org.junit.jupiter.api.io.TempDir;
  */
 class GeneratedPagesApprovalTest {
 
-  @TempDir
-  Path workDir;
+  @TempDir Path workDir;
 
   @TestFactory
   Stream<DynamicTest> generatedPage() throws IOException, JAXBException {
     Path html = FixtureSite.generate(workDir).resolve("html");
     Map<String, String> pages = new LinkedHashMap<>();
     try (Stream<Path> files = Files.list(html)) {
-      for (Path page : files.filter(p -> p.toString().endsWith(".html")).sorted().collect(Collectors.toList())) {
+      for (Path page :
+          files.filter(p -> p.toString().endsWith(".html")).sorted().collect(Collectors.toList())) {
         pages.put(page.getFileName().toString(), Files.readString(page, StandardCharsets.UTF_8));
       }
     }
     assertThat(pages).as("generated pages").isNotEmpty();
 
-    DynamicTest pageList = JupiterApprovals.dynamicTest("page list",
-        options -> Approvals.verify(String.join("\n", pages.keySet()) + "\n", options));
-    Stream<DynamicTest> pageTests = pages.entrySet().stream()
-        .map(page -> JupiterApprovals.dynamicTest(page.getKey().replaceFirst("\\.html$", ""),
-            options -> Approvals.verify(page.getValue(), options.forFile().withExtension(".html"))));
+    DynamicTest pageList =
+        JupiterApprovals.dynamicTest(
+            "page list",
+            options -> Approvals.verify(String.join("\n", pages.keySet()) + "\n", options));
+    Stream<DynamicTest> pageTests =
+        pages.entrySet().stream()
+            .map(page ->
+                JupiterApprovals.dynamicTest(
+                    page.getKey().replaceFirst("\\.html$", ""),
+                    options ->
+                        Approvals.verify(
+                            page.getValue(), options.forFile().withExtension(".html"))));
     return Stream.concat(Stream.of(pageList), pageTests);
   }
 }

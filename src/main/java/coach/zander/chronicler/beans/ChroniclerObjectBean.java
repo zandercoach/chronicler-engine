@@ -1,10 +1,5 @@
 package coach.zander.chronicler.beans;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import coach.zander.chronicler.model.ChroniclerObject;
 import coach.zander.chronicler.model.Creature;
 import coach.zander.chronicler.model.Endeavor;
@@ -12,6 +7,10 @@ import coach.zander.chronicler.model.Event;
 import coach.zander.chronicler.model.Location;
 import coach.zander.chronicler.model.Member;
 import coach.zander.chronicler.model.Stakeholder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public abstract class ChroniclerObjectBean extends ChroniclerPageBean {
   public List<Endeavor> getAdventures() {

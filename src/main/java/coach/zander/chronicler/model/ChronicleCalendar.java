@@ -1,21 +1,19 @@
 package coach.zander.chronicler.model;
 
+import coach.zander.chronicler.exception.IllegalDateException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-import coach.zander.chronicler.exception.IllegalDateException;
-
 /**
  * An instance's calendar, configured in {@code chronicler.xml}: its months in order, each with an
  * abbreviation, a name and a number of days, and the era written after the year. Data writes a date
- * as {@code D.ABBR YEAR ERA} ({@code 1.PER 1001 BF}); pages show {@code D. Name YEAR ERA}
- * ({@code 1. Peraine 1001 BF}).
+ * as {@code D.ABBR YEAR ERA} ({@code 1.PER 1001 BF}); pages show {@code D. Name YEAR ERA} ({@code
+ * 1. Peraine 1001 BF}).
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ChronicleCalendar implements Serializable {
@@ -25,15 +23,11 @@ public class ChronicleCalendar implements Serializable {
   public static class Month implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @XmlAttribute
-    private String abbr;
-    @XmlAttribute
-    private String name;
-    @XmlAttribute
-    private int days;
+    @XmlAttribute private String abbr;
+    @XmlAttribute private String name;
+    @XmlAttribute private int days;
 
-    public Month() {
-    }
+    public Month() {}
 
     public Month(String abbr, String name, int days) {
       this.abbr = abbr;
@@ -60,16 +54,15 @@ public class ChronicleCalendar implements Serializable {
   }
 
   /** Written after the year, e.g. "BF" or "n. F.". */
-  @XmlAttribute
-  private String era;
+  @XmlAttribute private String era;
+
   /** Written after the year for dates before the era, e.g. "vBF"; optional. */
-  @XmlAttribute
-  private String before;
+  @XmlAttribute private String before;
+
   @XmlElement(name = "month")
   private List<Month> months = new ArrayList<Month>();
 
-  public ChronicleCalendar() {
-  }
+  public ChronicleCalendar() {}
 
   public ChronicleCalendar(String era, String before, List<Month> months) {
     this.era = era;
@@ -111,7 +104,10 @@ public class ChronicleCalendar implements Serializable {
     return sum;
   }
 
-  /** Reads the data format {@code D.ABBR YEAR ERA}; the era is the rest after the year and may hold spaces. */
+  /**
+   * Reads the data format {@code D.ABBR YEAR ERA}; the era is the rest after the year and may hold
+   * spaces.
+   */
   public ChronicleDate parse(String text) throws IllegalDateException {
     String s = text == null ? "" : text.trim();
     try {

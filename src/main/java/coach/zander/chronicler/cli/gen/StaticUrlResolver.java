@@ -1,8 +1,7 @@
 package coach.zander.chronicler.cli.gen;
 
-import java.io.File;
-
 import coach.zander.chronicler.util.UrlResolver;
+import java.io.File;
 
 public class StaticUrlResolver extends UrlResolver {
   private final String imagePath;
@@ -25,7 +24,10 @@ public class StaticUrlResolver extends UrlResolver {
         return "../img/" + (type == null ? "" : type.toLowerCase() + "/") + basename + extension;
       }
     }
-    String url = "../img/" + (type == null ? getDefaultImage() : type.toLowerCase() + "/default") + getJpgImageExtension();
+    String url =
+        "../img/"
+            + (type == null ? getDefaultImage() : type.toLowerCase() + "/default")
+            + getJpgImageExtension();
     return url;
   }
 

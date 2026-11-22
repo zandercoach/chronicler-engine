@@ -2,15 +2,13 @@ package coach.zander.chronicler.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Stakeholder extends Person {
-  @XmlTransient
-  private List<Event> events = new ArrayList<Event>();
+  @XmlTransient private List<Event> events = new ArrayList<Event>();
 
   public void add(Event event) {
     if (event != null) {

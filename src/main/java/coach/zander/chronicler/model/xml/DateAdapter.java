@@ -2,7 +2,6 @@ package coach.zander.chronicler.model.xml;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class DateAdapter extends XmlAdapter<String, Date> {

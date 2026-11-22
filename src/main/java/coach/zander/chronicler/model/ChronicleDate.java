@@ -1,10 +1,12 @@
 package coach.zander.chronicler.model;
 
+import coach.zander.chronicler.exception.IllegalDateException;
 import java.io.Serializable;
 
-import coach.zander.chronicler.exception.IllegalDateException;
-
-/** A date in an instance's calendar. Ordered by days since the start of the era; before it, negative. */
+/**
+ * A date in an instance's calendar. Ordered by days since the start of the era; before it,
+ * negative.
+ */
 public class ChronicleDate implements Comparable<ChronicleDate>, Serializable {
   private static final long serialVersionUID = 1L;
 
@@ -15,19 +17,28 @@ public class ChronicleDate implements Comparable<ChronicleDate>, Serializable {
   private final boolean beforeEra;
   private final int value;
 
-  /** @param month the 1-based position of the month in the calendar */
+  /**
+   * @param month the 1-based position of the month in the calendar
+   */
   public ChronicleDate(ChronicleCalendar calendar, int day, int month, int year, boolean beforeEra)
       throws IllegalDateException {
     if (calendar == null) {
       throw new IllegalDateException("A date needs a calendar.");
     }
     if (month < 1 || month > calendar.getMonths().size()) {
-      throw new IllegalDateException("Month must be within 1 and " + calendar.getMonths().size() + ".");
+      throw new IllegalDateException(
+          "Month must be within 1 and " + calendar.getMonths().size() + ".");
     }
     int days = calendar.month(month).getDays();
     if (day < 1 || day > days) {
-      throw new IllegalDateException("Month '" + calendar.month(month).getName() + "' has days 1 to " + days + ", not "
-          + day + ".");
+      throw new IllegalDateException(
+          "Month '"
+              + calendar.month(month).getName()
+              + "' has days 1 to "
+              + days
+              + ", not "
+              + day
+              + ".");
     }
     if (year < 1) {
       throw new IllegalDateException("Year must not be less than 1.");
@@ -37,7 +48,9 @@ public class ChronicleDate implements Comparable<ChronicleDate>, Serializable {
     this.month = month;
     this.year = year;
     this.beforeEra = beforeEra;
-    this.value = (beforeEra ? -1 : 1) * ((year - 1) * calendar.daysPerYear() + calendar.daysBefore(month) + day);
+    this.value =
+        (beforeEra ? -1 : 1)
+            * ((year - 1) * calendar.daysPerYear() + calendar.daysBefore(month) + day);
   }
 
   public int compareTo(ChronicleDate o) {
