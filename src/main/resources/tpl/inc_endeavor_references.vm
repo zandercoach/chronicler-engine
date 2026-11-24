@@ -3,29 +3,37 @@
               <img src="$resolver.resolveImageUrlFor($bean.endeavor)" alt="$bean.endeavor.title" />
             </a>
             <ul class="nav nav-list">
-#if($bean.endeavor.locations)
               <li class="nav-header">Orte</li>
+#if($bean.endeavor.locations)
 #foreach($location in $bean.endeavor.locations)
               <li><a href="$resolver.resolveUrlFor($location)">$location.name</a></li>
 #end
+#else
+              <li class="muted">noch keine</li>
 #end
-#if($bean.endeavor.stakeholders)
               <li class="nav-header">Meisterpersonen</li>
+#if($bean.endeavor.stakeholders)
 #foreach($stakeholder in $bean.endeavor.stakeholders)
               <li><a href="$resolver.resolveUrlFor($stakeholder)">$stakeholder.name</a></li>
 #end
+#else
+              <li class="muted">noch keine</li>
 #end
-#if($bean.endeavor.creatures)
               <li class="nav-header">Kreaturen</li>
+#if($bean.endeavor.creatures)
 #foreach($creature in $bean.endeavor.creatures)
               <li><a href="$resolver.resolveUrlFor($creature)">$creature.name</a></li>
 #end
+#else
+              <li class="muted">noch keine</li>
 #end
-#if($bean.endeavor.members)
               <li class="nav-header">Helden</li>
+#if($bean.endeavor.members)
 #foreach($member in $bean.endeavor.members)
               <li><a href="$resolver.resolveUrlFor($member)">$member.name</a></li>
 #end
+#else
+              <li class="muted">noch keine</li>
 #end
             </ul>
           </div><!--/.well -->
