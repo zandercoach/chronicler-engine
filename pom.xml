@@ -11,8 +11,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>6.1.3</junit.version>
 		<!-- Coverage ratchet: today's values; raise them in the same PR when coverage rises. -->
-		<coverage.line.minimum>0.72</coverage.line.minimum>
-		<coverage.branch.minimum>0.51</coverage.branch.minimum>
+		<coverage.line.minimum>0.74</coverage.line.minimum>
+		<coverage.branch.minimum>0.55</coverage.branch.minimum>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -32,8 +32,28 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.7</version>
+			<artifactId>velocity-engine-core</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+		<!-- Velocity 2 logs through SLF4J; it logged nothing visible before, and still does not. -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-nop</artifactId>
+			<version>1.7.36</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- Only for the third-party wikitext parser (be.devijver.wikipedia), which is kept as it is.
+		     Came through Velocity 1.7 before. Our own code uses commons-lang3. -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<!-- ToStringBuilder, StringUtils; came through Velocity 1.7 as commons-lang 2. -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.22.0</version>
 		</dependency>
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
