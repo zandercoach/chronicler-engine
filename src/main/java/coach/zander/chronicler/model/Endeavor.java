@@ -1,11 +1,11 @@
 package coach.zander.chronicler.model;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlIDREF;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlIDREF;
 
 public class Endeavor extends ChroniclerActivity {
   @XmlElement(name = "event")

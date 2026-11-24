@@ -1,7 +1,7 @@
 package coach.zander.chronicler.cli.gen.xml;
 
+import jakarta.xml.bind.JAXBException;
 import java.io.IOException;
-import javax.xml.bind.JAXBException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**

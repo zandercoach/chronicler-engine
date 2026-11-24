@@ -1,9 +1,9 @@
 package coach.zander.chronicler.cli.gen.xml;
 
+import jakarta.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import javax.xml.bind.JAXBException;
 import org.apache.commons.io.FileUtils;
 
 /**
