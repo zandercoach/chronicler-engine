@@ -2,6 +2,7 @@ package coach.zander.chronicler.cli.gen.xml;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import jakarta.xml.bind.JAXBException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -10,7 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.xml.bind.JAXBException;
 import org.approvaltests.Approvals;
 import org.approvaltests.integrations.junit5.JupiterApprovals;
 import org.junit.jupiter.api.DynamicTest;

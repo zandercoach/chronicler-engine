@@ -2,10 +2,10 @@ package coach.zander.chronicler.cli.gen.xml;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import jakarta.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import javax.xml.bind.JAXBException;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
