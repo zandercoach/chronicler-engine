@@ -7,8 +7,9 @@ import coach.zander.chronicler.util.UrlResolver;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Objects;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.app.event.ReferenceInsertionEventHandler;
+import org.apache.velocity.context.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,8 @@ public final class ChroniclerReferenceInsertionEventHandler
     return writer.toString();
   }
 
-  public Object referenceInsert(String reference, Object content) {
+  @Override
+  public Object referenceInsert(Context context, String reference, Object content) {
     String markup = "";
     if (content != null) {
       String contentString = content.toString();
