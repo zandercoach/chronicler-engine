@@ -6,8 +6,8 @@ import coach.zander.chronicler.model.Location;
 import coach.zander.chronicler.model.Member;
 import coach.zander.chronicler.model.Stakeholder;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 @Component
 public class EndeavorBean extends ChroniclerPageBean {
@@ -34,7 +34,7 @@ public class EndeavorBean extends ChroniclerPageBean {
   }
 
   public void setEndeavor(Endeavor endeavor) {
-    Assert.notNull(endeavor);
+    Objects.requireNonNull(endeavor, "endeavor must not be null");
     this.endeavor = endeavor;
     this.setPageTitle(endeavor.getClass().getSimpleName() + " - " + endeavor.getTitle());
   }

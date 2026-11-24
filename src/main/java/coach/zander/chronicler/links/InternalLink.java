@@ -2,19 +2,19 @@ package coach.zander.chronicler.links;
 
 import coach.zander.chronicler.model.ChroniclerActivity;
 import coach.zander.chronicler.model.ChroniclerObject;
-import org.springframework.util.Assert;
+import java.util.Objects;
 
 public final class InternalLink {
   private String name;
   private String type;
 
   public InternalLink(ChroniclerActivity activity) {
-    Assert.notNull(activity);
+    Objects.requireNonNull(activity, "activity must not be null");
     init(activity.getTitle(), getTypeFor(activity));
   }
 
   public InternalLink(ChroniclerObject object) {
-    Assert.notNull(object);
+    Objects.requireNonNull(object, "object must not be null");
     init(object.getName(), getTypeFor(object));
   }
 
@@ -35,8 +35,8 @@ public final class InternalLink {
   }
 
   private void init(String name, String type) {
-    Assert.notNull(name);
-    Assert.notNull(type);
+    Objects.requireNonNull(name, "name must not be null");
+    Objects.requireNonNull(type, "type must not be null");
     this.name = name;
     this.type = type;
   }
