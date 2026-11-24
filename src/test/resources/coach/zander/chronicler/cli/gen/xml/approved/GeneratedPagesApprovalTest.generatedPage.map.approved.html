@@ -62,22 +62,22 @@
 
         routeCoordinates = [
 
-            getLatLng(400, 300), // 
-            getLatLng(460, 340), // 
-            getLatLng(420, 310), // 
-          ];
+          getLatLng(400, 300), // 
+          getLatLng(460, 340), // 
+          getLatLng(420, 310), // 
+        ];
         new google.maps.Polyline({map: map, path: routeCoordinates, strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2});
 
-              new MapLabel({text: 'M&uuml;hlbach', position: getLatLng(400, 300), map: map, fontSize: 12});
-                  new MapLabel({text: 'Turm im Nebelmoor', position: getLatLng(460, 340), map: map, fontSize: 12});
-                    routeCoordinates = [
+        new MapLabel({text: 'M&uuml;hlbach', position: getLatLng(400, 300), map: map, fontSize: 12});
+        new MapLabel({text: 'Turm im Nebelmoor', position: getLatLng(460, 340), map: map, fontSize: 12});
+        routeCoordinates = [
 
-            getLatLng(100, 100), // 
-          ];
+          getLatLng(100, 100), // 
+        ];
         new google.maps.Polyline({map: map, path: routeCoordinates, strokeColor: "#FF0000", strokeOpacity: 1.0, strokeWeight: 2});
 
-              new MapLabel({text: 'Graufurt', position: getLatLng(100, 100), map: map, fontSize: 12});
-            }
+        new MapLabel({text: 'Graufurt', position: getLatLng(100, 100), map: map, fontSize: 12});
+      }
     </script>
   </head>
 
