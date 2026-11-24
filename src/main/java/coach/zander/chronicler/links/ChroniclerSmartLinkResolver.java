@@ -5,14 +5,14 @@ import coach.zander.chronicler.util.UrlResolver;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.util.Assert;
+import java.util.Objects;
 
-public class ChroniclerSmartLinkResolver implements SmartLinkResolver {
+public final class ChroniclerSmartLinkResolver implements SmartLinkResolver {
   private final Map<String, InternalLink> internalLinks;
   private final UrlResolver resolver;
 
   public ChroniclerSmartLinkResolver(List<InternalLink> internalLinks, UrlResolver resolver) {
-    Assert.notNull(resolver);
+    Objects.requireNonNull(resolver, "resolver must not be null");
     this.internalLinks = new HashMap<String, InternalLink>();
     if (internalLinks != null) {
       for (InternalLink link : internalLinks) {

@@ -4,9 +4,9 @@ import coach.zander.chronicler.model.Endeavor;
 import coach.zander.chronicler.model.Member;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.util.Assert;
+import java.util.Objects;
 
-public class NavigationBean {
+public final class NavigationBean {
   private List<Member> members;
   private List<Endeavor> endeavors;
 
@@ -16,8 +16,8 @@ public class NavigationBean {
   }
 
   public NavigationBean(List<Endeavor> endeavors, List<Member> members) {
-    Assert.notNull(endeavors);
-    Assert.notNull(members);
+    Objects.requireNonNull(endeavors, "endeavors must not be null");
+    Objects.requireNonNull(members, "members must not be null");
     this.endeavors = endeavors;
     this.members = members;
   }
@@ -31,12 +31,12 @@ public class NavigationBean {
   }
 
   public void setEndeavors(List<Endeavor> endeavors) {
-    Assert.notNull(endeavors);
+    Objects.requireNonNull(endeavors, "endeavors must not be null");
     this.endeavors = endeavors;
   }
 
   public void setMembers(List<Member> members) {
-    Assert.notNull(members);
+    Objects.requireNonNull(members, "members must not be null");
     this.members = members;
   }
 }

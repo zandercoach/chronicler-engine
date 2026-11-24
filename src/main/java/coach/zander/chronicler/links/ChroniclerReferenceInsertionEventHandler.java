@@ -6,14 +6,15 @@ import be.devijver.wikipedia.Visitor;
 import coach.zander.chronicler.util.UrlResolver;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Objects;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.app.event.ReferenceInsertionEventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 @Service
-public class ChroniclerReferenceInsertionEventHandler implements ReferenceInsertionEventHandler {
+public final class ChroniclerReferenceInsertionEventHandler
+    implements ReferenceInsertionEventHandler {
   private static final String TAG_DESCRIPTION = "description";
   private String[] internalReferences = new String[0];
   private String[] internalReferenceTags = new String[0];
@@ -22,8 +23,8 @@ public class ChroniclerReferenceInsertionEventHandler implements ReferenceInsert
   @Autowired
   public ChroniclerReferenceInsertionEventHandler(
       InternalLinksProvider provider, UrlResolver resolver) {
-    Assert.notNull(provider);
-    Assert.notNull(resolver);
+    Objects.requireNonNull(provider, "provider must not be null");
+    Objects.requireNonNull(resolver, "resolver must not be null");
     List<InternalLink> internalLinks = provider.getInternalLinks();
     if (internalLinks != null) {
       internalReferences = new String[internalLinks.size()];
