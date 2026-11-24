@@ -74,5 +74,6 @@ A change is done when:
 
 - One pull request per change, **straight onto `main`** — no stacked pull requests. Head branches are deleted on merge.
 - Commit and push only when Christian asks; that includes local commits.
+- **Claude works as Claude Craft** (`claude-craft-agent`), here and in the instance repos: commits, pushes and pull requests under that account, never under Christian's login, so he approves as code owner instead of bypassing. Christian approves and merges; Claude does neither. Per command only, never `gh auth switch`: commit with `git -c user.name="Claude Craft" -c user.email=360632363+claude-craft-agent@users.noreply.github.com`, push with a one-off `-c credential.helper=` that reads the token file, call `gh` with `GH_TOKEN` from it. Token files live in `~` and never appear in output: `.claude-craft-token-zandercoach` for the org repos, `.claude-craft-token` for `chronicler-data-cfk`.
 - A formatting-only commit is merged with a merge commit and listed in `.git-blame-ignore-revs` (`git config blame.ignoreRevsFile .git-blame-ignore-revs`).
 - Changes that need data on both sides (engine and instances) are merged in the order the pull requests state: an older engine ignores unknown configuration elements, but cannot read new data formats.
