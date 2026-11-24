@@ -5,6 +5,7 @@ endeavor_Der_Turm_im_Nebelmoor.html
 endeavor_Der_verlorene_Zehnt.html
 home.html
 idx.html
+location_Bohlenweg.html
 location_Graufurt.html
 location_Mühlbach.html
 location_Turm_im_Nebelmoor.html

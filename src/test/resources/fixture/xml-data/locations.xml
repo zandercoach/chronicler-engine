@@ -1,5 +1,6 @@
 <locations>
     <location name="Graufurt" region="Ulmenau" x="100" y="100" description="Eine Furt an der Straße zur Burg des Grafen, wo das Wasser ohne Regen steigt."/>
+    <location name="Bohlenweg" region="Nebelmark" x="420" y="310" description="Ein alter Weg aus Eichenbohlen, der trockenen Fußes durchs Nebelmoor führt, solange man ihn nicht verlässt."/>
     <location name="Mühlbach" region="Nebelmark" x="400" y="300" description="Ein Mühlendorf am Rand des Nebelmoors."/>
     <location name="Turm im Nebelmoor" region="Nebelmark" x="460" y="340" description="Ein Turm, halb im Moor versunken."/>
     <location name="Unbetretene Lichtung" region="Nebelmark" x="500" y="280" description="Ein Ort, den noch kein Ereignis erreicht hat."/>

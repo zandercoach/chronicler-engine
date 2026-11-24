@@ -25,7 +25,7 @@ Ein zweiter Absatz, damit auch Zeilenumbrüche in einer Beschreibung abgedeckt s
         </event>
         <waypoint location="Mühlbach"/>
         <waypoint location="Turm im Nebelmoor"/>
-        <waypoint x="420" y="310"/>
+        <waypoint x="420" y="310" location="Bohlenweg"/>
         <session>2024-03-09</session>
         <session>2024-04-20</session>
     </endeavor>

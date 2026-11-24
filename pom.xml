@@ -11,8 +11,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.version>6.1.3</junit.version>
 		<!-- Coverage ratchet: today's values; raise them in the same PR when coverage rises. -->
-		<coverage.line.minimum>0.74</coverage.line.minimum>
-		<coverage.branch.minimum>0.55</coverage.branch.minimum>
+		<coverage.line.minimum>0.75</coverage.line.minimum>
+		<coverage.branch.minimum>0.56</coverage.branch.minimum>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -243,6 +243,11 @@ public class XmlStaticSiteGenerator {
           location.add(event);
         }
       }
+      for (Waypoint waypoint : endeavor.getWaypoints()) {
+        if (waypoint.getLocation() != null) {
+          waypoint.getLocation().addRoute(endeavor);
+        }
+      }
     }
 
     return data;

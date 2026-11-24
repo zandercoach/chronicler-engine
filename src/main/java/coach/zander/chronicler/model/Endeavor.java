@@ -63,6 +63,11 @@ public class Endeavor extends ChroniclerActivity {
         last = location;
       }
     }
+    for (Waypoint waypoint : waypoints) {
+      if (waypoint.getLocation() != null) {
+        locations.add(waypoint.getLocation());
+      }
+    }
     return new ArrayList<Location>(locations);
   }
 
