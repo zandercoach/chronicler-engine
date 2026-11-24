@@ -7,6 +7,8 @@ import coach.zander.chronicler.model.ChroniclerData;
 import coach.zander.chronicler.model.ChroniclerObject;
 import coach.zander.chronicler.model.Endeavor;
 import coach.zander.chronicler.model.Event;
+import coach.zander.chronicler.model.Location;
+import coach.zander.chronicler.model.Waypoint;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import java.io.File;
@@ -179,6 +181,65 @@ class GeneratedSiteInvariantsTest {
       }
     }
     assertThat(missing).as("events missing from the pages of those involved").isEmpty();
+  }
+
+  @Test
+  void everyPlaceOnARouteAndItsEndeavorListEachOther() throws JAXBException {
+    StaticUrlResolver resolver = new StaticUrlResolver("");
+    List<String> missing = new ArrayList<>();
+    for (Endeavor endeavor : loadData().getEndeavors()) {
+      String endeavorPage = resolver.resolveUrlFor(endeavor);
+      for (Waypoint waypoint : endeavor.getWaypoints()) {
+        Location location = waypoint.getLocation();
+        if (location == null) {
+          continue;
+        }
+        String locationPage = resolver.resolveUrlFor(location);
+        if (!sidebarLinks(locationPage).contains(endeavorPage)) {
+          missing.add(endeavorPage + " on " + locationPage);
+        }
+        if (!sidebarLinks(endeavorPage).contains(locationPage)) {
+          missing.add(locationPage + " on " + endeavorPage);
+        }
+      }
+    }
+    assertThat(missing).as("route places and endeavors not listing each other").isEmpty();
+  }
+
+  @Test
+  void everyWaypointNamingAPlaceLiesOnIt() throws JAXBException {
+    List<String> off = new ArrayList<>();
+    for (Endeavor endeavor : loadData().getEndeavors()) {
+      for (Waypoint waypoint : endeavor.getWaypoints()) {
+        Location location = waypoint.getLocation();
+        if (location != null
+            && !(waypoint.getX().equals(location.getX())
+                && waypoint.getY().equals(location.getY()))) {
+          off.add(
+              location.getName()
+                  + " in '"
+                  + endeavor.getTitle()
+                  + "': waypoint "
+                  + waypoint.getX()
+                  + "/"
+                  + waypoint.getY()
+                  + ", place "
+                  + location.getX()
+                  + "/"
+                  + location.getY());
+        }
+      }
+    }
+    assertThat(off).as("waypoints whose coordinates are not those of their place").isEmpty();
+  }
+
+  private List<String> sidebarLinks(String page) {
+    Document doc = pages.get(page);
+    return doc == null
+        ? List.of()
+        : doc.select(".sidebar-nav .nav-list a").eachAttr("href").stream()
+            .map(href -> href.substring(href.lastIndexOf('/') + 1))
+            .toList();
   }
 
   /**
