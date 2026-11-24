@@ -11,6 +11,8 @@
 #else
               <li class="muted">noch keine</li>
 #end
+## A location page does not list locations.
+#if($bean.object.class.simpleName != "Location")
               <li class="nav-header">Orte</li>
 #if($bean.object.locations)
 #foreach($location in $bean.object.locations)
@@ -19,6 +21,9 @@
 #else
               <li class="muted">noch keine</li>
 #end
+#end
+## A creature page does not list creatures.
+#if($bean.object.class.simpleName != "Creature")
               <li class="nav-header">Kreaturen</li>
 #if($bean.object.creatures)
 #foreach($creature in $bean.object.creatures)
@@ -26,6 +31,7 @@
 #end
 #else
               <li class="muted">noch keine</li>
+#end
 #end
               <li class="nav-header">Meisterpersonen</li>
 #if($bean.object.stakeholders)
